@@ -36,7 +36,7 @@ public class ImageImpl implements ICrudService<ImageEntity, Long> {
     public ImageEntity update(ImageEntity dto, Long id) {
 
         return imageRepository.findById(id).map(entity -> {
-            entity.setImage_url(dto.getImage_url());
+            entity.setImageUrl(dto.getImageUrl());
             return imageRepository.save(entity);
         }).orElse(null);
     }

@@ -16,19 +16,19 @@ import java.time.LocalDateTime;
 @Table(name = "reservation")
 public class ReservationEntity {
     @Id()
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_reservation")
-    private int idReservation;
+    private Long id;
 
     // Relación con la entidad User
-    @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
-    private User user;
+    //@ManyToOne
+    //@JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
+   //private User user;
 
     // Relación con la entidad TouristPlan
-    @ManyToOne
-    @JoinColumn(name = "id_plan", referencedColumnName = "id_plan", nullable = false)
-    private TouristPlan plan;
+    //@ManyToOne
+    //@JoinColumn(name = "id_plan", referencedColumnName = "id_plan", nullable = false)
+    //private TouristPlan plan;
 
     @Column(name = "reservation_date", nullable = false)
     private LocalDateTime reservationDate;

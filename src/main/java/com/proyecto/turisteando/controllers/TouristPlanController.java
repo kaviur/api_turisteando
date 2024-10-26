@@ -25,6 +25,7 @@ public class TouristPlanController {
 
     @GetMapping("/all")
     public Iterable<TouristPlanEntity> getAllTouristPlans() {
+
         return touristPlanService.getAll();
     }
 

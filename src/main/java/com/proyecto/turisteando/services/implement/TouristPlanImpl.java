@@ -19,11 +19,13 @@ public class TouristPlanImpl implements ICrudService<TouristPlanEntity, Long> {
 
     @Override
     public TouristPlanEntity read(Long id) {
+
         return touristPlanRepository.findById(id).orElse(null);
     }
 
     @Override
     public TouristPlanEntity create(TouristPlanEntity dto) {
+
         return touristPlanRepository.save(dto);
     }
 

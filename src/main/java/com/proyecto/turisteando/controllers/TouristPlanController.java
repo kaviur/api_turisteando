@@ -2,12 +2,12 @@ package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.dtos.IDto;
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
-import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.services.ITouristPlanService;
 import com.proyecto.turisteando.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +18,7 @@ public class TouristPlanController {
     private ITouristPlanService touristPlanService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response> createTouristPlan(@RequestBody TouristPlanRequestDto touristPlan) {
+    public ResponseEntity<Response> createTouristPlan(@RequestBody @Validated TouristPlanRequestDto touristPlan) {
         IDto newTouristPlan = touristPlanService.create(touristPlan);
         Response response = new Response(true, HttpStatus.CREATED, newTouristPlan);
         return ResponseEntity.ok(response);
@@ -68,7 +68,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/toggle-status/{id}")
+    @PatchMapping("/toggle-status/{id}")
     public ResponseEntity<Response> toggleTouristPlanStatus(@PathVariable Long id) {
         IDto toggledTouristPlan = touristPlanService.toggleStatus(id);
         Response response = new Response(true, HttpStatus.OK, toggledTouristPlan);

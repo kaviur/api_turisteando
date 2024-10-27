@@ -30,11 +30,11 @@ public class TouristPlanRequestDto implements IDto {
     @NotNull(message = "La categoría no puede estar vacía")
     private Long categoryId;
 
-    @NotBlank(message = "La fecha de inicio de disponibilidad no puede estar vacía")
+    @NotNull(message = "La fecha de inicio de disponibilidad no puede estar vacía")
     @FutureOrPresent(message = "La fecha de inicio de disponibilidad debe ser una fecha futura o presente")
     private LocalDate availabilityStartDate;
 
-    @NotBlank(message = "La fecha de fin de disponibilidad no puede estar vacía")
+    @NotNull(message = "La fecha de fin de disponibilidad no puede estar vacía")
     @FutureOrPresent(message = "La fecha de fin de disponibilidad debe ser una fecha futura o presente")
     private LocalDate availabilityEndDate;
 

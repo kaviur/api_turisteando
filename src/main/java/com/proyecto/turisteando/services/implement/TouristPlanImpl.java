@@ -69,7 +69,8 @@ public class TouristPlanImpl implements ITouristPlanService {
     @Override
     public IDto update(IDto dto, Long id) {
         try {
-            TouristPlanEntity touristPlan = touristPlanMapper.toEntity((TouristPlanRequestDto) read(id));
+            TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
+                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
             touristPlanMapper.partialUpdate((TouristPlanRequestDto) dto, touristPlan);
             return touristPlanMapper.toDto(touristPlanRepository.save(touristPlan));
         } catch (Exception e) {
@@ -80,7 +81,8 @@ public class TouristPlanImpl implements ITouristPlanService {
     @Override
     public IDto delete(Long id) {
         try {
-            TouristPlanEntity touristPlan = touristPlanMapper.toEntity((TouristPlanRequestDto) read(id));
+            TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
+                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
             touristPlan.setActive(false);
             touristPlanRepository.save(touristPlan);
             return touristPlanMapper.toDto(touristPlan);
@@ -92,7 +94,8 @@ public class TouristPlanImpl implements ITouristPlanService {
     @Override
     public IDto toggleStatus(Long id) {
         try {
-            TouristPlanEntity touristPlan = touristPlanMapper.toEntity((TouristPlanRequestDto) read(id));
+            TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
+                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
             touristPlan.setActive(!touristPlan.isActive());
             touristPlanRepository.save(touristPlan);
             return touristPlanMapper.toDto(touristPlan);

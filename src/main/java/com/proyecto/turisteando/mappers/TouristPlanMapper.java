@@ -4,7 +4,6 @@ import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
-import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.services.implement.CategoryServiceImpl;
 import org.mapstruct.*;
 

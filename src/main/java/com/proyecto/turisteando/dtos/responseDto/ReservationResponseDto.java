@@ -1,6 +1,5 @@
 package com.proyecto.turisteando.dtos.responseDto;
 
-import com.proyecto.turisteando.dtos.IDto;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
@@ -9,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Value
 @AllArgsConstructor
-public class ReservationResponseDto implements IDto, Serializable {
+public class ReservationResponseDto implements Serializable {
 
     Long id;
     LocalDateTime reservationDate;

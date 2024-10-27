@@ -1,6 +1,5 @@
 package com.proyecto.turisteando.dtos.requestDto;
 
-import com.proyecto.turisteando.dtos.IDto;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Value
 @AllArgsConstructor
-public class ReservationDto implements Serializable, IDto {
+public class ReservationDto implements Serializable {
     //@NotNull
     //@NotEmpty(message = "El ID de usuario no puede estar vacío")
     //Integer idUser;

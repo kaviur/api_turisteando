@@ -18,7 +18,7 @@ public class TouristPlanController {
     private ITouristPlanService touristPlanService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response> createTouristPlan(@RequestBody @Validated TouristPlanRequestDto touristPlan) {
+    public ResponseEntity<Response> createTouristPlan(@Validated @RequestBody TouristPlanRequestDto touristPlan) {
         IDto newTouristPlan = touristPlanService.create(touristPlan);
         Response response = new Response(true, HttpStatus.CREATED, newTouristPlan);
         return ResponseEntity.ok(response);

@@ -54,7 +54,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Response> updateTouristPlan(@RequestBody TouristPlanRequestDto touristPlan, @PathVariable Long id) {
         IDto updatedTouristPlan = touristPlanService.update(touristPlan, id);
         Response response = new Response(true, HttpStatus.OK, updatedTouristPlan);

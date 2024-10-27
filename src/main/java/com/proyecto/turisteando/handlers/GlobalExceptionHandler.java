@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.handlers;
 
 import com.proyecto.turisteando.exceptions.customExceptions.CategoryNotFoundException;
+import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             CategoryNotFoundException.class,
             NoResourceFoundException.class,
-            EntityNotFoundException.class
+            EntityNotFoundException.class,
+            TouristPlanNotFoundException.class
     })
     public ResponseEntity<Object> handleNotFoundException(Exception ex) {
         log.error("Error: {}", ex.getMessage(), ex);

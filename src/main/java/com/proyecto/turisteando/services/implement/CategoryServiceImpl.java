@@ -19,10 +19,11 @@ import java.util.Optional;
 /**
  * Implementation of the CategoryService interface, which provides methods
  * for accessing and managing category-related information.
+ *
  * @author Karen Urbano - <a href="https://github.com/kaviur">kaviur</a>
  * @version 1.0
  * @since 2024-10-25
- * */
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -80,7 +81,13 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
 //        }
 //
 //        return categoryMapper.toDto(categoryEntity);
-        return null;
+        return categoryMapper.toDto(categoryRepository.findById(id).orElse(null));
+//        return null;
+    }
+
+    public CategoryEntity readEntity(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No existe una categoría con el id " + id));
     }
 
     /**

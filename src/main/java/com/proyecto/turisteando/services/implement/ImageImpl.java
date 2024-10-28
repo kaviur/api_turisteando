@@ -1,19 +1,19 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.entities.ImageEntity;
-import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.repositories.ImageRepository;
 import com.proyecto.turisteando.services.ICrudService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 
 public class ImageImpl implements ICrudService<ImageEntity, Long> {
 
-    @Autowired
-    private ImageRepository imageRepository;
+
+    private final ImageRepository imageRepository;
 
 
     @Override
@@ -52,11 +52,6 @@ public class ImageImpl implements ICrudService<ImageEntity, Long> {
 
     @Override
     public ImageEntity toggleStatus(Long id) {
-        ImageEntity entity = imageRepository.findById(id).orElse(null);
-        if (entity != null) {
-            entity.setActive(!entity.isActive());
-            return imageRepository.save(entity);
-        }
         return null;
     }
 }

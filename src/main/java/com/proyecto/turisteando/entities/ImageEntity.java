@@ -22,9 +22,11 @@ public class ImageEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String imageUrl;
+
     // Campo de conexión con  para el plan turístico con relaciones pendientes
-    private String idTouristPlan; //Conexión con la tabla Tourist_Plan
-    private boolean isActive;
+    @ManyToOne()
+    @JoinColumn(name = "tourist_plan_id", nullable = false)
+    private TouristPlanEntity idTouristPlan; //Conexión con la tabla Tourist_Plan
 
     @CreationTimestamp()
     @Column(updatable = false)

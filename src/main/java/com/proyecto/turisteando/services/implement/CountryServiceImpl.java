@@ -1,68 +1,90 @@
 package com.proyecto.turisteando.services.implement;
 
+import com.proyecto.turisteando.dtos.CountryDto;
 import com.proyecto.turisteando.entities.CountryEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CountryNotFoundException;
+import com.proyecto.turisteando.mappers.CountryMapper;
 import com.proyecto.turisteando.repositories.CountryRepository;
-import com.proyecto.turisteando.services.ICrudService;
+import com.proyecto.turisteando.services.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.StreamSupport;
+
 @Service
-public class CountryServiceImpl implements ICrudService<CountryEntity, Long> {
+public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, Long> {
 
     @Autowired
     private CountryRepository countryRepository;
 
-    @Override
-    public Iterable<CountryEntity> getAll() {
-        return countryRepository.findAll();
-    }
+    @Autowired
+    private CountryMapper countryMapper;
 
     @Override
-    public CountryEntity read(Long id) {
+    public Iterable<CountryDto> getAll() {
         try {
-            return countryRepository.findById(id)
-                    .orElseThrow(() -> new CountryNotFoundException("No existe una ciudad con el id: " + id));
+            Iterable<CountryEntity> countries = countryRepository.findAll();
+            return StreamSupport.stream(countries.spliterator(), false)
+                    .map(countryMapper::toDto)
+                    .toList();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public CountryEntity create(CountryEntity dto) {
-        try {
-            return countryRepository.save(dto);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    @Override
-    public CountryEntity update(CountryEntity dto, Long id) {
+    public CountryDto read(Long id) {
         try {
             CountryEntity country = countryRepository.findById(id)
-                    .orElseThrow(() -> new CountryNotFoundException("No existe un pais con el id: " + id));
+                    .orElseThrow(() -> new CountryNotFoundException("No existe un país con el id: " + id));
+            return countryMapper.toDto(country);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public CountryEntity getCountry(Long id) {
+        return countryRepository.findById(id)
+                .orElseThrow(() -> new CountryNotFoundException("No existe un pais con el id: " + id));
+    }
+
+    @Override
+    public CountryDto create(CountryDto dto) {
+        try {
+            CountryEntity country = countryMapper.toEntity(dto);
+            return countryMapper.toDto(country);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public CountryDto update(CountryDto dto, Long id) {
+        try {
+            CountryEntity country = countryRepository.findById(id)
+                    .orElseThrow(() -> new CountryNotFoundException("No existe un país con el id: " + id));
             country.setName(dto.getName());
-            return countryRepository.save(country);
+            countryRepository.save(country);
+            return countryMapper.toDto(country);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public CountryEntity delete(Long id) {
+    public CountryDto delete(Long id) {
         try {
             CountryEntity country = countryRepository.findById(id)
-                    .orElseThrow(() -> new CountryNotFoundException("No existe un pais con el id: " + id));
+                    .orElseThrow(() -> new CountryNotFoundException("No existe un país con el id: " + id));
             countryRepository.delete(country);
-            return country;
+            return countryMapper.toDto(country);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public CountryEntity toggleStatus(Long id) {
+    public CountryDto toggleStatus(Long id) {
         return null;
     }
 }

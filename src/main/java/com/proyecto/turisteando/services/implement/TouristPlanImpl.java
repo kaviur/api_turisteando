@@ -28,7 +28,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     private TouristPlanMapper touristPlanMapper;
 
     @Override
-    public Iterable<IDto> getAll() {
+    public Iterable<TouristPlanResponseDto> getAll() {
         Iterable<TouristPlanEntity> allTouristPlans = touristPlanRepository.findAll();
         return StreamSupport.stream(allTouristPlans.spliterator(), false)
                 .map(touristPlanMapper::toDto)
@@ -36,7 +36,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     }
 
     @Override
-    public Iterable<IDto> getAllByFilters(IDto iDto) {
+    public Iterable<TouristPlanResponseDto> getAllByFilters(TouristPlanRequestDto iDto) {
         List<TouristPlanEntity> allTouristPlans = touristPlanRepository.findAll();
         List<TouristPlanEntity> filteredTouristPlans = filterTouristPlans(allTouristPlans, (TouristPlanRequestDto) iDto);
         return filteredTouristPlans.stream()
@@ -45,7 +45,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     }
 
     @Override
-    public IDto read(Long id) {
+    public TouristPlanResponseDto read(Long id) {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
@@ -56,7 +56,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     }
 
     @Override
-    public IDto create(IDto dto) {
+    public TouristPlanResponseDto create(TouristPlanRequestDto dto) {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository
                     .save(touristPlanMapper.toEntity((TouristPlanRequestDto) dto));
@@ -67,7 +67,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     }
 
     @Override
-    public IDto update(IDto dto, Long id) {
+    public TouristPlanResponseDto update(TouristPlanRequestDto dto, Long id) {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
@@ -79,7 +79,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     }
 
     @Override
-    public IDto delete(Long id) {
+    public TouristPlanResponseDto delete(Long id) {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
@@ -92,7 +92,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     }
 
     @Override
-    public IDto toggleStatus(Long id) {
+    public TouristPlanResponseDto toggleStatus(Long id) {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
@@ -112,8 +112,8 @@ public class TouristPlanImpl implements ITouristPlanService {
                         touristPlan.getTitle().toLowerCase().contains(iDto.getTitle().toLowerCase()))
                 .filter(touristPlan -> iDto.getDescription() == null ||
                         touristPlan.getDescription().toLowerCase().contains(iDto.getDescription().toLowerCase()))
-                .filter(touristPlan -> iDto.getCity() == null ||
-                        touristPlan.getCity().toLowerCase().contains(iDto.getCity()))
+                .filter(touristPlan -> iDto.getCityId() == null ||
+                        touristPlan.getCity().getId().equals(iDto.getCityId()))
                 .filter(touristPlan -> iDto.getCapacity() == null ||
                         touristPlan.getCapacity().equals(iDto.getCapacity()))
                 .filter(touristPlan -> iDto.getPrice() == null ||

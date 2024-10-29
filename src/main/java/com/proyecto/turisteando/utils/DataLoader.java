@@ -1,7 +1,13 @@
 package com.proyecto.turisteando.utils;
 
+import com.proyecto.turisteando.dtos.CountryDto;
+import com.proyecto.turisteando.dtos.requestDto.CityRequestDto;
 import com.proyecto.turisteando.entities.CityEntity;
 import com.proyecto.turisteando.entities.CountryEntity;
+import com.proyecto.turisteando.mappers.CountryMapper;
+import com.proyecto.turisteando.repositories.CityRepository;
+import com.proyecto.turisteando.repositories.CountryRepository;
+import com.proyecto.turisteando.services.CrudService;
 import com.proyecto.turisteando.services.ICrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,28 +25,29 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
-    private ICrudService<CountryEntity, Long> countryService;
+    private CountryRepository countryRepository;
 
     @Autowired
-    private ICrudService<CityEntity, Long> cityService;
+    private CityRepository cityRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
-        List<CountryEntity> countries = (List<CountryEntity>) countryService.getAll();
+        List<CountryEntity> countries = countryRepository.findAll();
         CountryEntity country;
 
         if (countries.isEmpty()) {
             // Cargar datos de paises
-            CountryEntity country1 = CountryEntity.builder()
+            CountryEntity newCountry = CountryEntity.builder()
                     .name("Perú")
                     .build();
-            country = countryService.create(country1);
+
+            country = countryRepository.save(newCountry);
         } else {
             country = null;
         }
 
-        List<CityEntity> cities = (List<CityEntity>) cityService.getAll();
+        List<CityEntity> cities = cityRepository.findAll();
         if (cities.isEmpty()) {
             // Cargar datos de ciudades
             List<String> departamentos = Arrays.asList(
@@ -75,7 +82,7 @@ public class DataLoader implements CommandLineRunner {
                         .name(departamento)
                         .country(country)
                         .build();
-                cityService.create(city);
+                cityRepository.save(city);
             });
         }
     }

@@ -34,13 +34,17 @@ public class TouristPlanEntity {
 
     // Campos  para el plan turístico con relaciones de entidades pendientes
     private String seller;
-    private String city;
+
+    @ManyToOne()
+    @JoinColumn(name = "city_id", nullable = false)
+    private CityEntity city;
 
     @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
 
     @OneToMany(mappedBy = "idTouristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
     @JsonIgnoreProperties("idTouristPlan")
     private List<ImageEntity> image;
 

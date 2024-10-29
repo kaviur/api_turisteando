@@ -1,10 +1,12 @@
 package com.proyecto.turisteando.services.implement;
 
-import com.proyecto.turisteando.dtos.requestDto.CategoryDto;
+import com.proyecto.turisteando.dtos.IDto;
+import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
 import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CategoryNotFoundException;
 import com.proyecto.turisteando.mappers.CategoryMapper;
 import com.proyecto.turisteando.repositories.CategoryRepository;
+import com.proyecto.turisteando.services.ICategoryService;
 import com.proyecto.turisteando.services.ICrudService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,8 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 /**
@@ -27,7 +30,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
+public class CategoryServiceImpl implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -41,7 +44,7 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
      */
 
     @Override
-    public Iterable<CategoryDto> getAll() {
+    public Iterable<IDto> getAll() {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        boolean isAdmin = auth.getAuthorities().stream()
 //                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
@@ -52,11 +55,13 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
 //                    .toList();
 //        }
 
-        return categoryRepository.findByStatus((byte) 1).stream()
-                .map(categoryMapper::toDto)
-                .toList();
+        Iterable<CategoryEntity> categories = categoryRepository.findByStatus((byte) 1);
 
+        return StreamSupport.stream(categories.spliterator(), false)
+                .map(categoryMapper::toDto)
+                .collect(Collectors.toList());
     }
+
 
     /**
      * Retrieves a category by its ID.
@@ -65,7 +70,7 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
      * @return A DTO of the category if found, otherwise an exception is thrown.
      */
     @Override
-    public CategoryDto read(Long id) {
+    public IDto read(Long id) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        boolean isAdmin = auth.getAuthorities().stream()
 //                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
@@ -104,9 +109,11 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
      * @throws ServiceException If an error occurs during category creation.
      */
     @Override
-    public CategoryDto create(CategoryDto dto) {
+    public IDto create(IDto dto) {
+        CategoryRequestDto categoryDto = (CategoryRequestDto) dto;
+
         try {
-            CategoryEntity categoryEntity = categoryRepository.save(categoryMapper.toEntity(dto));
+            CategoryEntity categoryEntity = categoryRepository.save(categoryMapper.toEntity(categoryDto));
             return categoryMapper.toDto(categoryEntity);
         } catch (DataIntegrityViolationException e) {
             if (e.getMessage().contains("name")) {
@@ -132,11 +139,13 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
      * @throws ServiceException If the specified category is not found or an error occurs during category update.
      */
     @Override
-    public CategoryDto update(CategoryDto dto, Long id) {
+    public IDto update(IDto dto, Long id) {
+        CategoryRequestDto categoryDto = (CategoryRequestDto) dto;
+
         CategoryEntity category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("No se encontró la categoría"));
 
-        categoryMapper.partialUpdate(dto, category);
+        categoryMapper.partialUpdate(categoryDto, category);
         CategoryEntity updatedCategory = categoryRepository.save(category);
 
         return categoryMapper.toDto(updatedCategory);
@@ -153,7 +162,7 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
      * @return The DTO of the disabled category if found, or an exception otherwise.
      */
     @Override
-    public CategoryDto delete(Long id) {
+    public IDto delete(Long id) {
         CategoryEntity categoryEntity = categoryRepository.findByIdAndStatus(id, 1)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la categorá a eliminar"));
 
@@ -172,7 +181,7 @@ public class CategoryServiceImpl implements ICrudService<CategoryDto, Long> {
      * @return The DTO of the category with the updated status.
      */
     @Override
-    public CategoryDto toggleStatus(Long id) {
+    public IDto toggleStatus(Long id) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la categoría"));
 

@@ -25,6 +25,10 @@ public interface TouristPlanMapper {
     List<TouristPlanResponseDto> toDtoList(List<TouristPlanEntity> touristPlanEntityList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mappings({
+            @Mapping(target = "city", source = "cityId"),
+            @Mapping(target = "category", source = "categoryId")
+    })
     TouristPlanEntity partialUpdate(TouristPlanRequestDto touristPlanRequestDto, @MappingTarget TouristPlanEntity touristPlanEntity1);
 
     default CategoryEntity getCategoryById(Long categoryId, @Context CategoryServiceImpl categoryService) {

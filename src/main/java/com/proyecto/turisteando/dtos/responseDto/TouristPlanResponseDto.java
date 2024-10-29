@@ -1,7 +1,9 @@
 package com.proyecto.turisteando.dtos.responseDto;
 
 import com.proyecto.turisteando.dtos.IDto;
-import com.proyecto.turisteando.dtos.requestDto.CategoryDto;
+import com.proyecto.turisteando.entities.CityEntity;
+import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +20,9 @@ public class TouristPlanResponseDto implements IDto {
 
     // Campos  para el plan turístico con relaciones de entidades pendientes
     private String seller;
-    private String city;
 
-    private CategoryDto category;
+    private CityEntity city;
+    private CategoryRequestDto category;
     private LocalDate availabilityStartDate;
     private LocalDate availabilityEndDate;
     private int capacity;

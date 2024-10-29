@@ -28,9 +28,13 @@ public class TouristPlanRequestDto implements IDto {
 
     // Campos  para el plan turístico con relaciones de entidades pendientes
     private String seller;
-    private String city;
+
+    @NotNull(message = "La ciudad no puede estar vacía")
+    @Positive(message = "El id de la ciudad debe ser mayor a cero")
+    private Long cityId;
 
     @NotNull(message = "La categoría no puede estar vacía")
+    @Positive(message = "El id de la categoría debe ser mayor a cero")
     private Long categoryId;
 
 

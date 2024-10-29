@@ -12,6 +12,7 @@ import com.proyecto.turisteando.repositories.ImageRepository;
 
 import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.ICrudService;
+import com.proyecto.turisteando.services.IImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 
-public class ImageServiceImpl implements ICrudService<IDto, Long> {
+public class ImageServiceImpl implements IImageService {
 
 
     private final ImageRepository imageRepository;
@@ -56,14 +57,17 @@ public class ImageServiceImpl implements ICrudService<IDto, Long> {
 
     @Override
     public IDto create(IDto dto) {
+        ImageRequestDto imageRequestDto = (ImageRequestDto) dto;
         try {
-            TouristPlanEntity touristPlanEntity = touristPlanRepository.findById(dto.getTouristPlanId())
-                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan Turístico con ese id" + dto.getTouristPlanId()));
-        ImageEntity imageEntity = new ImageEntity();
-        imageEntity.setImageUrl(dto.getImageUrl());
-        imageEntity.setIdTouristPlan(touristPlanEntity);
-
-        imageRepository.save(imageEntity);
+            TouristPlanEntity touristPlanEntity = touristPlanRepository.findById(imageRequestDto.getTouristPlanId())
+                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan Turístico con ese id" + imageRequestDto.getTouristPlanId()));
+//        ImageEntity imageEntity = new ImageEntity();
+//        imageEntity.setImageUrl(imageEntity.getImageUrl());
+//        imageEntity.setIdTouristPlan(touristPlanEntity);
+//
+             ImageEntity imageEntity = imageMapper.toEntity(imageRequestDto);
+             imageEntity.setIdTouristPlan(touristPlanEntity);
+             imageRepository.save(imageEntity);
 
         return imageMapper.toDto(imageEntity);
 

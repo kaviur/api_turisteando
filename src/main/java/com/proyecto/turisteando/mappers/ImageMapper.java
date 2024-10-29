@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.mappers;
 
 import com.proyecto.turisteando.dtos.requestDto.ImageRequestDto;
+import com.proyecto.turisteando.dtos.responseDto.ImageResponseDto;
 import com.proyecto.turisteando.entities.ImageEntity;
 import org.mapstruct.*;
 
@@ -8,7 +9,7 @@ import org.mapstruct.*;
 public interface ImageMapper {
     ImageEntity toEntity(ImageRequestDto imageRequestDto);
 
-    ImageRequestDto toDto(ImageEntity imageEntity);
+    ImageResponseDto toDto(ImageEntity imageEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     ImageEntity partialUpdate(ImageRequestDto imageRequestDto, @MappingTarget ImageEntity imageEntity);

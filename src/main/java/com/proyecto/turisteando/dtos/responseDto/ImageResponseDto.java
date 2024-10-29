@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class ImageResponseDto implements IDto, Serializable {
     private Long id;
     private String imageUrl;
-     private TouristPlanRequestDto touristPlanRequestDto;
+
 
 }

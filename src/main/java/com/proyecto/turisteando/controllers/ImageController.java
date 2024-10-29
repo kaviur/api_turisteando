@@ -1,46 +1,47 @@
 package com.proyecto.turisteando.controllers;
 
-import com.proyecto.turisteando.entities.ImageEntity;
-import com.proyecto.turisteando.services.ICrudService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.proyecto.turisteando.dtos.requestDto.ImageRequestDto;
+
+import com.proyecto.turisteando.services.IImageService;
+import com.proyecto.turisteando.utils.Response;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/image")
+@RequiredArgsConstructor
 public class ImageController {
 
-    @Autowired
-    private ICrudService <ImageEntity, Long> imageService;
+   private final IImageService imageService;
 
     @PostMapping("/create")
 
-    public ImageEntity createImage(@RequestBody ImageEntity image) {
-        return imageService.create(image);
+    public ResponseEntity<Response> createImage(@Valid @RequestBody ImageRequestDto imageRequestDto) {
+        Response response = new Response(true, HttpStatus.CREATED,  imageService.create(imageRequestDto));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-
-    @GetMapping("/id")
-    public ImageEntity getImage(@PathVariable Long id) {
-        return imageService.read(id);
-    }
-
-    @GetMapping("/all")
-    public Iterable<ImageEntity> getAllImages() {
-        return imageService.getAll();
-    }
 
     @PutMapping("/update/{id}")
-    public ImageEntity updateImage(@RequestBody ImageEntity imageEntity, @PathVariable Long id) {
-        return imageService.update(imageEntity, id);
+    public ResponseEntity<Response> updateImage(
+            @RequestBody ImageRequestDto imageRequestDto,
+            @PathVariable Long id) {
+
+        Response response = new Response(true,HttpStatus.OK, imageService.update(imageRequestDto, id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ImageEntity deleteTouristPlan(@PathVariable Long id) {
-        return imageService.delete(id);
+    public ResponseEntity<Response> deleteTouristPlan(
+            @PathVariable Long id) {
+
+        Response response = new Response(true, HttpStatus.OK, imageService.delete(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/toggle-status/{id}")
-    public ImageEntity toggleImageStatus(@PathVariable Long id) {
-        return imageService.toggleStatus(id);
-    }
+
 }

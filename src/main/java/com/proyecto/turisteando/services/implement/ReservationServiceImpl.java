@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.requestDto.ReservationDto;
+import com.proyecto.turisteando.dtos.responseDto.ReservationResponseDto;
 import com.proyecto.turisteando.entities.ReservationEntity;
 import com.proyecto.turisteando.mappers.ReservationMapper;
 import com.proyecto.turisteando.repositories.ReservationRepository;

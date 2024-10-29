@@ -1,7 +1,9 @@
 package com.proyecto.turisteando.controllers;
 
 
-import com.proyecto.turisteando.dtos.requestDto.CategoryDto;
+import com.proyecto.turisteando.dtos.IDto;
+import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
+import com.proyecto.turisteando.services.ICategoryService;
 import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
@@ -20,13 +22,13 @@ import java.util.stream.StreamSupport;
 @Validated
 public class CategoryController {
 
-    private final ICrudService<CategoryDto, Long> categoryService;
+    private final ICategoryService categoryService;
 
     //get all categories
     @GetMapping("/all")
     public ResponseEntity<Response> getAllCategories() {
-        Iterable<CategoryDto> categoryIterable = categoryService.getAll();
-        List<CategoryDto> categoryList = StreamSupport.stream(categoryIterable.spliterator(), false)
+        Iterable<IDto> categoryIterable = categoryService.getAll();
+        List<IDto> categoryList = StreamSupport.stream(categoryIterable.spliterator(), false)
                 .toList();
 
         Response response = new Response(true, HttpStatus.OK, categoryList);
@@ -43,14 +45,14 @@ public class CategoryController {
 
     //create category
     @PostMapping("/create")
-    public ResponseEntity<Response> createCategory(@RequestBody @Valid CategoryDto categoryDto) {
+    public ResponseEntity<Response> createCategory(@Valid @RequestBody CategoryRequestDto categoryDto) {
         Response response = new Response(true, HttpStatus.OK, categoryService.create(categoryDto));
         return ResponseEntity.ok(response);
     }
 
     //update category
     @PutMapping("/update/{id}")
-    public ResponseEntity<Response> updateCategory(@PathVariable Long id, @RequestBody @Valid CategoryDto categoryDto) {
+    public ResponseEntity<Response> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryRequestDto categoryDto) {
         Response response = new Response(true, HttpStatus.OK, categoryService.update(categoryDto, id));
         return ResponseEntity.ok(response);
     }
@@ -64,7 +66,7 @@ public class CategoryController {
 
     @PatchMapping("/toggle-status/{id}")
     public ResponseEntity<Response> toggleStatus(@PathVariable Long id) {
-        CategoryDto categoryDto = categoryService.toggleStatus(id);
+        IDto categoryDto = categoryService.toggleStatus(id);
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, categoryDto));
     }
 

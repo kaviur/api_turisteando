@@ -1,7 +1,6 @@
 package com.proyecto.turisteando.mappers;
 
 import com.proyecto.turisteando.dtos.CountryDto;
-import com.proyecto.turisteando.dtos.requestDto.CountryRequestDto;
 import com.proyecto.turisteando.entities.CountryEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

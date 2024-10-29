@@ -1,13 +1,11 @@
 package com.proyecto.turisteando.services.implement;
 
-import com.proyecto.turisteando.dtos.IDto;
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
 import com.proyecto.turisteando.mappers.TouristPlanMapper;
 import com.proyecto.turisteando.repositories.TouristPlanRepository;
-import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.services.ITouristPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Service

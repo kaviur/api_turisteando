@@ -1,14 +1,9 @@
 package com.proyecto.turisteando.utils;
 
-import com.proyecto.turisteando.dtos.CountryDto;
-import com.proyecto.turisteando.dtos.requestDto.CityRequestDto;
 import com.proyecto.turisteando.entities.CityEntity;
 import com.proyecto.turisteando.entities.CountryEntity;
-import com.proyecto.turisteando.mappers.CountryMapper;
 import com.proyecto.turisteando.repositories.CityRepository;
 import com.proyecto.turisteando.repositories.CountryRepository;
-import com.proyecto.turisteando.services.CrudService;
-import com.proyecto.turisteando.services.ICrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

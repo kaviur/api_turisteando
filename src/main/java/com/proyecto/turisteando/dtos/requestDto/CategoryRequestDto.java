@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Value
 @AllArgsConstructor
-public class CategoryDto implements Serializable, IDto {
+public class CategoryRequestDto implements Serializable, IDto {
     @NotNull
     @NotEmpty(message = "El nombre de la categoría no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre de la categoría debe tener entre 3 y 50 caracteres")

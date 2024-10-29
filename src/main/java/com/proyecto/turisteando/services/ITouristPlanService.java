@@ -1,9 +1,10 @@
 package com.proyecto.turisteando.services;
 
-import com.proyecto.turisteando.dtos.IDto;
+import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
+import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 
-public interface ITouristPlanService extends ICrudService<IDto, Long> {
+public interface ITouristPlanService extends CrudService<TouristPlanRequestDto, TouristPlanResponseDto, Long> {
 
-    Iterable<IDto> getAllByFilters(IDto iDto);
+    Iterable<TouristPlanResponseDto> getAllByFilters(TouristPlanRequestDto dto);
 
 }

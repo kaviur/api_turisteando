@@ -44,6 +44,7 @@ public class TouristPlanEntity {
     private CategoryEntity category;
 
     @OneToMany(mappedBy = "idTouristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
     @JsonIgnoreProperties("idTouristPlan")
     private List<ImageEntity> image;
 

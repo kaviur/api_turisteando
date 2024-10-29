@@ -6,6 +6,7 @@ import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CategoryNotFoundException;
 import com.proyecto.turisteando.mappers.CategoryMapper;
 import com.proyecto.turisteando.repositories.CategoryRepository;
+import com.proyecto.turisteando.services.ICategoryService;
 import com.proyecto.turisteando.services.ICrudService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
@@ -28,7 +30,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CategoryServiceImpl implements ICrudService<IDto, Long> {
+public class CategoryServiceImpl implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -57,7 +59,7 @@ public class CategoryServiceImpl implements ICrudService<IDto, Long> {
 
         return StreamSupport.stream(categories.spliterator(), false)
                 .map(categoryMapper::toDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 

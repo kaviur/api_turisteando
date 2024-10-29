@@ -21,6 +21,8 @@ public class ImageEntity {
     @Id()
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(length = 255)
     private String imageUrl;
 
     // Campo de conexión con  para el plan turístico con relaciones pendientes

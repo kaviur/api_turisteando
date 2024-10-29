@@ -2,7 +2,6 @@ package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.services.ICrudService;
-import com.proyecto.turisteando.services.implement.ImageImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

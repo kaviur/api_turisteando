@@ -1,6 +1,9 @@
 package com.proyecto.turisteando.dtos.requestDto;
 
 import com.proyecto.turisteando.dtos.IDto;
+import com.proyecto.turisteando.entities.CategoryEntity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +32,7 @@ public class TouristPlanRequestDto implements IDto {
 
     @NotNull(message = "La categoría no puede estar vacía")
     private Long categoryId;
+
 
     @NotNull(message = "La fecha de inicio de disponibilidad no puede estar vacía")
     @FutureOrPresent(message = "La fecha de inicio de disponibilidad debe ser una fecha futura o presente")

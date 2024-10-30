@@ -17,7 +17,7 @@ package com.proyecto.turisteando.entities;
 @Table(name = "reservation")
 public class ReservationEntity {
     @Id()
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reservation")
     private Long id;
 
@@ -37,6 +37,9 @@ public class ReservationEntity {
 
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
+
+    //@Column(name = "people_count", nullable = false)
+    //private int peopleCount;
 
     @PrePersist
     protected void onCreate() {

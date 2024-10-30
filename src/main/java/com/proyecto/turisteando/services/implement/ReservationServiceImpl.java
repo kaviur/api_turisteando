@@ -1,23 +1,17 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.requestDto.ReservationRequestDto;
-import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReservationResponseDto;
-import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ReservationEntity;
-import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.ReservationNotFoundException;
-import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
 import com.proyecto.turisteando.mappers.ReservationMapper;
 import com.proyecto.turisteando.repositories.ReservationRepository;
-import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.services.IReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

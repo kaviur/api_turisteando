@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,6 +24,7 @@ public class TouristPlanResponseDto implements IDto {
 
     private CityEntity city;
     private CategoryRequestDto category;
+    private List<ImageResponseDto> images;
     private LocalDate availabilityStartDate;
     private LocalDate availabilityEndDate;
     private int capacity;

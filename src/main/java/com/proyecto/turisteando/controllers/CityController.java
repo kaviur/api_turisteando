@@ -6,6 +6,7 @@ import com.proyecto.turisteando.entities.CityEntity;
 import com.proyecto.turisteando.services.CrudService;
 import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.utils.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class CityController {
     private CrudService<CityRequestDto, CityResponseDto, Long> cityService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response> create(CityRequestDto city) {
+    public ResponseEntity<Response> create(@Valid @RequestBody CityRequestDto city) {
         Response response = new Response(true, HttpStatus.CREATED, cityService.create(city));
         return ResponseEntity.ok(response);
     }

@@ -1,12 +1,13 @@
 package com.proyecto.turisteando.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+        import jakarta.persistence.*;
+        import lombok.AllArgsConstructor;
+        import lombok.Builder;
+        import lombok.Data;
+        import lombok.NoArgsConstructor;
+        import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+        import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -20,16 +21,11 @@ public class ReservationEntity {
     @Column(name = "id_reservation")
     private Long id;
 
-    // Relación con la entidad User
-    //@ManyToOne
-    //@JoinColumn(name = "id_user", referencedColumnName = "id_user", nullable = false)
-   //private User user;
+    //@ManyToOne()
+    //@JoinColumn(name = "id_plan", nullable = false)
+    //private TouristPlanEntity touristPlan;
 
-    // Relación con la entidad TouristPlan
-    //@ManyToOne
-    //@JoinColumn(name = "id_plan", referencedColumnName = "id_plan", nullable = false)
-    //private TouristPlan plan;
-
+    @CreationTimestamp()
     @Column(name = "reservation_date", nullable = false)
     private LocalDateTime reservationDate;
 
@@ -41,4 +37,9 @@ public class ReservationEntity {
 
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
+
+    @PrePersist
+    protected void onCreate() {
+        this.reservationDate = LocalDateTime.now();
+    }
 }

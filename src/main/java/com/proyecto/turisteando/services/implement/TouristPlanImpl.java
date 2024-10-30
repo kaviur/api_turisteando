@@ -56,7 +56,7 @@ public class TouristPlanImpl implements ITouristPlanService {
     public TouristPlanResponseDto create(TouristPlanRequestDto dto) {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository
-                    .save(touristPlanMapper.toEntity((TouristPlanRequestDto) dto));
+                    .save(touristPlanMapper.toEntity(dto));
             return touristPlanMapper.toDto(touristPlan);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -68,7 +68,7 @@ public class TouristPlanImpl implements ITouristPlanService {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
-            touristPlanMapper.partialUpdate((TouristPlanRequestDto) dto, touristPlan);
+            touristPlanMapper.partialUpdate(dto, touristPlan);
             return touristPlanMapper.toDto(touristPlanRepository.save(touristPlan));
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

@@ -11,7 +11,8 @@ import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = {CategoryMapper.class, CategoryServiceImpl.class, CityMapper.class, CityServiceImpl.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring",
+        uses = {CategoryMapper.class, CategoryServiceImpl.class, CityMapper.class, CityServiceImpl.class, ImageMapper.class})
 public interface TouristPlanMapper {
 
     @Mappings({

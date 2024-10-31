@@ -43,7 +43,7 @@ public class TouristPlanEntity {
     @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
-
+  
     @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("touristPlan")
     @Size(min = 1, max = 5, message = "Debe haber entre 1 y 5 imágenes")

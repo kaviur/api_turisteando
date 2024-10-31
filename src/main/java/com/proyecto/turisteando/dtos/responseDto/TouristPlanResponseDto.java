@@ -22,8 +22,8 @@ public class TouristPlanResponseDto implements IDto {
     // Campos  para el plan turístico con relaciones de entidades pendientes
     private String seller;
 
-    private CityEntity city;
-    private CategoryRequestDto category;
+    private CityResponseDto city;
+    private CategoryResponseDto category;
     private List<String> images;
     private LocalDate availabilityStartDate;
     private LocalDate availabilityEndDate;

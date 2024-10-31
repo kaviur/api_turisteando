@@ -48,6 +48,19 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(List.of(RESOURCE_NOT_FOUND + ex.getMessage()), ex, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(FileValidationException.class)
+    public ResponseEntity<Object> handleFileValidationException(FileValidationException ex) {
+        log.error("Error de validación de archivo: {}", ex.getMessage(), ex);
+        return buildErrorResponse(List.of(VALIDATION_ERROR + ": " + ex.getMessage()), ex, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<Object> handleFileUploadException(FileUploadException ex) {
+        log.error("Error de carga de archivo: {}", ex.getMessage(), ex);
+        return buildErrorResponse(List.of(ex.getMessage()), ex, HttpStatus.BAD_REQUEST);
+    }
+
+
 //    @ExceptionHandler({
 //            LockedException.class,
 //            DisabledException.class,

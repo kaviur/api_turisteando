@@ -2,14 +2,19 @@ package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
+import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.exceptions.customExceptions.FileValidationException;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
 import com.proyecto.turisteando.mappers.TouristPlanMapper;
 import com.proyecto.turisteando.repositories.TouristPlanRepository;
+import com.proyecto.turisteando.services.FileUploadService;
 import com.proyecto.turisteando.services.ITouristPlanService;
+import com.proyecto.turisteando.utils.FileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -23,6 +28,12 @@ public class TouristPlanImpl implements ITouristPlanService {
 
     @Autowired
     private TouristPlanMapper touristPlanMapper;
+
+    @Autowired
+    private FileValidator fileValidator;
+
+    @Autowired
+    private FileUploadService fileUploadService;
 
     @Override
     public Iterable<TouristPlanResponseDto> getAll() {
@@ -52,15 +63,39 @@ public class TouristPlanImpl implements ITouristPlanService {
         }
     }
 
+//    @Override
+//    public TouristPlanResponseDto create(TouristPlanRequestDto dto) {
+//        try {
+//            TouristPlanEntity touristPlan = touristPlanRepository
+//                    .save(touristPlanMapper.toEntity((TouristPlanRequestDto) dto));
+//            return touristPlanMapper.toDto(touristPlan);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+
     @Override
     public TouristPlanResponseDto create(TouristPlanRequestDto dto) {
-        try {
-            TouristPlanEntity touristPlan = touristPlanRepository
-                    .save(touristPlanMapper.toEntity((TouristPlanRequestDto) dto));
-            return touristPlanMapper.toDto(touristPlan);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+
+        fileValidator.validateFiles(dto.getMultipartImages()); // Valida las imagénes y lanza una excepción de tipo FileValidationException si hay un error
+
+        // Guarda las imágenes y obtiene las URLs
+        List<String> imageUrls = fileUploadService.saveImage(dto.getMultipartImages()); // Guarda las imágenes y lanza una excepción de tipo FileUploadException si hay un error
+        dto.setImages(imageUrls); // Añade las URLs al DTO como strings antes de mapear la entidad
+
+        // Mapea el DTO a la entidad
+        TouristPlanEntity touristPlanEntity = touristPlanMapper.toEntity(dto);
+
+        // Crear las entidades de imagen y agregarlas a la entidad del plan turístico
+        List<ImageEntity> imageEntities = imageUrls.stream()
+                .map(url -> new ImageEntity(url, touristPlanEntity))
+                .collect(Collectors.toList());
+
+        touristPlanEntity.setImages(imageEntities);
+
+        TouristPlanEntity savedTouristPlan = touristPlanRepository.save(touristPlanEntity);
+
+        return touristPlanMapper.toDto(savedTouristPlan);
     }
 
     @Override

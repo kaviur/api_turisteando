@@ -4,7 +4,6 @@ import com.proyecto.turisteando.dtos.IDto;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Value

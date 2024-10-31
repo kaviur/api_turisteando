@@ -94,7 +94,6 @@ public class ReservationServiceImpl implements IReservationService {
         try {
             ReservationEntity reservation = reservationRepository.findById(id)
                     .orElseThrow(() -> new ReservationNotFoundException("No existe una reserva con el id: " + id));
-            // Alternar el estado entre Confirmed y Cancelled
             reservation.setStatus(!reservation.isStatus());
             ReservationEntity updatedReservation = reservationRepository.save(reservation);
             return reservationMapper.toDto(updatedReservation);

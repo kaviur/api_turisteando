@@ -2,6 +2,7 @@ package com.proyecto.turisteando.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,9 +43,10 @@ public class TouristPlanEntity {
     @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
-
-    @OneToMany(mappedBy = "idTouristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("idTouristPlan")
+  
+    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("touristPlan")
+    @Size(min = 1, max = 5, message = "Debe haber entre 1 y 5 imágenes")
     private List<ImageEntity> images;
 
     private LocalDate availabilityStartDate;

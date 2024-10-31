@@ -28,7 +28,7 @@ public class ImageEntity {
     // Campo de conexión con  para el plan turístico con relaciones pendientes
     @ManyToOne()
     @JoinColumn(name = "tourist_plan_id", nullable = false)
-    private TouristPlanEntity idTouristPlan; //Conexión con la tabla Tourist_Plan
+    private TouristPlanEntity touristPlan; //Conexión con la tabla Tourist_Plan
 
     @CreationTimestamp()
     @Column(updatable = false)
@@ -37,4 +37,7 @@ public class ImageEntity {
     @UpdateTimestamp()
     @Column(insertable = false)
     private LocalDateTime updatedAt;
+
+    public ImageEntity(String url, TouristPlanEntity touristPlanEntity) {
+    }
 }

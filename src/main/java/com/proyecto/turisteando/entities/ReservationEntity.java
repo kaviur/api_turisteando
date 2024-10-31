@@ -21,16 +21,16 @@ public class ReservationEntity {
     @Column(name = "id_reservation")
     private Long id;
 
-    //@ManyToOne()
-    //@JoinColumn(name = "id_plan", nullable = false)
-    //private TouristPlanEntity touristPlan;
+    @ManyToOne()
+    @JoinColumn(name = "id_plan", nullable = false)
+    private TouristPlanEntity touristPlan;
 
     @CreationTimestamp()
-    @Column(name = "reservation_date", nullable = false)
-    private LocalDateTime reservationDate;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt; //antes reservationDate
 
     @Column(name = "status", nullable = false)
-    private String status; // Confirmed, Pending, Cancelled
+    private boolean status; // true para activo, false para inactivo
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
@@ -38,11 +38,9 @@ public class ReservationEntity {
     @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    //@Column(name = "people_count", nullable = false)
-    //private int peopleCount;
+    @Column(name = "people_count", nullable = false)
+    private int peopleCount;
 
     @PrePersist
-    protected void onCreate() {
-        this.reservationDate = LocalDateTime.now();
-    }
+    protected void onCreate() { this.status = true; }
 }

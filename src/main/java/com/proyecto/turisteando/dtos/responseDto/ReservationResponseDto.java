@@ -12,11 +12,10 @@ import java.time.LocalDateTime;
 public class ReservationResponseDto implements IDto {
 
     private Long id;
-    private LocalDateTime reservationDate;
-    private String status;
+    private LocalDateTime createdAt;
+    private boolean status;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    //private int peopleCount;
-
-    //private Long touristPlanId;
+    private int peopleCount;
+    private Long touristPlanId;
 }

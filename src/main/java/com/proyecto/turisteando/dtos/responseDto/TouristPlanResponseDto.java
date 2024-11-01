@@ -24,7 +24,7 @@ public class TouristPlanResponseDto implements IDto {
 
     private CityResponseDto city;
     private CategoryResponseDto category;
-    private List<String> images;
+    private List<ImageResponseDto> images;
     private LocalDate availabilityStartDate;
     private LocalDate availabilityEndDate;
     private int capacity;

@@ -61,12 +61,9 @@ public class ImageServiceImpl implements IImageService {
         try {
             TouristPlanEntity touristPlanEntity = touristPlanRepository.findById(imageRequestDto.getTouristPlanId())
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan Turístico con ese id" + imageRequestDto.getTouristPlanId()));
-//        ImageEntity imageEntity = new ImageEntity();
-//        imageEntity.setImageUrl(imageEntity.getImageUrl());
-//        imageEntity.setIdTouristPlan(touristPlanEntity);
-//
+
              ImageEntity imageEntity = imageMapper.toEntity(imageRequestDto);
-             imageEntity.setIdTouristPlan(touristPlanEntity);
+             imageEntity.setTouristPlan(touristPlanEntity);
              imageRepository.save(imageEntity);
 
         return imageMapper.toDto(imageEntity);

@@ -4,7 +4,7 @@ import com.proyecto.turisteando.dtos.IDto;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
-import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Value
@@ -12,11 +12,10 @@ import java.time.LocalDateTime;
 public class ReservationResponseDto implements IDto {
 
     private Long id;
-    private LocalDateTime reservationDate;
-    private String status;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    //private int peopleCount;
-
-    //private Long touristPlanId;
+    private LocalDateTime createdAt;
+    private boolean status;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private int peopleCount;
+    private Long touristPlanId;
 }

@@ -1,15 +1,18 @@
 package com.proyecto.turisteando.controllers;
 
-import com.proyecto.turisteando.dtos.IDto;
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.services.ITouristPlanService;
 import com.proyecto.turisteando.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/tourist-plans")
@@ -18,10 +21,15 @@ public class TouristPlanController {
     @Autowired
     private ITouristPlanService touristPlanService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Response> createTouristPlan(@Validated @RequestBody TouristPlanRequestDto touristPlan) {
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Response> createTouristPlan(
+            @Validated @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
+            @RequestPart("images") List<MultipartFile> images) {
+
+        touristPlan.setMultipartImages(images); // Añadir las imágenes al DTO manualmente
         TouristPlanResponseDto newTouristPlan = touristPlanService.create(touristPlan);
         Response response = new Response(true, HttpStatus.CREATED, newTouristPlan);
+
         return ResponseEntity.ok(response);
     }
 

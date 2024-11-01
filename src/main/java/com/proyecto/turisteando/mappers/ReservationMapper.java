@@ -11,6 +11,8 @@ import org.mapstruct.*;
 
 public interface ReservationMapper {
     ReservationEntity toEntity(ReservationRequestDto reservationRequestDto);
+
+    @Mapping(target = "touristPlanId", source = "touristPlan.id")
     ReservationResponseDto toDto(ReservationEntity reservationEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

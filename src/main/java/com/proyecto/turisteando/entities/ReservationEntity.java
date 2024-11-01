@@ -7,6 +7,7 @@ package com.proyecto.turisteando.entities;
         import lombok.NoArgsConstructor;
         import org.hibernate.annotations.CreationTimestamp;
 
+        import java.time.LocalDate;
         import java.time.LocalDateTime;
 
 @Entity
@@ -33,10 +34,10 @@ public class ReservationEntity {
     private boolean status; // true para activo, false para inactivo
 
     @Column(name = "start_date", nullable = false)
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @Column(name = "people_count", nullable = false)
     private int peopleCount;

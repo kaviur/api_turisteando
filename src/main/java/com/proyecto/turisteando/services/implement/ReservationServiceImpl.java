@@ -15,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -52,6 +55,11 @@ public class ReservationServiceImpl implements IReservationService {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(dto.getTouristPlanId())
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + dto.getTouristPlanId()));
+                // Validar que las fechas de la reserva estén dentro del rango de disponibilidad del plan turístico
+                if (dto.getStartDate().isBefore(touristPlan.getAvailabilityStartDate()) ||
+                    dto.getEndDate().isAfter(touristPlan.getAvailabilityEndDate()) ) {
+                throw new ReservationNotFoundException("La fecha de la reserva debe estar entre las fechas de disponibilidad del plan turístico y la fecha de inicio no puede ser después de la fecha de fin.");
+            }
 
             ReservationEntity reservationEntity = reservationMapper.toEntity(dto);
             reservationEntity.setTouristPlan(touristPlan);
@@ -68,7 +76,6 @@ public class ReservationServiceImpl implements IReservationService {
         try{
         ReservationEntity reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new ReservationNotFoundException("No existe una reserva con el id: " + id));
-        // Actualizar campos de la entidad
         reservationMapper.partialUpdate(dto, reservation);
         return reservationMapper.toDto(reservationRepository.save(reservation));
         } catch (Exception e) {
@@ -101,5 +108,31 @@ public class ReservationServiceImpl implements IReservationService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public Iterable<ReservationResponseDto> getReservationsByTouristPlan(Long touristPlanId) {
+        List<ReservationEntity> reservations = reservationRepository.findByTouristPlanId(touristPlanId);
+        if (reservations.isEmpty()) {
+            throw new ReservationNotFoundException("No se encontraron reservas para el plan turístico con ID: " + touristPlanId);
+        }
+        return reservations.stream()
+                .map(reservationMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Iterable<ReservationResponseDto> findByStartDateBetween(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new ReservationNotFoundException("La fecha de inicio no puede ser posterior a la fecha de fin.");
+        }
+        List<ReservationEntity> reservations = reservationRepository.findByStartDateBetween(startDate, endDate);
+        if (reservations.isEmpty()) {
+            throw new ReservationNotFoundException("No se encontraron reservas en el rango de fechas especificado.");
+        }
+        return reservations.stream()
+                .map(reservationMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 
 }

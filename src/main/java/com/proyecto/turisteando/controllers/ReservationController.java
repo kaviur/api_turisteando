@@ -7,12 +7,16 @@ import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
@@ -39,6 +43,26 @@ public class ReservationController {
     @GetMapping("/{id}")
     public ResponseEntity<Response> getReservationById(@PathVariable Long id) {
         Response response = new Response(true, HttpStatus.OK, reservationService.read(id));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/tourist-plan/{touristPlanId}")
+    public ResponseEntity<Response> getReservationsByTouristPlan(@PathVariable Long touristPlanId) {
+        List<ReservationResponseDto> reservations = (List<ReservationResponseDto>) reservationService.getReservationsByTouristPlan(touristPlanId);
+
+        if (reservations.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(false, HttpStatus.NOT_FOUND, "No reservations found for the given tourist plan ID"));
+        }
+        Response response = new Response(true, HttpStatus.OK, reservations);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search-by-date")
+    public ResponseEntity<Response> getReservationsByDateRange(
+            @RequestParam("start") LocalDate startDate,
+            @RequestParam("end") LocalDate endDate) {
+        Iterable<ReservationResponseDto> reservations = reservationService.findByStartDateBetween(startDate, endDate);
+        Response response = new Response(true, HttpStatus.OK, reservations);
         return ResponseEntity.ok(response);
     }
 

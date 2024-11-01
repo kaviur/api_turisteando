@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,19 +15,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "image")
-
 public class ImageEntity {
+
     @Id()
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 255)
     private String imageUrl;
 
-    // Campo de conexión con  para el plan turístico con relaciones pendientes
     @ManyToOne()
     @JoinColumn(name = "tourist_plan_id", nullable = false)
-    private TouristPlanEntity touristPlan; //Conexión con la tabla Tourist_Plan
+    private TouristPlanEntity touristPlan;
 
     @CreationTimestamp()
     @Column(updatable = false)
@@ -38,6 +36,4 @@ public class ImageEntity {
     @Column(insertable = false)
     private LocalDateTime updatedAt;
 
-    public ImageEntity(String url, TouristPlanEntity touristPlanEntity) {
-    }
 }

@@ -4,8 +4,6 @@ import com.proyecto.turisteando.dtos.IDto;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -40,7 +38,7 @@ public class TouristPlanRequestDto implements IDto {
 
     private List<MultipartFile> multipartImages;
 
-    private List<String> images;
+    private List<String> imagesUrl;
 
     @NotNull(message = "La fecha de inicio de disponibilidad no puede estar vacía")
     @FutureOrPresent(message = "La fecha de inicio de disponibilidad debe ser una fecha futura o presente")

@@ -38,7 +38,7 @@ public class ReviewController {
     }
 
     @GetMapping("/plan/{idPlan}")
-    public ResponseEntity<Iterable<ReviewResponseDto>> getAllReviewsByPlan(Long idPlan) {
+    public ResponseEntity<Iterable<ReviewResponseDto>> getAllReviewsByPlan(@PathVariable Long idPlan) {
         Iterable<ReviewResponseDto> reviews = reviewService.getAllByPlan(idPlan);
         List<ReviewResponseDto> reviewList = StreamSupport.stream(reviews.spliterator(), false)
                 .toList();
@@ -46,7 +46,7 @@ public class ReviewController {
     }
 
     @GetMapping("/rating/{idPlan}/{rating}")
-    public ResponseEntity<Iterable<ReviewResponseDto>> getAllReviewsByRating(Long idPlan, int rating) {
+    public ResponseEntity<Iterable<ReviewResponseDto>> getAllReviewsByRating(@PathVariable Long idPlan, @PathVariable int rating) {
         Iterable<ReviewResponseDto> reviews = reviewService.getAllByRating(idPlan, rating);
         List<ReviewResponseDto> reviewList = StreamSupport.stream(reviews.spliterator(), false)
                 .toList();
@@ -54,7 +54,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReviewResponseDto> getReviewById(Long id) {
+    public ResponseEntity<ReviewResponseDto> getReviewById(@PathVariable Long id) {
         return ResponseEntity.ok(reviewService.read(id));
     }
 }

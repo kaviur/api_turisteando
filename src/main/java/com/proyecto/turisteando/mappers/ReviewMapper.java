@@ -12,6 +12,7 @@ public interface ReviewMapper {
 
     ReviewRequestDto toRequestDto(ReviewEntity review);
 
+    @Mapping(source = "id", target = "idReview")
     ReviewResponseDto toResponseDto(ReviewEntity review);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

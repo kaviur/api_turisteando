@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long>{
     List<ReviewEntity> findByTouristPlanIdAndStatus(Long idPlan, int status);
-    List<ReviewEntity> findByRatingAndTouristPlanId(int rating, Long idPlan);
+    List<ReviewEntity> findByRatingAndTouristPlanIdAndStatus(int rating, Long idPlan, int status);
     List<ReviewEntity> findByRating(int rating);
 
 

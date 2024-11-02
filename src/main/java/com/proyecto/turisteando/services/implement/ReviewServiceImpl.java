@@ -29,7 +29,9 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Override
     public ReviewResponseDto read(Long id) {
-        return null;
+        ReviewEntity reviewEntity = reviewRepository.findById(id)
+                .orElseThrow(() -> new ServiceException("Review not found"));
+        return reviewMapper.toResponseDto(reviewEntity);
     }
 
     @Override
@@ -83,7 +85,7 @@ public class ReviewServiceImpl implements IReviewService {
     public Iterable<ReviewResponseDto> getAllByRating(Long idPlan, int rating) {
         TouristPlanEntity plan = touristPlanRepository.findById(idPlan)
                 .orElseThrow(() -> new ServiceException("Tourist plan not found"));
-        return reviewRepository.findByRatingAndTouristPlanId(rating, idPlan)
+        return reviewRepository.findByRatingAndTouristPlanIdAndStatus(rating, idPlan,1)
                 .stream().map(reviewMapper::toResponseDto)
                 .toList();
 

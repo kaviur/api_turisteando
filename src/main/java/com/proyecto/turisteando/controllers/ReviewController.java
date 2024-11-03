@@ -6,6 +6,9 @@ import com.proyecto.turisteando.services.IReviewService;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +78,26 @@ public class ReviewController {
                 true,
                 HttpStatus.OK,
                 reviewList
+        ));
+    }
+
+    @GetMapping("/plan/{idPlan}/reviews")
+    public ResponseEntity<Response> getAllReviewsByPlanPage(
+            @PageableDefault(page =0, size = 2, sort = "id") Pageable pageable,
+            @PathVariable Long idPlan) {
+
+        Page<ReviewResponseDto> reviews = reviewService.getAllByPlanP(idPlan, pageable);
+        if (reviews.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
+                    false,
+                    HttpStatus.NOT_FOUND,
+                    "No reviews found for the given plan ID"
+            ));
+        }
+        return ResponseEntity.ok(new Response(
+                true,
+                HttpStatus.OK,
+                reviews
         ));
     }
 

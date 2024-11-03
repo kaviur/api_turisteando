@@ -13,6 +13,8 @@ import com.proyecto.turisteando.services.IReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -93,5 +95,14 @@ public class ReviewServiceImpl implements IReviewService {
                 .stream().map(reviewMapper::toResponseDto)
                 .toList();
 
+    }
+
+    @Override
+    public Page<ReviewResponseDto> getAllByPlanP(Long idPlan, Pageable pageable) {
+        TouristPlanEntity plan = touristPlanRepository.findById(idPlan)
+                .orElseThrow(() -> new TouristPlanNotFoundException("Tourist plan with id " + idPlan + " not found"));
+        Page<ReviewEntity> reviews = reviewRepository.findByTouristPlanIdAndStatus(idPlan, 1, pageable);
+
+        return reviews.map(reviewMapper::toResponseDto);
     }
 }

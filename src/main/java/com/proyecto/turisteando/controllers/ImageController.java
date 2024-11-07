@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/image")
+@RequestMapping("/api/images")
 @RequiredArgsConstructor
 public class ImageController {
 

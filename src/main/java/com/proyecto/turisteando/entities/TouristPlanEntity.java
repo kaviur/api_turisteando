@@ -26,9 +26,11 @@ public class TouristPlanEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 100, unique = true, nullable = false)
+    @Size(min = 3, max = 100, message = "El título debe tener entre 3 y 100 caracteres")
     private String title;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String description;
 
     private Double price;

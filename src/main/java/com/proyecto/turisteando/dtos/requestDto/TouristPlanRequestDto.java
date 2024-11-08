@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.dtos.requestDto;
 
 import com.proyecto.turisteando.dtos.IDto;
+import com.proyecto.turisteando.entities.CharacteristicsEntity;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class TouristPlanRequestDto implements IDto {
 
     @Size(min = 10, max = 500, message = "La descripción debe tener entre 10 y 500 caracteres")
     @NotBlank(message = "La descripción no puede estar vacía")
-    private String description;
+    private String descriptgiion;
 
     @NotNull(message = "El precio no puede estar vacío")
     @PositiveOrZero(message = "El precio debe ser igual o mayor a cero")
@@ -55,9 +56,7 @@ public class TouristPlanRequestDto implements IDto {
     @NotEmpty(message = "La duración no puede estar vacía")
     private String duration;
 
-    private Boolean foodIncluded;
-    private Boolean wifiIncluded;
-    private Boolean petsFriendly;
-    private Boolean disabilityAccess;
+    @NotEmpty(message = "Las características no pueden estar vacías")
+    private List<CharacteristicsEntity> characteristic;
 
 }

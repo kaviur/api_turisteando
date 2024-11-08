@@ -1,0 +1,41 @@
+package com.proyecto.turisteando.entities;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "characteristics")
+public class CharacteristicsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    @NotEmpty(message = "El nombre de la caracterìstica no puede estar vacía")
+    private String name;
+
+
+    @Column(nullable = false) // it has no effect, but it is good to have it for clarity
+    private Byte status;
+
+    private String icon;
+
+    @ManyToMany(mappedBy = "characteristic")
+    private List<TouristPlanEntity> touristPlan;
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.status = 1;
+    }
+}

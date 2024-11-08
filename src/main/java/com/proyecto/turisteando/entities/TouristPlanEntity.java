@@ -55,10 +55,19 @@ public class TouristPlanEntity {
     private LocalDate availabilityEndDate;
     private Integer capacity;
     private String duration; // Duración del plan turístico (por ejemplo, "3 días" o "1 noche")
-    private boolean foodIncluded;
+
+    @ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "touristPlan_characteristic", joinColumns = @JoinColumn (name = "touristPlan_id", referencedColumnName = "id"),
+            inverseJoinColumns =  @JoinColumn(name = "characteristic_touristPlan", referencedColumnName = "id")
+    )
+    private List<CharacteristicsEntity> characteristic;
+
+    /*private boolean foodIncluded;
     private boolean wifiIncluded;
     private boolean petsFriendly;
-    private boolean disabilityAccess;
+    private boolean disabilityAccess;*/
+
     private boolean isActive;
 
     @CreationTimestamp()

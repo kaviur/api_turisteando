@@ -19,12 +19,10 @@ public class ImageController {
    private final IImageService imageService;
 
     @PostMapping("/create")
-
     public ResponseEntity<Response> createImage(@Valid @RequestBody ImageRequestDto imageRequestDto) {
         Response response = new Response(true, HttpStatus.CREATED,  imageService.create(imageRequestDto));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Response> updateImage(
@@ -42,6 +40,5 @@ public class ImageController {
         Response response = new Response(true, HttpStatus.OK, imageService.delete(id));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
 }

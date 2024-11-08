@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.stream.StreamSupport;
 public class ReviewController {
     private final IReviewService reviewService;
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('BUYER')")
     @PostMapping("/create")
     public ResponseEntity<Response> createReview(@RequestBody @Valid ReviewRequestDto reviewDto) {
         Response response = new Response(
@@ -32,6 +34,7 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('BUYER')")
     @PutMapping("/update/{id}")
     public ResponseEntity<Response> updateReview(@PathVariable Long id, @RequestBody @Valid ReviewRequestDto reviewDto) {
         Response response = new Response(
@@ -42,6 +45,7 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('BUYER')")
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Response> deleteReview(@PathVariable Long id) {
         reviewService.delete(id);
@@ -52,6 +56,7 @@ public class ReviewController {
         ));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/disable/{id}")
     public ResponseEntity<Response> disableReview(@PathVariable Long id) {
         ReviewResponseDto updatedReviewResponseDto = reviewService.toggleStatus(id);

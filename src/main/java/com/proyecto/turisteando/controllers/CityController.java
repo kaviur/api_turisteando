@@ -2,9 +2,7 @@ package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.dtos.requestDto.CityRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.CityResponseDto;
-import com.proyecto.turisteando.entities.CityEntity;
 import com.proyecto.turisteando.services.CrudService;
-import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

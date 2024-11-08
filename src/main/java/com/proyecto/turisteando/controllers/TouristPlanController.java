@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ public class TouristPlanController {
     @Autowired
     private ITouristPlanService touristPlanService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> createTouristPlan(
             @Validated @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
@@ -63,6 +65,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<Response> updateTouristPlan(@RequestBody TouristPlanRequestDto touristPlan, @PathVariable Long id) {
         TouristPlanResponseDto updatedTouristPlan = touristPlanService.update(touristPlan, id);
@@ -70,6 +73,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> deleteTouristPlan(@PathVariable Long id) {
         TouristPlanResponseDto deletedTouristPlan = touristPlanService.delete(id);
@@ -77,6 +81,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/toggle-status/{id}")
     public ResponseEntity<Response> toggleTouristPlanStatus(@PathVariable Long id) {
         TouristPlanResponseDto toggledTouristPlan = touristPlanService.toggleStatus(id);

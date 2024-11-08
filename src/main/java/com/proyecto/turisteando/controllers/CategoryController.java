@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +31,7 @@ public class CategoryController {
         Iterable<IDto> categoryIterable = categoryService.getAll();
         List<IDto> categoryList = StreamSupport.stream(categoryIterable.spliterator(), false)
                 .toList();
-
         Response response = new Response(true, HttpStatus.OK, categoryList);
-
         return ResponseEntity.ok(response);
     }
 
@@ -43,14 +42,16 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
 
-    //create category
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<Response> createCategory(@Valid @RequestBody CategoryRequestDto categoryDto) {
         Response response = new Response(true, HttpStatus.OK, categoryService.create(categoryDto));
         return ResponseEntity.ok(response);
     }
 
+    //create category
     //update category
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<Response> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryRequestDto categoryDto) {
         Response response = new Response(true, HttpStatus.OK, categoryService.update(categoryDto, id));
@@ -58,12 +59,14 @@ public class CategoryController {
     }
 
     //delete category
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Response> deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, "Categoría eliminada exitosamente"));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/toggle-status/{id}")
     public ResponseEntity<Response> toggleStatus(@PathVariable Long id) {
         IDto categoryDto = categoryService.toggleStatus(id);

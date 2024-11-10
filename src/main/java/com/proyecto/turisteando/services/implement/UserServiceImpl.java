@@ -7,6 +7,7 @@ import com.proyecto.turisteando.mappers.IUserMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
 import com.proyecto.turisteando.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -88,6 +89,17 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public Iterable<UserResponseDto> getAllByFilters(UserRequestDto dto) {
         List<UserEntity> userEntities = userRepository.findAll();
         return userMapper.toDtoList(filterUsers(userEntities, dto));
+    }
+
+    @Override
+    public UserResponseDto getCurrentUser(Authentication authentication) {
+        UserEntity  userEntity = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        try {
+            return userMapper.toDto(userEntity);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

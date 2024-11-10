@@ -7,6 +7,7 @@ import com.proyecto.turisteando.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +42,11 @@ public class UserController {
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userService.read(id)));
     }
 
+    @GetMapping("/current-user")
+    public ResponseEntity<Response> getCurrentUser(Authentication authentication) {
+        return ResponseEntity.ok(new Response(true, HttpStatus.OK, userService.getCurrentUser(authentication)));
+    }
+
     @PatchMapping("/update/{id}")
     public ResponseEntity<Response> updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userService.update(userRequestDto, id);
@@ -57,6 +63,5 @@ public class UserController {
     public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userService.delete(id)));
     }
-
 
 }

@@ -42,7 +42,7 @@ public class ReviewController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> deleteReview(@PathVariable Long id) {
         reviewService.delete(id);
         return ResponseEntity.ok(new Response(
@@ -92,6 +92,25 @@ public class ReviewController {
                     false,
                     HttpStatus.NOT_FOUND,
                     "No reviews found for the given plan ID"
+            ));
+        }
+        return ResponseEntity.ok(new Response(
+                true,
+                HttpStatus.OK,
+                reviews
+        ));
+    }
+
+    @GetMapping("/user/{idUser}")
+    public ResponseEntity<Response> getAllReviewsByUser(
+            @PageableDefault(page = 0, size = 10, sort = "id") Pageable pageable,
+            @PathVariable Long idUser) {
+        Page<ReviewResponseDto> reviews = reviewService.getAllByUser(idUser, pageable);
+        if (reviews.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
+                    false,
+                    HttpStatus.NOT_FOUND,
+                    "No reviews found for the given user ID"
             ));
         }
         return ResponseEntity.ok(new Response(

@@ -41,7 +41,8 @@ public class GlobalExceptionHandler {
             CityNotFoundException.class,
             CountryNotFoundException.class,
             ImageNotFoundException.class,
-            ReservationNotFoundException.class
+            ReservationNotFoundException.class,
+            ReviewNotFoundException.class
     })
 
     public ResponseEntity<Object> handleNotFoundException(Exception ex) {

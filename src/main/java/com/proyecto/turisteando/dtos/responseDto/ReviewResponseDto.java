@@ -12,7 +12,6 @@ import java.util.Date;
 public class ReviewResponseDto implements Serializable, IDto {
 
     Long idReview;
-    String user;
     int rating;
     Date date;
     String comment;

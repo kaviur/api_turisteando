@@ -24,7 +24,7 @@ public class FileValidator {
             throw new FileValidationException("El número máximo de imágenes permitidas es 5");
         }
 
-        // Validar que los archivos sean imágenes y que no superen los 3 MB
+        // Validar que los archivos sean imágenes y que no superen los 10 MB
         for (MultipartFile file : files) {
             if (!isImage(file)) {
                 throw new FileValidationException("El archivo " + file.getOriginalFilename() + " no es una imagen");

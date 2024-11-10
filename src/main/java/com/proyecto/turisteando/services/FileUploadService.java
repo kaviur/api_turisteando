@@ -11,6 +11,6 @@ public interface FileUploadService {
 
     List<String> saveImage(List<MultipartFile> multipartFiles) throws FileUploadException;
     List<String> uploadImage(List<MultipartFile> multipartFiles) throws FileUploadException;
-    List<String> updateImage(List<String> existingImages, List<MultipartFile> newImages) throws FileUploadException;
+    List<String> updateImage(List<String> existingImages, List<String> imagesToDelete, List<MultipartFile> newImages) throws FileUploadException;
 
 }

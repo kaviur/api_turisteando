@@ -51,17 +51,25 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Override
-    public List<String> updateImage(List<String> existingImages, List<MultipartFile> newImages) throws FileUploadException {
+    public List<String> updateImage(List<String> imagesToKeep, List<String> imagesToDelete, List<MultipartFile> newImages) throws FileUploadException {
         Cloudinary cloudinary = cloudinaryConfig.configuration();
 
-        if (!existingImages.isEmpty()) {
-            deleteExistingImages(existingImages, cloudinary);
+        // Elimina solo las imágenes especificadas en imagesToDelete
+        if (!imagesToDelete.isEmpty()) {
+            deleteExistingImages(imagesToDelete, cloudinary);
         }
 
-        return (newImages.isEmpty()) ? Collections.emptyList() : saveImage(newImages);
+        // Subir las nuevas imágenes y obtener las URLs
+        List<String> uploadedImages = newImages.isEmpty() ? Collections.emptyList() : saveImage(newImages);
+
+        // Combina las imágenes a conservar y las nuevas en la lista final
+        List<String> finalImages = new ArrayList<>(imagesToKeep);
+        finalImages.addAll(uploadedImages);
+
+        return finalImages;  // Devuelve todas las imágenes activas después de la actualización
     }
 
-    // Auxiliar method to get upload parameters
+    // Método auxiliar para obtener los parámetros de subida
     private Map<String, Object> getUploadParams() {
         return ObjectUtils.asMap(
                 "use_filename", true,
@@ -71,14 +79,22 @@ public class FileUploadServiceImpl implements FileUploadService {
         );
     }
 
-    // Método auxiliar para eliminar imágenes existentes
-    private void deleteExistingImages(List<String> existingImages, Cloudinary cloudinary) throws FileUploadException {
-        for (String image : existingImages) {
+    // Método auxiliar para eliminar imágenes especificadas
+    private void deleteExistingImages(List<String> imagesToDelete, Cloudinary cloudinary) throws FileUploadException {
+        for (String imageUrl : imagesToDelete) {
             try {
-                cloudinary.uploader().destroy(image, ObjectUtils.emptyMap());
+                // Extrae el public_id desde la URL de la imagen
+                String publicId = extractPublicId(imageUrl);
+                cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
             } catch (IOException ex) {
-                throw new FileUploadException("Error al eliminar la imagen existente: " + image, ex);
+                throw new FileUploadException("Error al eliminar la imagen existente: " + imageUrl, ex);
             }
         }
+    }
+
+    // Método auxiliar para extraer el public_id desde la URL de la imagen
+    private String extractPublicId(String imageUrl) {
+        // Lógica para extraer el public_id del URL (por ejemplo, usando un regex)
+        return imageUrl.substring(imageUrl.lastIndexOf('/') + 1, imageUrl.lastIndexOf('.'));
     }
 }

@@ -36,7 +36,11 @@ public class TouristPlanRequestDto implements IDto {
     @Positive(message = "El id de la categoría debe ser mayor a cero")
     private Long categoryId;
 
+    @Size(max = 5, message = "El total de imágenes no puede exceder 5.")
     private List<MultipartFile> multipartImages;
+
+    // URLs de imágenes para eliminar
+    private List<String> imagesToDelete;
 
     private List<String> imagesUrl;
 

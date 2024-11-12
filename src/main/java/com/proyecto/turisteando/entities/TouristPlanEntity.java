@@ -45,8 +45,9 @@ public class TouristPlanEntity {
     @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
+
   
-    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("touristPlan")
     @Size(min = 1, max = 5, message = "Debe haber entre 1 y 5 imágenes")
     private List<ImageEntity> images;
@@ -54,14 +55,14 @@ public class TouristPlanEntity {
     private LocalDate availabilityStartDate;
     private LocalDate availabilityEndDate;
     private Integer capacity;
-    private String duration; // Duración del plan turístico (por ejemplo, "3 días" o "1 noche")
+    private String duration; // Duración del plan turistico (por ejemplo, "3 días" o "1 noche")
 
-    @ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany
     @JoinTable(
-            name = "touristPlan_characteristic", joinColumns = @JoinColumn (name = "touristPlan_id", referencedColumnName = "id"),
-            inverseJoinColumns =  @JoinColumn(name = "characteristic_touristPlan", referencedColumnName = "id")
-    )
-    private List<CharacteristicsEntity> characteristic;
+            name = "tourist_plan_characteristic",
+            joinColumns = @JoinColumn(name = "tourist_plan_id"),
+            inverseJoinColumns =  @JoinColumn(name = "characteristic_id"))
+    private List<CharacteristicEntity> characteristic;
 
     /*private boolean foodIncluded;
     private boolean wifiIncluded;

@@ -1,8 +1,8 @@
+
 package com.proyecto.turisteando.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "characteristics")
-public class CharacteristicsEntity {
+@Table(name = "characteristic")
+public class CharacteristicEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -28,6 +29,7 @@ public class CharacteristicsEntity {
     @Column(nullable = false) // it has no effect, but it is good to have it for clarity
     private Byte status;
 
+
     private String icon;
 
     @ManyToMany(mappedBy = "characteristic")
@@ -39,3 +41,4 @@ public class CharacteristicsEntity {
         this.status = 1;
     }
 }
+

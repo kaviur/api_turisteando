@@ -163,14 +163,6 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
                         touristPlan.getAvailabilityEndDate().isEqual(iDto.getAvailabilityStartDate()))
                 .filter(touristPlan -> iDto.getAvailabilityEndDate() == null ||
                         touristPlan.getAvailabilityEndDate().isEqual(iDto.getAvailabilityEndDate()))
-                .filter(touristPlan -> iDto.getDisabilityAccess() == null ||
-                        touristPlan.isDisabilityAccess() == iDto.getDisabilityAccess())
-                .filter(touristPlan -> iDto.getPetsFriendly() == null ||
-                        touristPlan.isPetsFriendly() == iDto.getPetsFriendly())
-                .filter(touristPlan -> iDto.getFoodIncluded() == null ||
-                        touristPlan.isFoodIncluded() == iDto.getFoodIncluded())
-                .filter(touristPlan -> iDto.getWifiIncluded() == null ||
-                        touristPlan.isWifiIncluded() == iDto.getWifiIncluded())
                 .toList();
     }
 

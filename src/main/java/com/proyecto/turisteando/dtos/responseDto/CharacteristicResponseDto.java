@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Value
 @AllArgsConstructor
-public class CharacteristicsResponseDto implements IDto, Serializable {
+public class CharacteristicResponseDto implements IDto, Serializable {
     Long id;
     String name;
     String icon;

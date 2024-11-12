@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
     private static final String VALIDATION_ERROR = "Verifica los campos ingresados.";
 
     @ExceptionHandler({
+            CharacteristicNotFoundException.class,
             CategoryNotFoundException.class,
             NoResourceFoundException.class,
             EntityNotFoundException.class,

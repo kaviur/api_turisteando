@@ -18,10 +18,9 @@ public class ReviewEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Cambiar tipo de dato a UsuarioEntity
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "id_user", nullable = false)
-    private Long user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @ManyToOne()
     @JoinColumn(name = "tourist_plan_id", nullable = false)

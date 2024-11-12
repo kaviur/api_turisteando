@@ -4,9 +4,11 @@ import com.proyecto.turisteando.dtos.requestDto.ReviewRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReviewResponseDto;
 import com.proyecto.turisteando.entities.ReviewEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.ReviewNotFoundException;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
 import com.proyecto.turisteando.mappers.ReviewMapper;
+import com.proyecto.turisteando.repositories.IUserRepository;
 import com.proyecto.turisteando.repositories.ReviewRepository;
 import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.IReviewService;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class ReviewServiceImpl implements IReviewService {
     private final ReviewRepository reviewRepository;
     private final TouristPlanRepository touristPlanRepository;
+    private final IUserRepository userRepository;
     private final ReviewMapper reviewMapper;
 
 
@@ -43,9 +46,11 @@ public class ReviewServiceImpl implements IReviewService {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(reviewRequestDto.getPlanId())
                     .orElseThrow(() -> new TouristPlanNotFoundException("Tourist plan with id " + reviewRequestDto.getPlanId() + " not found"));
+            UserEntity user = userRepository.findById(reviewRequestDto.getIdUser())
+                    .orElseThrow(() -> new ReviewNotFoundException("User with id " + reviewRequestDto.getIdUser() + " not found"));
             ReviewEntity reviewEntity = reviewMapper.toEntity(reviewRequestDto);
             reviewEntity.setTouristPlan(touristPlan);
-            reviewEntity.setUser(reviewRequestDto.getIdUser());
+            reviewEntity.setUser(user);
             return reviewMapper.toResponseDto(reviewRepository.save(reviewEntity));
         } catch (Exception e) {
             throw new ServiceException("Error creating review entity " + e.getMessage());
@@ -102,6 +107,15 @@ public class ReviewServiceImpl implements IReviewService {
         TouristPlanEntity plan = touristPlanRepository.findById(idPlan)
                 .orElseThrow(() -> new TouristPlanNotFoundException("Tourist plan with id " + idPlan + " not found"));
         Page<ReviewEntity> reviews = reviewRepository.findByTouristPlanIdAndStatus(idPlan, 1, pageable);
+
+        return reviews.map(reviewMapper::toResponseDto);
+    }
+
+    @Override
+    public Page<ReviewResponseDto> getAllByUser(Long idUser, Pageable pageable) {
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new ReviewNotFoundException("User with id " + idUser + " not found"));
+        Page<ReviewEntity> reviews = reviewRepository.findByUserIdAndStatus(idUser, 1, pageable);
 
         return reviews.map(reviewMapper::toResponseDto);
     }

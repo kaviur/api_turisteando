@@ -7,8 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface IReviewService extends CrudService<ReviewRequestDto, ReviewResponseDto, Long>{
     Iterable<ReviewResponseDto> getAllByPlan(Long idPlan);
-
     Iterable<ReviewResponseDto> getAllByRating(Long idPlan, int rating);
-
     Page<ReviewResponseDto> getAllByPlanP(Long idPlan, Pageable pageable);
+
+    Page<ReviewResponseDto> getAllByUser(Long idUser, Pageable pageable);
+
 }

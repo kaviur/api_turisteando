@@ -23,4 +23,6 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
      * @return An Optional containing the CategoryEntity if found, otherwise an empty Optional.
      */
     Optional<CategoryEntity> findByIdAndStatus(Long id, int i);
+
+    CategoryEntity findByName(String name);
 }

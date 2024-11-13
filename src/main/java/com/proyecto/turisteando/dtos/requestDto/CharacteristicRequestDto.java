@@ -12,8 +12,9 @@ import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
+
 public class CharacteristicRequestDto implements Serializable, IDto {
-    @NotNull
+
     @NotEmpty(message = "El nombre de la característica no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre de la característica debe tener entre 3 y 50 caracteres")
     String name;

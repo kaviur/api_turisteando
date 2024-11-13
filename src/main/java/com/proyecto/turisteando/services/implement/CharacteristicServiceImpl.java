@@ -1,11 +1,16 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.IDto;
+import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
 import com.proyecto.turisteando.dtos.requestDto.CharacteristicRequestDto;
+
+import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.entities.CharacteristicEntity;
+import com.proyecto.turisteando.exceptions.customExceptions.CharacteristicNotFoundException;
 import com.proyecto.turisteando.mappers.CharacteristicMapper;
 import com.proyecto.turisteando.repositories.CharacteristicRepository;
 import com.proyecto.turisteando.services.ICharacteristicService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
@@ -83,16 +88,40 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
 
     @Override
     public IDto update(IDto dto, Long id) {
-        return null;
+        CharacteristicRequestDto characteristicDto = (CharacteristicRequestDto) dto;
+
+        CharacteristicEntity characteristic =  characteristicRepository.findById(id)
+                .orElseThrow(() -> new CharacteristicNotFoundException("No se encontró la característica"));
+
+        characteristicMapper.partialUpdate(characteristicDto, characteristic);
+        CharacteristicEntity updatedCharacteristic =  characteristicRepository.save(characteristic);
+
+        return  characteristicMapper.toDto(updatedCharacteristic);
     }
+
+
+
 
     @Override
     public IDto delete(Long id) {
-        return null;
+        CharacteristicEntity characteristicEntity = characteristicRepository.findByIdAndStatus(id, 1)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la característica a eliminar"));
+
+        characteristicEntity.setStatus((byte) 0);
+        characteristicRepository.save(characteristicEntity);
+
+        return characteristicMapper.toDto(characteristicEntity);
     }
 
     @Override
     public IDto toggleStatus(Long id) {
-        return null;
+        CharacteristicEntity characteristicEntity  = characteristicRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la característica"));
+
+        byte newStatus = (characteristicEntity.getStatus() == 1) ? (byte) 0 : (byte) 1;
+        characteristicEntity.setStatus(newStatus);
+
+        characteristicRepository.save(characteristicEntity);
+        return characteristicMapper.toDto(characteristicEntity);
     }
 }

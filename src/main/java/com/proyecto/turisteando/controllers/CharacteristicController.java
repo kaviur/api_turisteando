@@ -57,7 +57,7 @@ public class CharacteristicController {
 
     //update  characteristic
     @PutMapping("/update/{id}")
-    public ResponseEntity<Response> updateCharacteristic(@PathVariable Long id, @Valid @RequestBody  CharacteristicRequestDto characteristicDto) {
+    public ResponseEntity<Response> updateCharacteristic(@PathVariable Long id, @RequestBody  CharacteristicRequestDto characteristicDto) {
         Response response = new Response(true, HttpStatus.OK, characteristicService.update(characteristicDto, id));
         return ResponseEntity.ok(response);
     }

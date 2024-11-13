@@ -64,11 +64,6 @@ public class TouristPlanEntity {
             inverseJoinColumns =  @JoinColumn(name = "characteristic_id"))
     private List<CharacteristicEntity> characteristic;
 
-    /*private boolean foodIncluded;
-    private boolean wifiIncluded;
-    private boolean petsFriendly;
-    private boolean disabilityAccess;*/
-
     private boolean isActive;
 
     @CreationTimestamp()

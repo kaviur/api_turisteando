@@ -33,6 +33,9 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private ImageRepository imageRepository;
 
+    @Autowired
+    private CharacteristicRepository characteristicRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -80,13 +83,13 @@ public class DataLoader implements CommandLineRunner {
                     "Tumbes",
                     "Ucayali"
             );
-            departamentos.forEach(departamento -> {
-                CityEntity city = CityEntity.builder()
-                        .name(departamento)
-                        .country(country)
-                        .build();
-                cityRepository.save(city);
-            });
+            List<CityEntity> cities = departamentos.stream().map(
+                            departamento -> CityEntity.builder()
+                                    .name(departamento)
+                                    .country(country)
+                                    .build())
+                    .toList();
+            cityRepository.saveAll(cities);
         }
 
         // Cargar categorías (si no existen)
@@ -98,6 +101,32 @@ public class DataLoader implements CommandLineRunner {
             ));
         }
 
+        // Crear caracteristicas
+        List<CharacteristicEntity> characteristicsListEntities = characteristicRepository.findAll();
+        if (characteristicsListEntities.isEmpty()) {
+            List<String> characteristics = Arrays.asList(
+                    "Caminata",
+                    "Tren",
+                    "Hotel",
+                    "Comida incluida",
+                    "Wifi incluido",
+                    "Piscina",
+                    "Parque",
+                    "Accesibilidad",
+                    "Pets Friendly",
+                    "Niños"
+            );
+            List<CharacteristicEntity> newCharacteristicsList = characteristics.stream().map(
+                    characteristic -> CharacteristicEntity.builder()
+                            .name(characteristic)
+                            .status((byte) 1)
+                            .icon("https://example.com/images/" + characteristic.toLowerCase().replace(" ", "-") + ".jpg")
+                            .build()
+            ).toList();
+            characteristicRepository.saveAll(newCharacteristicsList);
+        }
+
+        List<CharacteristicEntity> characteristicsList = characteristicRepository.findAll();
         List<CityEntity> cities = cityRepository.findAll();
 
         List<TouristPlanEntity> plans = touristPlanRepository.findAll();
@@ -117,10 +146,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("3 días")
-                    .foodIncluded(true)
-                    .wifiIncluded(true)
-                    .petsFriendly(false)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour1);
@@ -143,10 +174,11 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
-                    .foodIncluded(false)
-                    .wifiIncluded(true)
-                    .petsFriendly(false)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour2);
@@ -170,10 +202,13 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
-                    .foodIncluded(true)
-                    .wifiIncluded(true)
-                    .petsFriendly(false)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(7),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour3);
@@ -197,10 +232,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
-                    .foodIncluded(true)
-                    .wifiIncluded(true)
-                    .petsFriendly(false)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour4);
@@ -223,10 +260,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
-                    .foodIncluded(true)
-                    .wifiIncluded(true)
-                    .petsFriendly(false)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour5);
@@ -249,10 +288,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("2 días")
-                    .foodIncluded(true)
-                    .wifiIncluded(true)
-                    .petsFriendly(false)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour6);
@@ -275,10 +316,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 día")
-                    .foodIncluded(false)
-                    .wifiIncluded(false)
-                    .petsFriendly(true)
-                    .disabilityAccess(false)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(activity1);
@@ -301,10 +344,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("2 día")
-                    .foodIncluded(true)
-                    .wifiIncluded(false)
-                    .petsFriendly(false)
-                    .disabilityAccess(false)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(activity2);
@@ -327,10 +372,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 día")
-                    .foodIncluded(false)
-                    .wifiIncluded(false)
-                    .petsFriendly(true)
-                    .disabilityAccess(false)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(activity3);
@@ -353,10 +400,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 día")
-                    .foodIncluded(true)
-                    .wifiIncluded(true)
-                    .petsFriendly(true)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(activity4);
@@ -379,10 +428,12 @@ public class DataLoader implements CommandLineRunner {
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 día")
-                    .foodIncluded(true)
-                    .wifiIncluded(false)
-                    .petsFriendly(true)
-                    .disabilityAccess(true)
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
             touristPlanRepository.save(activity5);

@@ -18,4 +18,5 @@ public class ReservationResponseDto implements IDto {
     private LocalDate endDate;
     private int peopleCount;
     private Long touristPlanId;
+    private Long userId;
 }

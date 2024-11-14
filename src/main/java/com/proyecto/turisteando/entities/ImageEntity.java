@@ -26,7 +26,7 @@ public class ImageEntity {
     private String imageUrl;
 
     @ManyToOne()
-    @JoinColumn(name = "tourist_plan_id", nullable = false)
+    @JoinColumn(name = "tourist_plan_id", nullable = true)
     @JsonBackReference  // Evita la recursión en el lado "secundario"
     private TouristPlanEntity touristPlan;
 

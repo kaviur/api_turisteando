@@ -1,5 +1,7 @@
 package com.proyecto.turisteando.entities;
 
+        import com.fasterxml.jackson.annotation.JsonBackReference;
+        import com.fasterxml.jackson.annotation.JsonIgnore;
         import jakarta.persistence.*;
         import lombok.AllArgsConstructor;
         import lombok.Builder;
@@ -25,6 +27,11 @@ public class ReservationEntity {
     @ManyToOne()
     @JoinColumn(name = "id_plan", nullable = false)
     private TouristPlanEntity touristPlan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private UserEntity user;
 
     @CreationTimestamp()
     @Column(name = "created_at", nullable = false, updatable = false)

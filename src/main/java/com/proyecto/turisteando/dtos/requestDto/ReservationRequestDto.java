@@ -17,6 +17,9 @@ public class ReservationRequestDto implements IDto {
     @NotNull(message = "El ID del plan turístico no puede estar vacío")
     private Long touristPlanId;
 
+    @NotNull(message = "El ID del usuario no puede estar vacío")
+    private Long userId;
+
     @NotNull(message = "El estado de la reserva no puede estar vacío")
     private boolean status;
 

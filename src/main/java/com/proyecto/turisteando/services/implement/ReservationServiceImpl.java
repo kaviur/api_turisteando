@@ -4,9 +4,11 @@ import com.proyecto.turisteando.dtos.requestDto.ReservationRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReservationResponseDto;
 import com.proyecto.turisteando.entities.ReservationEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.ReservationNotFoundException;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
 import com.proyecto.turisteando.mappers.ReservationMapper;
+import com.proyecto.turisteando.repositories.IUserRepository;
 import com.proyecto.turisteando.repositories.ReservationRepository;
 import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.IReservationService;
@@ -35,6 +37,9 @@ public class ReservationServiceImpl implements IReservationService {
     @Autowired
     private TouristPlanRepository touristPlanRepository;
 
+    @Autowired
+    private IUserRepository userRepository;
+
     @Override
     public Iterable<ReservationResponseDto> getAll() {
         Iterable<ReservationEntity> allReservations = reservationRepository.findAll();
@@ -61,8 +66,15 @@ public class ReservationServiceImpl implements IReservationService {
                 throw new ReservationNotFoundException("La fecha de la reserva debe estar entre las fechas de disponibilidad del plan turístico y la fecha de inicio no puede ser después de la fecha de fin.");
             }
 
+            UserEntity user = userRepository.findById(dto.getUserId())
+                    .orElseThrow(() -> new ReservationNotFoundException("No existe un usuario con el id: " + dto.getUserId()));
+
+            System.out.println(user.toString());
+
             ReservationEntity reservationEntity = reservationMapper.toEntity(dto);
             reservationEntity.setTouristPlan(touristPlan);
+            reservationEntity.setUser(user);
+
 
             ReservationEntity savedReservation = reservationRepository.save(reservationEntity);
             return reservationMapper.toDto(savedReservation);
@@ -128,6 +140,17 @@ public class ReservationServiceImpl implements IReservationService {
         List<ReservationEntity> reservations = reservationRepository.findByStartDateBetween(startDate, endDate);
         if (reservations.isEmpty()) {
             throw new ReservationNotFoundException("No se encontraron reservas en el rango de fechas especificado.");
+        }
+        return reservations.stream()
+                .map(reservationMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Iterable<ReservationResponseDto> findByUserIdAndStatus(Long userId, boolean status) {
+        List<ReservationEntity> reservations = reservationRepository.findByUserIdAndStatus(userId, status);
+        if (reservations.isEmpty()) {
+            throw new ReservationNotFoundException("No se encontraron reservas para el usuario con ID: " + userId);
         }
         return reservations.stream()
                 .map(reservationMapper::toDto)

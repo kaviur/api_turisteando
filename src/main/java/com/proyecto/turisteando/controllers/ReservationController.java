@@ -66,6 +66,14 @@ public class ReservationController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/search-by-user")
+    public ResponseEntity<Response> getReservationsByUserAndStatus(
+            @RequestParam("userId") Long userId) {
+        Iterable<ReservationResponseDto> reservations = reservationService.findByUserIdAndStatus(userId, true);
+        Response response = new Response(true, HttpStatus.OK, reservations);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Response> createReservation(@RequestBody @Valid ReservationRequestDto reservationRequestDto) {
         Response response = new Response(true, HttpStatus.OK, reservationService.create(reservationRequestDto));

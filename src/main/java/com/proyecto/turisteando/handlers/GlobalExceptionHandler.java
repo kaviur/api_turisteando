@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
     private static final String VALIDATION_ERROR = "Verifica los campos ingresados.";
 
     @ExceptionHandler({
+            CharacteristicNotFoundException.class,
             CategoryNotFoundException.class,
             NoResourceFoundException.class,
             EntityNotFoundException.class,
@@ -41,7 +42,8 @@ public class GlobalExceptionHandler {
             CityNotFoundException.class,
             CountryNotFoundException.class,
             ImageNotFoundException.class,
-            ReservationNotFoundException.class
+            ReservationNotFoundException.class,
+            ReviewNotFoundException.class
     })
 
     public ResponseEntity<Object> handleNotFoundException(Exception ex) {

@@ -11,4 +11,5 @@ public interface IReservationService extends CrudService<ReservationRequestDto, 
 
     Iterable<ReservationResponseDto> getReservationsByTouristPlan(Long touristPlanId);
     Iterable<ReservationResponseDto> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
+    Iterable<ReservationResponseDto> findByUserIdAndStatus(Long userId, boolean status);
 }

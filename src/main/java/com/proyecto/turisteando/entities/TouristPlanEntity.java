@@ -27,9 +27,11 @@ public class TouristPlanEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 100, unique = true, nullable = false)
+    @Size(min = 3, max = 100, message = "El título debe tener entre 3 y 100 caracteres")
     private String title;
 
-    @Column(length = 500)
+    @Column(length = 500, nullable = false)
     private String description;
 
     private Double price;
@@ -44,8 +46,9 @@ public class TouristPlanEntity {
     @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
+
   
-    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("touristPlan")
     @Size(min = 1, max = 5, message = "Debe haber entre 1 y 5 imágenes")
     @JsonManagedReference  // Previene la recursión en el lado "principal"
@@ -54,11 +57,15 @@ public class TouristPlanEntity {
     private LocalDate availabilityStartDate;
     private LocalDate availabilityEndDate;
     private Integer capacity;
-    private String duration; // Duración del plan turístico (por ejemplo, "3 días" o "1 noche")
-    private boolean foodIncluded;
-    private boolean wifiIncluded;
-    private boolean petsFriendly;
-    private boolean disabilityAccess;
+    private String duration; // Duración del plan turistico (por ejemplo, "3 días" o "1 noche")
+
+    @ManyToMany
+    @JoinTable(
+            name = "tourist_plan_characteristic",
+            joinColumns = @JoinColumn(name = "tourist_plan_id"),
+            inverseJoinColumns =  @JoinColumn(name = "characteristic_id"))
+    private List<CharacteristicEntity> characteristic;
+
     private boolean isActive;
 
     @CreationTimestamp()

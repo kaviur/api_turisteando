@@ -3,6 +3,7 @@ package com.proyecto.turisteando.dtos.requestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proyecto.turisteando.dtos.IDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import com.proyecto.turisteando.entities.CharacteristicEntity;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +39,6 @@ public class TouristPlanRequestDto implements IDto {
     @Positive(message = "El id de la categoría debe ser mayor a cero")
     private Long categoryId;
 
-    @Size(max = 5, message = "El total de imágenes no puede exceder 5.")
     private List<MultipartFile> multipartImages;
 
     // URLs de imágenes para eliminar
@@ -62,5 +62,8 @@ public class TouristPlanRequestDto implements IDto {
 
     @NotEmpty(message = "La duración no puede estar vacía")
     private String duration;
+
+    @NotEmpty(message = "Las características no pueden estar vacías")
+    private List<CharacteristicEntity> characteristic;
 
 }

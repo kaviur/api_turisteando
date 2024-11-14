@@ -13,6 +13,7 @@ public interface ReservationMapper {
     ReservationEntity toEntity(ReservationRequestDto reservationRequestDto);
 
     @Mapping(target = "touristPlanId", source = "touristPlan.id")
+    @Mapping(target = "userId", source = "user.id")
     ReservationResponseDto toDto(ReservationEntity reservationEntity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

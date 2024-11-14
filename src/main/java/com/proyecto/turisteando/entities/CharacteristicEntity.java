@@ -1,28 +1,22 @@
+
 package com.proyecto.turisteando.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
-/**
- * Entity class representing a category.
- * @author Karen Urbano - <a href="https://github.com/kaviur">kaviur</a>
- * @version 1.0
- * @since 2024-10-25
- */
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "category")
-public class CategoryEntity {
+@Table(name = "characteristic")
+public class CharacteristicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,24 +24,23 @@ public class CategoryEntity {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotEmpty(message = "El nombre de la categoría no puede estar vacío")
+    @NotEmpty(message = "El nombre de la caracterìstica no puede estar vacía")
     private String name;
+
 
     @Column(nullable = false) // it has no effect, but it is good to have it for clarity
     private Byte status;
 
-    @Size(max = 255, message = "La descripción de la categoría no puede tener más de 255 caracteres")
-    private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private ImageEntity image;
+    private String icon;
+
+    @ManyToMany(mappedBy = "characteristic")
+    private List<TouristPlanEntity> touristPlan;
 
 
     @PrePersist
     protected void onCreate() {
         this.status = 1;
     }
-
 }
 

@@ -29,5 +29,6 @@ public class TouristPlanResponseDto implements IDto {
     private LocalDate availabilityEndDate;
     private int capacity;
     private String duration;
+    private List<CharacteristicResponseDto> characteristic;
     private boolean isActive;
 }

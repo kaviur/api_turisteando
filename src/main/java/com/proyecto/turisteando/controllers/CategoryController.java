@@ -3,9 +3,7 @@ package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.dtos.IDto;
 import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
-import com.proyecto.turisteando.dtos.responseDto.CategoryResponseDto;
 import com.proyecto.turisteando.services.ICategoryService;
-import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

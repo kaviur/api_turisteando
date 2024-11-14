@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.services;
 
+import com.cloudinary.Cloudinary;
 import com.proyecto.turisteando.exceptions.customExceptions.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +14,6 @@ public interface FileUploadService {
     List<String> uploadImage(List<MultipartFile> multipartFiles) throws FileUploadException;
     List<String> updateImage(List<String> existingImages, List<String> imagesToDelete, List<MultipartFile> newImages) throws FileUploadException;
 
+    // Método auxiliar para eliminar imágenes especificadas
+    void deleteExistingImages(List<String> imagesToDelete) throws FileUploadException;
 }

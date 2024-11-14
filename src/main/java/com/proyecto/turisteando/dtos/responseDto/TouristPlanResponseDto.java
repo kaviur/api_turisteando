@@ -29,9 +29,5 @@ public class TouristPlanResponseDto implements IDto {
     private LocalDate availabilityEndDate;
     private int capacity;
     private String duration;
-    private boolean foodIncluded;
-    private boolean wifiIncluded;
-    private boolean petsFriendly;
-    private boolean disabilityAccess;
     private boolean isActive;
 }

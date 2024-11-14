@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,7 @@ public class TouristPlanEntity {
     @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("touristPlan")
     @Size(min = 1, max = 5, message = "Debe haber entre 1 y 5 imágenes")
+    @JsonManagedReference  // Previene la recursión en el lado "principal"
     private List<ImageEntity> images;
 
     private LocalDate availabilityStartDate;

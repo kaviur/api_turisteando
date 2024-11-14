@@ -1,6 +1,8 @@
 package com.proyecto.turisteando.dtos.requestDto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proyecto.turisteando.dtos.IDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,8 +42,10 @@ public class TouristPlanRequestDto implements IDto {
     private List<MultipartFile> multipartImages;
 
     // URLs de imágenes para eliminar
+    @Schema(description = "URLs de imágenes a eliminar (sólo necesario para la actualización)")
     private List<String> imagesToDelete;
 
+    @JsonIgnore
     private List<String> imagesUrl;
 
     @NotNull(message = "La fecha de inicio de disponibilidad no puede estar vacía")
@@ -58,10 +62,5 @@ public class TouristPlanRequestDto implements IDto {
 
     @NotEmpty(message = "La duración no puede estar vacía")
     private String duration;
-
-    private Boolean foodIncluded;
-    private Boolean wifiIncluded;
-    private Boolean petsFriendly;
-    private Boolean disabilityAccess;
 
 }

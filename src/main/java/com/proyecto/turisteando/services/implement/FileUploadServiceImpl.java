@@ -56,7 +56,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         // Elimina solo las imágenes especificadas en imagesToDelete
         if (!imagesToDelete.isEmpty()) {
-            deleteExistingImages(imagesToDelete, cloudinary);
+            deleteExistingImages(imagesToDelete);
         }
 
         // Subir las nuevas imágenes y obtener las URLs
@@ -79,11 +79,12 @@ public class FileUploadServiceImpl implements FileUploadService {
         );
     }
 
-    // Método auxiliar para eliminar imágenes especificadas
-    private void deleteExistingImages(List<String> imagesToDelete, Cloudinary cloudinary) throws FileUploadException {
+    @Override
+    public void deleteExistingImages(List<String> imagesToDelete) throws FileUploadException {
+        Cloudinary cloudinary = cloudinaryConfig.configuration();
+
         for (String imageUrl : imagesToDelete) {
             try {
-                // Extrae el public_id desde la URL de la imagen
                 String publicId = extractPublicId(imageUrl);
                 cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
             } catch (IOException ex) {

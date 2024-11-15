@@ -1,6 +1,5 @@
 package com.proyecto.turisteando.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -8,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 
 /**
@@ -39,10 +39,9 @@ public class CategoryEntity {
     @Size(max = 255, message = "La descripción de la categoría no puede tener más de 255 caracteres")
     private String description;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private ImageEntity image;
-
 
     @PrePersist
     protected void onCreate() {

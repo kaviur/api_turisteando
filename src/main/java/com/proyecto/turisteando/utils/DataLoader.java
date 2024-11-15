@@ -102,7 +102,7 @@ public class DataLoader implements CommandLineRunner {
                     ImageEntity.builder().imageUrl("https://example.com/images/tours.jpg").build(),
                     ImageEntity.builder().imageUrl("https://example.com/images/activities.jpg").build()
             );
-            List<ImageEntity> savedImages = imageRepository.saveAll(images);
+//            List<ImageEntity> savedImages = imageRepository.saveAll(images);
 
             // Crear categorías con las imágenes asociadas
             categoryRepository.saveAll(Arrays.asList(
@@ -110,13 +110,13 @@ public class DataLoader implements CommandLineRunner {
                             .name("Tours")
                             .status((byte) 1)
                             .description("Recorridos turísticos...")
-                            .image(savedImages.get(0)) // Asociar la primera imagen
+                            .image(images.get(0)) // Asociar la primera imagen
                             .build(),
                     CategoryEntity.builder()
                             .name("Actividades")
                             .status((byte) 1)
                             .description("Actividades al aire libre...")
-                            .image(savedImages.get(1)) // Asociar la segunda imagen
+                            .image(images.get(1)) // Asociar la segunda imagen
                             .build()
             ));
         }
@@ -143,14 +143,11 @@ public class DataLoader implements CommandLineRunner {
                 return imageEntity;
             }).toList();
 
-            // Guardar todas las imágenes y obtener las entidades persistidas
-            List<ImageEntity> savedImages = imageRepository.saveAll(images);
-
             // Asociar cada característica con su imagen correspondiente
             List<CharacteristicEntity> newCharacteristicsList = characteristics.stream()
                     .map(characteristic -> {
                         // Obtener la imagen correspondiente para esta característica
-                        ImageEntity associatedImage = savedImages.get(characteristics.indexOf(characteristic));
+                        ImageEntity associatedImage = images.get(characteristics.indexOf(characteristic));
 
                         // Crear la característica y asociarla con la imagen
                         return CharacteristicEntity.builder()

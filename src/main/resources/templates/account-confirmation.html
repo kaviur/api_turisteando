@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido a Turisteando</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100%;
+        max-width: 550px;
+        margin: 0 auto;
+        padding: 16px;
+        background-color: #f4f4f4;
+        text-align: center;
+      }
+      .card {
+        max-width: 550px;
+        width: 100%;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .card-header {
+        padding: 16px;
+        background-color: #fff;
+        text-align: center;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      .card-header img {
+        height: 60px;
+      }
+      .card-body {
+        padding: 24px;
+      }
+      .card-body h1 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333333;
+        text-align: center;
+      }
+      .card-body p {
+        font-size: 16px;
+        color: #666666;
+        text-align: center;
+        line-height: 1.5;
+      }
+      .card-footer {
+        padding: 16px;
+        background-color: #f8f9fa;
+        text-align: center;
+      }
+      .card-footer p {
+        font-size: 12px;
+        color: #999999;
+      }
+      .card-footer a {
+        margin: 0 8px;
+        font-size: 12px;
+        color: #ff0178;
+        text-decoration: none;
+      }
+      .card-footer a:hover {
+        text-decoration: underline;
+      }
+      .button {
+        display: block;
+        width: 100%;
+        max-width: 192px;
+        padding: 12px;
+        font-size: 16px;
+        color: #ffffff !important;
+        background-color: #ff0178;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        margin: 16px auto 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <img src="cid:logoImage" alt="Logo Turisteando" />
+        </div>
+        <div class="card-body">
+          <h1>¡Bienvenido, {{ user }}!</h1>
+          <p>
+            Gracias por registrarte en Turisteando. Estamos encantados de
+            tenerte a bordo. Para completar tu registro, por favor confirma tu
+            cuenta haciendo clic en el siguiente botón.
+          </p>
+          <a href="{{ confirmLink }}" class="button">Confirmar Cuenta</a>
+          <p class="text-sm">
+            Si no creó una cuenta, puede ignorar este correo electrónico con
+            seguridad.
+          </p>
+        </div>
+        <div class="card-footer">
+          <p>© 2024 Turisteando. Todos los derechos reservados.</p>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -123,9 +123,9 @@ public class DataLoader implements CommandLineRunner{
                             .image(images.get(0)) // Asociar la primera imagen
                             .build(),
                     CategoryEntity.builder()
-                            .name("Actividades")
+                            .name("Activity")
                             .status((byte) 1)
-                            .description("Actividades al aire libre...")
+                            .description("Actividades al aire libre ..")
                             .image(images.get(1)) // Asociar la segunda imagen
                             .build()
             ));
@@ -243,7 +243,7 @@ public class DataLoader implements CommandLineRunner{
 
             //TOUR 8
             TouristPlanEntity tour8 = TouristPlanEntity.builder()
-                    .title("Tour al valle Sur del Cusco")
+                    .title("Recorre el valle Sur del Cusco")
                     .description("Reserva con FWTP nuestro tour al valle sur del Cusco, durante este tour visitarás Tipón, Piquillaqta y Andahuaylillas — en un tour de medio día. Tipón es un sitio arqueológico donde aun se pueden canales de irrigación que denotan lo mejor de la ingeniería hidráulica del imperio de los incas; por el otro lado, Andahuaylillas es un sitio arqueológico que perteneció a la cultura Wari")
                     .price(75.00)
                     .seller("freewalkingtours")
@@ -301,7 +301,7 @@ public class DataLoader implements CommandLineRunner{
             //TOUR 9
             TouristPlanEntity tour9 = TouristPlanEntity.builder()
                     .title("Tour Colca Puno")
-                    .description("Disfruta esta experiencia preferida por los turistas que quieren aprovechar al máximo su tiempo conociendo lo más resaltante del Valle del Colca, los pueblos tradicionales, un poco de relajo en los baños termales más recomendados como son los de Chacapi, conocerán este pueblo tradicional cerca al Valle y de ahí lo más resaltante es que finalizará nuestro recorrido llegando a la ciudad de Puno después de 2 días de viaje, haciendo breves paradas en el camino para apreciar los bellos paisajes de las reservas naturales protegidas que existen en este camino.")
+                    .description("Disfruta esta experiencia preferida por los turistas, donde aprovecharás al máximo tu tiempo conociendo lo más resaltante del Valle del Colca, sus pueblos tradicionales y los baños termales de Chacapi. Conocerás este pueblo cerca del Valle y finalizarás el recorrido en la ciudad de Puno después de 2 días, haciendo breves paradas para apreciar los paisajes.")
                     .price(236.00)
                     .seller("Arequipa Explorer")
                     .city(cities.get(7))
@@ -354,7 +354,7 @@ public class DataLoader implements CommandLineRunner{
            //TOUR 10
             TouristPlanEntity tour10 = TouristPlanEntity.builder()
                     .title("Tour al valle Sur del Cusco")
-                    .description("Visita a Las Huacas Del Sol y La Luna,  las construcciones más grandes de la civilización Moche, con impresionaste murales policromos de antiguas divinidades. Parada para almorzar en la ciudad de Trujillo. El Tour continuará hacia el norte para visitar, la zona arqueológica de la antigua Ciudad de Chanchan ahora llamado Palacio Nikan, y para terminar en la playa de Huanchaco. Viajaremos a visitar El brujo está constituido por 3 importantes sitios: Huaca Cortada, Huaca Prieta y en el extremo sur se encuentra la más antigua la Huaca Cao Viejo. Visita al Museo Cao se halla el descubrimiento más importante de la cultura peruana, La Señora de Cao, la única mujer gobernante que por ahora se cree tuvo el Perú antiguo y cuya momia tatuada, en perfecto estado de conservación.")
+                    .description("Visita a Las Huacas del Sol y la Luna, grandes construcciones Moche con impresionantes murales de divinidades. Parada para almorzar en Trujillo. Continuamos hacia Chanchan (Palacio Nikan) y la playa Huanchaco. Luego, visitaremos El Brujo, compuesto por Huaca Cortada, Huaca Prieta y la Huaca Cao Viejo. En el Museo Cao se exhibe la Señora de Cao, la única mujer gobernante del Perú antiguo.")
                     .price(450.00)
                     .seller("Viajando tours")
                     .city(cities.get(12))
@@ -406,7 +406,7 @@ public class DataLoader implements CommandLineRunner{
            //TOUR 11
            TouristPlanEntity tour11 = TouristPlanEntity.builder()
                     .title("Tour- Expedición al Huascaran")
-                    .description("El nevado Huascarán o también llamado “Mataraju”, que en el vocablo quechua significa “Nevados gemelos” pues cuenta con 2 picos, la cumbre Norte y la cumbre Sur. Esta última es la cumbre principal y la que más se asciende durante la temporada. El Huascarán, es además la montaña nevada más alta de todo el Perú, 6877 mts, por ello se le conoce como el Techo del país. Se localiza en el límite de las provincias de Yungay y Carhuaz a tan solo unos 15 kilómetros de distancia de los centros poblados y dentro del Parque Nacional del mismo Nombre.El gran coloso, a diferencia de otras altas montañas del continente americano, es una de las más difíciles de ascender, pues durante su recorrido se deberán superar grietas, seracs, avalanchas y canaletas de más de 30 metros de altura, las cuales hacen el ascenso hacia el campo 1 y 2 todo un reto, por lo mismo, no olvides llevar con anterioridad cursos de escalada técnica.")
+                    .description("¡Conquista el Techo del Perú! Adéntrate en el majestuoso Nevado Huascarán, también llamado “Mataraju”, con sus impresionantes picos gemelos. Vive la emoción de ascender a la cima más alta del país (6,877 m) en el Parque Nacional Huascarán. Supera desafíos únicos como grietas y seracs, siempre guiado por expertos. ¡Haz realidad esta inolvidable experiencia llena de adrenalina y naturaleza!.")
                     .price(12000.00)
                     .seller(" Huascaran tours")
                     .city(cities.get(1))
@@ -458,17 +458,16 @@ public class DataLoader implements CommandLineRunner{
 //Actividad 6
 
             TouristPlanEntity activity6 = TouristPlanEntity.builder()
-                    .title("7 lagunas de Ausangate + aguas termales")
-                    .description("Si eres amante de la naturaleza y la aventura, el tour 7 lagunas de Ausangate + aguas termales te ofrecerán una experiencia única, rodeadas de paisajes montañosos, encontrarás lagunas que varían en tamaño y color, creando un mosaico de tonalidades que van desde el azul turquesa hasta el verde esmeralda. Prepárate para vivir una experiencia única de trekking y adéntrate en el encanto de su paisaje natural." +
-                            "La Ruta de las 7 Lagunas de Ausangate + Aguas Termales es una experiencia de trekking que te llevará a explorar diferentes lagunas de origen glaciar, cada una con su propio color y personalidad. Disfrutarás de vistas panorámicas con un sendero bien señalizado y finalizada la caminata, te espera un relajante baño en aguas termales de Pacchanta")
+                    .title("7 lagunas de Ausangate aguas termales")
+                    .description("Explora las 7 Lagunas de Ausangate y relájate en sus aguas termales. Si amas la naturaleza y la aventura, este tour es para ti. Recorre un sendero rodeado de imponentes montañas, donde descubrirás lagunas de origen glaciar en tonos azul turquesa y verde esmeralda. Disfruta de vistas panorámicas únicas y culmina con un baño relajante en las aguas termales de Pacchanta. ¡Conecta con el encanto natural en esta experiencia inolvidable!")
                     .price(75.00)
                     .seller("Freewalking Tours Peru")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(15)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .availabilityEndDate(LocalDate.of(2024, 11, 1))
+                    .duration("1 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -513,8 +512,7 @@ public class DataLoader implements CommandLineRunner{
            //Actividad 7
             TouristPlanEntity activity7 = TouristPlanEntity.builder()
                     .title("Excursión a laguna Humantay por Cusco")
-                    .description("Si deseas conocer una maravilla natural en los andes del Perú, esta excursión en las afueras del Cusco es tu mejor opción, partiremos muy temprano en Bus desde la ciudad del Cusco conjuntamente con otros amantes de la naturaleza, hasta llegar a Mollepata donde tendremos nuestro desayuno." +
-                            "Después del desayuno seguiremos conduciendo en bus hasta llegar a una comunidad indígena denominada Soraypampa, desde donde empezaremos a caminar a la laguna de Humantay ubicada en la cordillera de Salkantay.")
+                    .description("Descubre la Laguna Humantay: un paraíso en los Andes Vive una experiencia única en los alrededores de Cusco. Partiremos temprano en bus hacia Mollepata para disfrutar de un delicioso desayuno. Luego, continuaremos hasta Soraypampa, una pintoresca comunidad indígena, desde donde iniciaremos nuestra caminata hacia la impresionante Laguna Humantay, rodeada de la majestuosa cordillera de Salkantay. ¡Una aventura que no te puedes perder!")
                     .price(825.00)
                     .seller("Freewalking Tours Perú")
                     .city(cities.get(7))
@@ -573,8 +571,7 @@ public class DataLoader implements CommandLineRunner{
             //Activity 8
              TouristPlanEntity activity8 = TouristPlanEntity.builder()
                     .title("City tour Cusco + 4 ruinas de Sacsayhuamán")
-                    .description("Conoce la belleza de la ciudad del Cusco con nuestro city tour Cusco original, en aproximadamente cinco horas de tour a pie y en bus conoceremos por dentro los lugares más resaltantes de la ciudad del Cuzco." +
-                            "Visitaremos la Catedral del Cusco y el templo de Coricancha a pie; después de visitar los lugares mencionados, tomaremos un bus hacia las cuatro ruinas del Parque Arqueológico de Sacsayhuamán, en donde descubrirás los misterios que esconde la arquitectura Inca.")
+                    .description("Descubre Cusco con el City Tour Original. Sumérgete en la historia y belleza de Cusco en nuestro city tour de 5 horas. A pie, exploraremos la imponente Catedral del Cusco y el Templo de Coricancha. Luego, tomaremos un bus hacia las ruinas de Sacsayhuamán, donde descubrirás los secretos de la arquitectura Inca. Una experiencia única para conocer los puntos más emblemáticos de la antigua capital del Imperio Inca. ¡No te lo puedes perder!")
                     .price(75.00)
                     .seller("Cusco Tours")
                     .city(cities.get(7))
@@ -631,11 +628,11 @@ public class DataLoader implements CommandLineRunner{
             //Actividad 9
             TouristPlanEntity activity9 = TouristPlanEntity.builder()
                     .title("Excursión a Waqrapukara por Santa Lucia")
-                    .description("Ubicado en el distrito de Acos, provincia de Acomayo se encuentra una fortaleza en forma de cuerno conocida como (Waqrapukara) tiene un paisaje andino como también su flora y fauna, para este tour se realizará una caminata donde podrás observar impresionantes vistas de las montañas y formaciones rocosas, la cual anteriormente era habitada por la cultura Canchis y conquistada por los Incas.")
+                    .description("Explora Waqrapukara: La Fortaleza Andina. Ubicada en el distrito de Acos, provincia de Acomayo, Waqrapukara es una fortaleza en forma de cuerno que ofrece vistas impresionantes de las montañas y formaciones rocosas. Durante este tour, recorrerás un camino rodeado de la rica flora y fauna andina. Este sitio, habitado por la cultura Canchis y luego conquistado por los Incas, es un destino único lleno de historia y belleza natural. ¡Una aventura que no puedes perderte!")
                     .price(506.00)
                     .seller("Macchu Pichu Viajes Peru")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Actividad"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
                     .availabilityEndDate(LocalDate.of(2024, 11, 28))
@@ -685,14 +682,11 @@ public class DataLoader implements CommandLineRunner{
 
             TouristPlanEntity activity10 = TouristPlanEntity.builder()
                     .title("Aventura en el Planetario del Cusco")
-                    .description("El planetario de Cusco está situado dentro del parque arqueológico de Sacsayhuamán y la reserva " +
-                                    "ecológica de Llaullipata, ofrece una experiencia única en un entorno lleno de historia y belleza natural. A tan solo 15 minutos en autobús del centro histórico de la ciudad, el planetario se encuentra rodeado de impresionantes paisajes naturales."+
-                            "Vive una experiencia única en nuestras salas de interpretación con científicos y tecnología de última generación. Descubre la astronomía inca, sus fundamentos y leyendas de los cielos del Sur."+
-                                    "En nuestro Domo, podrás ver una proyección del cielo estrellado y luego observar las estrellas, nebulosas, planetas y constelaciones del hemisferio sur a través de telescopios avanzados.")
+                    .description("Vive la magia del Planetario de Cusco. Ubicado en el Parque Arqueológico de Sacsayhuamán y la reserva ecológica de Llaullipata, el Planetario de Cusco ofrece una experiencia única de astronomía. A solo 15 minutos del centro histórico, disfrutarás de un entorno natural impresionante. Explora la astronomía inca, leyendas de los cielos del Sur, y observa las estrellas, nebulosas y planetas con telescopios avanzados. ¡Una experiencia única que conecta historia y ciencia!")
                                     .price(135.00)
                                     .seller("Macchu Pichu Viajes Peru")
                                     .city(cities.get(7))
-                                    .category(categoryRepository.findByName("Actividad"))
+                                    .category(categoryRepository.findByName("Activity"))
                                     .capacity(25)
                                     .availabilityStartDate(LocalDate.of(2024, 11, 27))
                                     .availabilityEndDate(LocalDate.of(2024, 11, 27))
@@ -994,7 +988,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(49.50)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1047,7 +1041,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(162.42)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1095,7 +1089,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(60.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(5)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1144,7 +1138,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(95.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1196,7 +1190,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(116.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(6)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1572,7 +1566,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(19.00)
                     .seller("Machupicchu Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(30)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1625,7 +1619,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(250.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(15))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1685,7 +1679,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(83.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(10))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1736,7 +1730,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(10.00)
                     .seller("Machupicchu Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1789,7 +1783,7 @@ public class DataLoader implements CommandLineRunner{
                     .price(35.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Actividades"))
+                    .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))

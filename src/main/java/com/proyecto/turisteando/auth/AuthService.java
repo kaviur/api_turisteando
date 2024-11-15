@@ -8,6 +8,7 @@ import com.proyecto.turisteando.exceptions.customExceptions.UserNotFoundExceptio
 import com.proyecto.turisteando.jwt.JwtService;
 import com.proyecto.turisteando.mappers.IUserMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
+import com.proyecto.turisteando.services.implement.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +37,9 @@ public class AuthService {
     @Autowired
     IUserMapper userMapper;
 
+    @Autowired
+    EmailService emailService;
+
     @Transactional(rollbackFor = Exception.class)
     public AuthResponse register(UserRequestDto request) {
         try {
@@ -47,6 +51,9 @@ public class AuthService {
                     .role(Role.ADMIN)
                     .build();
             userRepository.save(user);
+
+            // Enviar email de confirmación de registro para el usuario
+            emailService.sendEmail(user.getEmail(), user.getName());
 
             String token = jwtService.generateToken(user);
 

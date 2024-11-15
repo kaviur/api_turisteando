@@ -32,16 +32,16 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth
-                            .requestMatchers("/api/categories/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers("/api/cities/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers("/api/images/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers("/api/reservations/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
-                            .requestMatchers("/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
-                            .requestMatchers(HttpMethod.POST,  "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.PUT, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.DELETE, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.PATCH, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers("/api/users/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers("/api/categories/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers("/api/cities/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers("/api/images/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers("/api/reservations/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
+//                            .requestMatchers("/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
+//                            .requestMatchers(HttpMethod.POST,  "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers(HttpMethod.PUT, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers(HttpMethod.DELETE, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers(HttpMethod.PATCH, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
+//                            .requestMatchers("/api/users/**").hasAuthority(Role.ADMIN.name())
                             .anyRequest().permitAll();
                 })
                 .sessionManagement(session -> session

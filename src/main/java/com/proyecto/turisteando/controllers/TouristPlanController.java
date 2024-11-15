@@ -63,10 +63,21 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Response> updateTouristPlan(@RequestBody TouristPlanRequestDto touristPlan, @PathVariable Long id) {
+
+    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Response> updateTouristPlan(
+            @Validated @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images,
+            @PathVariable Long id) {
+
+        // Añadir las imágenes al DTO solo si están presentes
+        if (images != null && !images.isEmpty()) {
+            touristPlan.setMultipartImages(images);
+        }
+
         TouristPlanResponseDto updatedTouristPlan = touristPlanService.update(touristPlan, id);
         Response response = new Response(true, HttpStatus.OK, updatedTouristPlan);
+
         return ResponseEntity.ok(response);
     }
 

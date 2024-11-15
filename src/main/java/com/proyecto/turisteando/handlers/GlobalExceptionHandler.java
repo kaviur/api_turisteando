@@ -51,6 +51,13 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(List.of(RESOURCE_NOT_FOUND + ex.getMessage()), ex, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ImageLimitExceededException.class)
+    public ResponseEntity<Response> handleImageLimitExceededException(ImageLimitExceededException ex) {
+        Response response = new Response(false, HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(FileValidationException.class)
     public ResponseEntity<Object> handleFileValidationException(FileValidationException ex) {
         log.error("Error de validación de archivo: {}", ex.getMessage(), ex);

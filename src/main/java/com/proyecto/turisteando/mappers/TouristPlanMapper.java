@@ -3,9 +3,11 @@ package com.proyecto.turisteando.mappers;
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.CategoryEntity;
+import com.proyecto.turisteando.entities.CharacteristicEntity;
 import com.proyecto.turisteando.entities.CityEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.services.implement.CategoryServiceImpl;
+import com.proyecto.turisteando.services.implement.CharacteristicServiceImpl;
 import com.proyecto.turisteando.services.implement.CityServiceImpl;
 import org.mapstruct.*;
 
@@ -13,12 +15,13 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring",
         uses = {CategoryMapper.class, CategoryServiceImpl.class, CityMapper.class, CityServiceImpl.class,
-                ImageMapper.class, CharacteristicMapper.class})
+                ImageMapper.class, CharacteristicMapper.class, CharacteristicServiceImpl.class})
 public interface TouristPlanMapper {
 
     @Mappings({
             @Mapping(target = "city", source = "cityId"),
-            @Mapping(target = "category", source = "categoryId")
+            @Mapping(target = "category", source = "categoryId"),
+            @Mapping(target = "characteristic", source = "characteristicIds")
     })
     TouristPlanEntity toEntity(TouristPlanRequestDto touristPlanRequestDto);
 
@@ -30,6 +33,7 @@ public interface TouristPlanMapper {
     @Mappings({
             @Mapping(target = "city", source = "cityId"),
             @Mapping(target = "category", source = "categoryId")
+            ,@Mapping(target = "characteristic", source = "characteristicIds")
     })
     TouristPlanEntity partialUpdate(TouristPlanRequestDto touristPlanRequestDto, @MappingTarget TouristPlanEntity touristPlanEntity1);
 
@@ -39,6 +43,11 @@ public interface TouristPlanMapper {
 
     default CityEntity getCityById(Long cityId, @Context CityServiceImpl cityService) {
         return cityService.getEntity(cityId);
+    }
+
+    default List<CharacteristicEntity> getCharacteristicByIds(List<Long> characteristicIds,
+                                                              @Context CharacteristicServiceImpl characteristicService) {
+        return characteristicService.getCharacteristicsByIds(characteristicIds);
     }
 
 }

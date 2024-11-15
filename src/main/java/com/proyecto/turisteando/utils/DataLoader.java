@@ -1866,7 +1866,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("Albus")
                     .lastName("Dumbledore")
                     .email("albus@gmail.com")
-                    .password("123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.BUYER)
                     .build();
             userRepository.save(user4);

@@ -14,10 +14,11 @@ import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RequiredArgsConstructor
@@ -47,18 +48,34 @@ public class CharacteristicController {
     }
 
     //create  characteristic
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Response> createCharacteristic(
+            @Validated @RequestPart("characteristic") CharacteristicRequestDto characteristicDto,
+            @RequestPart("image") MultipartFile image) {
 
+        // Asignar la imagen al DTO manualmente
+        characteristicDto.setIcon(image);
+        IDto newCharacteristic = characteristicService.create(characteristicDto);
 
-    public ResponseEntity<Response> createCharacteristic(@Valid @RequestBody CharacteristicRequestDto characteristicDto) {
-        Response response = new Response(true, HttpStatus.CREATED,  characteristicService.create(characteristicDto));
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Response response = new Response(true, HttpStatus.CREATED, newCharacteristic);
+
+        return ResponseEntity.ok(response);
     }
 
+
     //update  characteristic
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Response> updateCharacteristic(@PathVariable Long id, @RequestBody  CharacteristicRequestDto characteristicDto) {
+    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Response> updateCharacteristic(
+            @PathVariable Long id,
+            @Valid @RequestPart("characteristic") CharacteristicRequestDto characteristicDto,
+            @RequestPart(value = "image", required = false) MultipartFile icon) {
+
+        if (icon != null && !icon.isEmpty()) {
+            characteristicDto.setIcon(icon);
+        }
+
         Response response = new Response(true, HttpStatus.OK, characteristicService.update(characteristicDto, id));
+
         return ResponseEntity.ok(response);
     }
 

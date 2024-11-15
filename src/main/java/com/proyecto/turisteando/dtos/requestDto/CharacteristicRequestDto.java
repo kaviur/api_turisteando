@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 
@@ -20,5 +21,5 @@ public class CharacteristicRequestDto implements Serializable, IDto {
     String name;
 
     @NotEmpty(message = "El icono de la característica no puede estar vacío")
-    String icon;
+    MultipartFile icon;
 }

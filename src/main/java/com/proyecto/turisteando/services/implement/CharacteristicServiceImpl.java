@@ -6,10 +6,14 @@ import com.proyecto.turisteando.dtos.requestDto.CharacteristicRequestDto;
 
 import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.entities.CharacteristicEntity;
+import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CharacteristicNotFoundException;
 import com.proyecto.turisteando.mappers.CharacteristicMapper;
 import com.proyecto.turisteando.repositories.CharacteristicRepository;
+import com.proyecto.turisteando.repositories.ImageRepository;
+import com.proyecto.turisteando.services.FileUploadService;
 import com.proyecto.turisteando.services.ICharacteristicService;
+import com.proyecto.turisteando.utils.FileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +21,8 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,6 +34,9 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
 
     private final CharacteristicRepository characteristicRepository;
     private final CharacteristicMapper characteristicMapper;
+    private final FileValidator fileValidator;
+    private final FileUploadService fileUploadService;
+    private final ImageRepository imageRepository;
 
     @Override
     public Iterable<IDto> getAll() {
@@ -74,15 +83,39 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
         CharacteristicRequestDto characteristicDto = (CharacteristicRequestDto) dto;
 
         try {
-            CharacteristicEntity characteristicEntity = characteristicRepository.save(characteristicMapper.toEntity(characteristicDto));
-            return characteristicMapper.toDto(characteristicEntity);
+            // Validar el archivo del icono solo si se proporciona
+            if (characteristicDto.getIcon() != null && !characteristicDto.getIcon().isEmpty()) {
+                fileValidator.validateFiles(Collections.singletonList(characteristicDto.getIcon()));
+
+                // Subir la imagen del icono a Cloudinary y obtener la URL
+                String iconUrl = fileUploadService.saveImage(Collections.singletonList(characteristicDto.getIcon())).get(0);
+
+                ImageEntity iconEntity = new ImageEntity();
+                iconEntity.setImageUrl(iconUrl);
+
+                CharacteristicEntity characteristicEntity = characteristicMapper.toEntity(characteristicDto);
+                characteristicEntity.setIcon(iconEntity);
+
+                CharacteristicEntity savedCharacteristic = characteristicRepository.save(characteristicEntity);
+
+                // Mapear la entidad guardada a DTO y devolverla
+                return characteristicMapper.toDto(savedCharacteristic);
+            } else {
+                // Si no se proporciona un icono, se crea la característica sin él
+                CharacteristicEntity characteristicEntity = characteristicMapper.toEntity(characteristicDto);
+
+                // Guardar la nueva característica sin icono
+                CharacteristicEntity savedCharacteristic = characteristicRepository.save(characteristicEntity);
+
+                return characteristicMapper.toDto(savedCharacteristic);
+            }
         } catch (DataIntegrityViolationException e) {
             if (e.getMessage().contains("name")) {
-                throw new ServiceException("Ya existe la Característica", e);
+                throw new ServiceException("Ya existe la característica con ese nombre", e);
             }
-            throw new ServiceException("Error al crear la Característica", e);
+            throw new ServiceException("Error al crear la característica", e);
         } catch (Exception e) {
-            throw new ServiceException("Error al crear la Característica: ", e);
+            throw new ServiceException("Error al crear la característica", e);
         }
     }
 
@@ -90,13 +123,33 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
     public IDto update(IDto dto, Long id) {
         CharacteristicRequestDto characteristicDto = (CharacteristicRequestDto) dto;
 
-        CharacteristicEntity characteristic =  characteristicRepository.findById(id)
+        // Buscar la característica existente
+        CharacteristicEntity characteristic = characteristicRepository.findById(id)
                 .orElseThrow(() -> new CharacteristicNotFoundException("No se encontró la característica"));
 
-        characteristicMapper.partialUpdate(characteristicDto, characteristic);
-        CharacteristicEntity updatedCharacteristic =  characteristicRepository.save(characteristic);
+        if (characteristicDto.getIcon() != null && !characteristicDto.getIcon().isEmpty()) {
 
-        return  characteristicMapper.toDto(updatedCharacteristic);
+            // Eliminar la imagen anterior de Cloudinary si existe
+            fileUploadService.deleteExistingImages(Collections.singletonList(characteristic.getIcon().getImageUrl()));
+
+            // Validar y guardar la nueva imagen
+            fileValidator.validateFiles(Collections.singletonList(characteristicDto.getIcon()));  // Validación
+            List<String> imageUrls = fileUploadService.saveImage(Collections.singletonList(characteristicDto.getIcon()));
+            String imageUrl = imageUrls.get(0); // Solo se carga una imagen
+
+            ImageEntity iconEntity = new ImageEntity();
+            iconEntity.setImageUrl(imageUrl);
+            imageRepository.save(iconEntity); // Guardar la nueva imagen en la base de datos
+
+            characteristic.setIcon(iconEntity);
+        }
+
+        // Actualizar los demás campos de la característica con los valores del DTO recibido
+        characteristicMapper.partialUpdate(characteristicDto, characteristic);
+
+        CharacteristicEntity updatedCharacteristic = characteristicRepository.save(characteristic);
+
+        return characteristicMapper.toDto(updatedCharacteristic);
     }
 
 

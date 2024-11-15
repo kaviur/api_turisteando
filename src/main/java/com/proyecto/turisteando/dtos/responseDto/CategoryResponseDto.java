@@ -12,5 +12,5 @@ public class CategoryResponseDto implements IDto, Serializable {
     Long id;
     String name;
     String description;
-    String image;
+    ImageResponseDto image;
 }

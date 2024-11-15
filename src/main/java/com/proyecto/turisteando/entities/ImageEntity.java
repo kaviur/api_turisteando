@@ -1,4 +1,5 @@
 package com.proyecto.turisteando.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,8 @@ public class ImageEntity {
     private String imageUrl;
 
     @ManyToOne()
-    @JoinColumn(name = "tourist_plan_id", nullable = false)
+    @JoinColumn(name = "tourist_plan_id", nullable = true)
+    @JsonBackReference  // Evita la recursión en el lado "secundario"
     private TouristPlanEntity touristPlan;
 
     @CreationTimestamp()

@@ -31,8 +31,9 @@ public class CharacteristicEntity {
     @Column(nullable = false) // it has no effect, but it is good to have it for clarity
     private Byte status;
 
-
-    private String icon;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private ImageEntity icon;
 
     @ManyToMany(mappedBy = "characteristic")
     private List<TouristPlanEntity> touristPlan;

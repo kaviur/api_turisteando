@@ -3,11 +3,15 @@ package com.proyecto.turisteando.services.implement;
 import com.proyecto.turisteando.dtos.IDto;
 import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
 import com.proyecto.turisteando.entities.CategoryEntity;
+import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CategoryNotFoundException;
 import com.proyecto.turisteando.mappers.CategoryMapper;
 import com.proyecto.turisteando.repositories.CategoryRepository;
+import com.proyecto.turisteando.repositories.ImageRepository;
+import com.proyecto.turisteando.services.FileUploadService;
 import com.proyecto.turisteando.services.ICategoryService;
 import com.proyecto.turisteando.services.ICrudService;
+import com.proyecto.turisteando.utils.FileValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +19,8 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,6 +40,9 @@ public class CategoryServiceImpl implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final FileValidator fileValidator;
+    private final FileUploadService fileUploadService;
+    private final ImageRepository imageRepository;
 
     /**
      * Retrieves all available categories.
@@ -113,8 +122,22 @@ public class CategoryServiceImpl implements ICategoryService {
         CategoryRequestDto categoryDto = (CategoryRequestDto) dto;
 
         try {
-            CategoryEntity categoryEntity = categoryRepository.save(categoryMapper.toEntity(categoryDto));
-            return categoryMapper.toDto(categoryEntity);
+            // Validar la imagen
+            fileValidator.validateFiles(Collections.singletonList(categoryDto.getImage()));
+
+            // Subir la imagen y obtener la URL
+            String imageUrl = fileUploadService.saveImage(Collections.singletonList(categoryDto.getImage())).get(0);
+
+            ImageEntity imageEntity = new ImageEntity();
+            imageEntity.setImageUrl(imageUrl);
+
+            // Mapear el DTO a la entidad y asignar la imagen
+            CategoryEntity categoryEntity = categoryMapper.toEntity(categoryDto);
+            categoryEntity.setImage(imageEntity);
+
+            CategoryEntity savedCategory = categoryRepository.save(categoryEntity);
+
+            return categoryMapper.toDto(savedCategory);
         } catch (DataIntegrityViolationException e) {
             if (e.getMessage().contains("name")) {
                 throw new ServiceException("Ya existe la categoría", e);
@@ -142,10 +165,30 @@ public class CategoryServiceImpl implements ICategoryService {
     public IDto update(IDto dto, Long id) {
         CategoryRequestDto categoryDto = (CategoryRequestDto) dto;
 
+        // Buscar la categoría existente
         CategoryEntity category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("No se encontró la categoría"));
 
+        if (categoryDto.getImage() != null && !categoryDto.getImage().isEmpty()) {
+
+            // Eliminar la imagen anterior de Cloudinary
+            fileUploadService.deleteExistingImages(Collections.singletonList(category.getImage().getImageUrl()));
+
+            // Validar y guardar la nueva imagen
+            fileValidator.validateFiles(Collections.singletonList(categoryDto.getImage()));  // Validación
+            List<String> imageUrls = fileUploadService.saveImage(Collections.singletonList(categoryDto.getImage()));
+            String imageUrl = imageUrls.get(0); // sólo se carga una imagen
+
+            ImageEntity imageEntity = new ImageEntity();
+            imageEntity.setImageUrl(imageUrl);
+            imageRepository.save(imageEntity);
+
+            category.setImage(imageEntity);
+        }
+
+        // Actualizar los demás campos de la categoría con el DTO recibido
         categoryMapper.partialUpdate(categoryDto, category);
+
         CategoryEntity updatedCategory = categoryRepository.save(category);
 
         return categoryMapper.toDto(updatedCategory);

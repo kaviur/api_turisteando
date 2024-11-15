@@ -62,7 +62,7 @@ public class CategoryController {
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> updateCategory(
             @PathVariable Long id,
-            @Valid @RequestPart("category") CategoryRequestDto categoryDto,
+            @RequestPart("category") CategoryRequestDto categoryDto,
             @RequestPart(value = "image", required = false) MultipartFile image) {
 
         // Si se proporciona una nueva imagen, la añadimos al DTO

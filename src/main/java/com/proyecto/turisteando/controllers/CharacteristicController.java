@@ -8,10 +8,8 @@ import java.util.stream.StreamSupport;
 import com.proyecto.turisteando.dtos.IDto;
 
 import com.proyecto.turisteando.dtos.requestDto.CharacteristicRequestDto;
-import com.proyecto.turisteando.dtos.requestDto.ImageRequestDto;
 import com.proyecto.turisteando.services.ICharacteristicService;
 import com.proyecto.turisteando.utils.Response;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/characteristic")
+@RequestMapping("api/characteristics")
 @Validated
 public class CharacteristicController {
     private final ICharacteristicService characteristicService;
@@ -67,7 +65,7 @@ public class CharacteristicController {
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> updateCharacteristic(
             @PathVariable Long id,
-            @Valid @RequestPart("characteristic") CharacteristicRequestDto characteristicDto,
+            @RequestPart("characteristic") CharacteristicRequestDto characteristicDto,
             @RequestPart(value = "image", required = false) MultipartFile icon) {
 
         if (icon != null && !icon.isEmpty()) {

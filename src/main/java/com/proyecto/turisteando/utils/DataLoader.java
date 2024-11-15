@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.utils;
 
 import com.proyecto.turisteando.entities.*;
+import com.proyecto.turisteando.entities.enums.Role;
 import com.proyecto.turisteando.repositories.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +39,15 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private CharacteristicRepository characteristicRepository;
+
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -121,6 +132,7 @@ public class DataLoader implements CommandLineRunner {
             ));
         }
 
+        // Primero, verifica si ya existen características en la base de datos
         List<CharacteristicEntity> characteristicsListEntities = characteristicRepository.findAll();
         if (characteristicsListEntities.isEmpty()) {
             List<String> characteristics = Arrays.asList(
@@ -160,7 +172,9 @@ public class DataLoader implements CommandLineRunner {
 
             // Guardar todas las entidades de características con las imágenes asociadas
             characteristicRepository.saveAll(newCharacteristicsList);
+
         }
+
 
         List<CharacteristicEntity> characteristicsList = characteristicRepository.findAll();
         List<CityEntity> cities = cityRepository.findAll();
@@ -481,5 +495,312 @@ public class DataLoader implements CommandLineRunner {
             activity5.setImages(Arrays.asList(image11));
             touristPlanRepository.save(activity5);
         }
+
+
+        List<UserEntity> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            UserEntity user1 = UserEntity.builder()
+                    .name("Harry")
+                    .lastName("Potter")
+                    .email("harry@gmail.com")
+                    .password("123456")
+                    .role(Role.BUYER)
+                    .build();
+            userRepository.save(user1);
+            UserEntity user2 = UserEntity.builder()
+                    .name("Hermione")
+                    .lastName("Granger")
+                    .email("hermione@gmail.com")
+                    .password("123456")
+                    .role(Role.BUYER)
+                    .build();
+            userRepository.save(user2);
+            UserEntity user3 = UserEntity.builder()
+                    .name("Ron")
+                    .lastName("Weasley")
+                    .email("ron@gmail.com")
+                    .password("123456")
+                    .role(Role.BUYER)
+                    .build();
+            userRepository.save(user3);
+            UserEntity user4 = UserEntity.builder()
+                    .name("Albus")
+                    .lastName("Dumbledore")
+                    .email("albus@gmail.com")
+                    .password("123456")
+                    .role(Role.BUYER)
+                    .build();
+            userRepository.save(user4);
+            UserEntity user5 = UserEntity.builder()
+                    .name("Severus")
+                    .lastName("Snape")
+                    .email("severus@gmail.com")
+                    .password("123456")
+                    .role(Role.BUYER)
+                    .build();
+            userRepository.save(user5);
+            UserEntity user6 = UserEntity.builder()
+                    .name("admin")
+                    .lastName("admin")
+                    .email("admin@gmail.com")
+                    .password("admin123456")
+                    .role(Role.ADMIN)
+                    .build();
+            userRepository.save(user6);
+        }
+
+        List<ReviewEntity> reviews = reviewRepository.findAll();
+        if (reviews.isEmpty()){
+            ReviewEntity review1 = ReviewEntity.builder()
+                    .user(userRepository.findById(1L).get())
+                    .touristPlan(touristPlanRepository.findById(1L).get())
+                    .rating(5)
+                    .comment("Excelente tour, lo recomiendo.")
+                    .build();
+            reviewRepository.save(review1);
+            ReviewEntity review2 = ReviewEntity.builder()
+                    .user(userRepository.findById(2L).get())
+                    .touristPlan(touristPlanRepository.findById(1L).get())
+                    .rating(4)
+                    .comment("Muy buena experiencia.")
+                    .build();
+            reviewRepository.save(review2);
+            ReviewEntity review3 = ReviewEntity.builder()
+                    .user(userRepository.findById(3L).get())
+                    .touristPlan(touristPlanRepository.findById(2L).get())
+                    .rating(5)
+                    .comment("Increíble tour.")
+                    .build();
+            reviewRepository.save(review3);
+            ReviewEntity review4 = ReviewEntity.builder()
+                    .user(userRepository.findById(4L).get())
+                    .touristPlan(touristPlanRepository.findById(2L).get())
+                    .rating(4)
+                    .comment("Muy buena atención.")
+                    .build();
+            reviewRepository.save(review4);
+            ReviewEntity review5 = ReviewEntity.builder()
+                    .user(userRepository.findById(5L).get())
+                    .touristPlan(touristPlanRepository.findById(3L).get())
+                    .rating(5)
+                    .comment("Lo volvería a hacer.")
+                    .build();
+            reviewRepository.save(review5);
+            ReviewEntity review6 = ReviewEntity.builder()
+                    .user(userRepository.findById(1L).get())
+                    .touristPlan(touristPlanRepository.findById(3L).get())
+                    .rating(5)
+                    .comment("Excelente tour, lo recomiendo.")
+                    .build();
+            reviewRepository.save(review6);
+            ReviewEntity review7 = ReviewEntity.builder()
+                    .user(userRepository.findById(2L).get())
+                    .touristPlan(touristPlanRepository.findById(4L).get())
+                    .rating(4)
+                    .comment("Muy buena experiencia.")
+                    .build();
+            reviewRepository.save(review7);
+            ReviewEntity review8 = ReviewEntity.builder()
+                    .user(userRepository.findById(3L).get())
+                    .touristPlan(touristPlanRepository.findById(4L).get())
+                    .rating(5)
+                    .comment("Increíble tour.")
+                    .build();
+            reviewRepository.save(review8);
+            ReviewEntity review9 = ReviewEntity.builder()
+                    .user(userRepository.findById(4L).get())
+                    .touristPlan(touristPlanRepository.findById(5L).get())
+                    .rating(4)
+                    .comment("Muy buena atención.")
+                    .build();
+            reviewRepository.save(review9);
+            ReviewEntity review10 = ReviewEntity.builder()
+                    .user(userRepository.findById(5L).get())
+                    .touristPlan(touristPlanRepository.findById(5L).get())
+                    .rating(5)
+                    .comment("Lo volvería a hacer.")
+                    .build();
+            reviewRepository.save(review10);
+            ReviewEntity review11 = ReviewEntity.builder()
+                    .user(userRepository.findById(1L).get())
+                    .touristPlan(touristPlanRepository.findById(6L).get())
+                    .rating(5)
+                    .comment("Excelente tour, lo recomiendo.")
+                    .build();
+            reviewRepository.save(review11);
+            ReviewEntity review12 = ReviewEntity.builder()
+                    .user(userRepository.findById(2L).get())
+                    .touristPlan(touristPlanRepository.findById(6L).get())
+                    .rating(4)
+                    .comment("Muy buena experiencia.")
+                    .build();
+            reviewRepository.save(review12);
+            ReviewEntity review13 = ReviewEntity.builder()
+                    .user(userRepository.findById(3L).get())
+                    .touristPlan(touristPlanRepository.findById(7L).get())
+                    .rating(5)
+                    .comment("Increíble tour.")
+                    .build();
+            reviewRepository.save(review13);
+            ReviewEntity review14 = ReviewEntity.builder()
+                    .user(userRepository.findById(4L).get())
+                    .touristPlan(touristPlanRepository.findById(7L).get())
+                    .rating(4)
+                    .comment("Muy buena atención.")
+                    .build();
+            reviewRepository.save(review14);
+            ReviewEntity review15 = ReviewEntity.builder()
+                    .user(userRepository.findById(5L).get())
+                    .touristPlan(touristPlanRepository.findById(8L).get())
+                    .rating(5)
+                    .comment("Lo volvería a hacer.")
+                    .build();
+            reviewRepository.save(review15);
+            ReviewEntity review16 = ReviewEntity.builder()
+                    .user(userRepository.findById(1L).get())
+                    .touristPlan(touristPlanRepository.findById(8L).get())
+                    .rating(5)
+                    .comment("Excelente tour, lo recomiendo.")
+                    .build();
+            reviewRepository.save(review16);
+            ReviewEntity review17 = ReviewEntity.builder()
+                    .user(userRepository.findById(2L).get())
+                    .touristPlan(touristPlanRepository.findById(9L).get())
+                    .rating(4)
+                    .comment("Muy buena experiencia.")
+                    .build();
+            reviewRepository.save(review17);
+            ReviewEntity review18 = ReviewEntity.builder()
+                    .user(userRepository.findById(3L).get())
+                    .touristPlan(touristPlanRepository.findById(9L).get())
+                    .rating(5)
+                    .comment("Increíble tour.")
+                    .build();
+            reviewRepository.save(review18);
+            ReviewEntity review19 = ReviewEntity.builder()
+                    .user(userRepository.findById(4L).get())
+                    .touristPlan(touristPlanRepository.findById(10L).get())
+                    .rating(4)
+                    .comment("Muy buena atención.")
+                    .build();
+            reviewRepository.save(review19);
+            ReviewEntity review20 = ReviewEntity.builder()
+                    .user(userRepository.findById(5L).get())
+                    .touristPlan(touristPlanRepository.findById(10L).get())
+                    .rating(5)
+                    .comment("Lo volvería a hacer.")
+                    .build();
+            reviewRepository.save(review20);
+            ReviewEntity review21 = ReviewEntity.builder()
+                    .user(userRepository.findById(1L).get())
+                    .touristPlan(touristPlanRepository.findById(11L).get())
+                    .rating(5)
+                    .comment("Excelente tour, lo recomiendo.")
+                    .build();
+            reviewRepository.save(review21);
+            ReviewEntity review22 = ReviewEntity.builder()
+                    .user(userRepository.findById(2L).get())
+                    .touristPlan(touristPlanRepository.findById(11L).get())
+                    .rating(4)
+                    .comment("Muy buena experiencia.")
+                    .build();
+            reviewRepository.save(review22);
+        }
+
+        List<ReservationEntity> reservations = reservationRepository.findAll();
+        if (reservations.isEmpty()){
+            ReservationEntity reservation1 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(1L).get())
+                    .user(userRepository.findById(1L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation1);
+            ReservationEntity reservation2 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(2L).get())
+                    .user(userRepository.findById(2L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation2);
+            ReservationEntity reservation3 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(3L).get())
+                    .user(userRepository.findById(3L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation3);
+            ReservationEntity reservation4 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(4L).get())
+                    .user(userRepository.findById(4L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation4);
+            ReservationEntity reservation5 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(5L).get())
+                    .user(userRepository.findById(5L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation5);
+            ReservationEntity reservation6 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(6L).get())
+                    .user(userRepository.findById(1L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation6);
+            ReservationEntity reservation7 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(7L).get())
+                    .user(userRepository.findById(2L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation7);
+            ReservationEntity reservation8 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(8L).get())
+                    .user(userRepository.findById(3L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation8);
+            ReservationEntity reservation9 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(9L).get())
+                    .user(userRepository.findById(4L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation9);
+            ReservationEntity reservation10 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(10L).get())
+                    .user(userRepository.findById(5L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation10);
+            ReservationEntity reservation11 = ReservationEntity.builder()
+                    .touristPlan(touristPlanRepository.findById(11L).get())
+                    .user(userRepository.findById(1L).get())
+                    .startDate(LocalDate.of(2024, 11, 1))
+                    .endDate(LocalDate.of(2024, 11, 3))
+                    .peopleCount(2)
+                    .build();
+            reservationRepository.save(reservation11);
+        }
+
+
+
+
     }
 }

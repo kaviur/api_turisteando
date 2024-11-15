@@ -39,7 +39,7 @@ public class CategoryEntity {
     @Size(max = 255, message = "La descripción de la categoría no puede tener más de 255 caracteres")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private ImageEntity image;
 

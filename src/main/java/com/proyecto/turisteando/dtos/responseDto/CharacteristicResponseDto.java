@@ -10,6 +10,6 @@ import java.io.Serializable;
 public class CharacteristicResponseDto implements IDto, Serializable {
     Long id;
     String name;
-    String icon;
+    ImageResponseDto icon;
 
 }

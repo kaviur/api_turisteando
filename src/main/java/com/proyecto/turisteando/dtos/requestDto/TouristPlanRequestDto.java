@@ -64,6 +64,6 @@ public class TouristPlanRequestDto implements IDto {
     private String duration;
 
     @NotEmpty(message = "Las características no pueden estar vacías")
-    private List<CharacteristicEntity> characteristic;
+    private List<Long> characteristicIds;
 
 }

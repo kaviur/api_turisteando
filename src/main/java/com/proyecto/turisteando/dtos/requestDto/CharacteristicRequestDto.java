@@ -20,6 +20,6 @@ public class CharacteristicRequestDto implements Serializable, IDto {
     @Size(min = 3, max = 50, message = "El nombre de la característica debe tener entre 3 y 50 caracteres")
     String name;
 
-    @NotEmpty(message = "El icono de la característica no puede estar vacío")
+//    @NotNull(message = "El icono de la característica no puede estar vacío")
     MultipartFile icon;
 }

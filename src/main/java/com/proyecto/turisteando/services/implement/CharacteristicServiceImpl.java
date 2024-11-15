@@ -152,9 +152,6 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
         return characteristicMapper.toDto(updatedCharacteristic);
     }
 
-
-
-
     @Override
     public IDto delete(Long id) {
         CharacteristicEntity characteristicEntity = characteristicRepository.findByIdAndStatus(id, 1)
@@ -176,5 +173,9 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
 
         characteristicRepository.save(characteristicEntity);
         return characteristicMapper.toDto(characteristicEntity);
+    }
+
+    public List<CharacteristicEntity> getCharacteristicsByIds(List<Long> characteristicIds) {
+        return characteristicRepository.findAllById(characteristicIds);
     }
 }

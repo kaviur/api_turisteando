@@ -6,6 +6,7 @@ import com.proyecto.turisteando.repositories.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +48,9 @@ public class DataLoader implements CommandLineRunner{
 
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -1838,7 +1842,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("Harry")
                     .lastName("Potter")
                     .email("harry@gmail.com")
-                    .password("123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.BUYER)
                     .build();
             userRepository.save(user1);
@@ -1846,7 +1850,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("Hermione")
                     .lastName("Granger")
                     .email("hermione@gmail.com")
-                    .password("123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.BUYER)
                     .build();
             userRepository.save(user2);
@@ -1854,7 +1858,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("Ron")
                     .lastName("Weasley")
                     .email("ron@gmail.com")
-                    .password("123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.BUYER)
                     .build();
             userRepository.save(user3);
@@ -1862,7 +1866,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("Albus")
                     .lastName("Dumbledore")
                     .email("albus@gmail.com")
-                    .password("123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.BUYER)
                     .build();
             userRepository.save(user4);
@@ -1870,7 +1874,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("Severus")
                     .lastName("Snape")
                     .email("severus@gmail.com")
-                    .password("123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.BUYER)
                     .build();
             userRepository.save(user5);
@@ -1878,7 +1882,7 @@ public class DataLoader implements CommandLineRunner{
                     .name("admin")
                     .lastName("admin")
                     .email("admin@gmail.com")
-                    .password("admin123456")
+                    .password(passwordEncoder.encode("123456"))
                     .role(Role.ADMIN)
                     .build();
             userRepository.save(user6);
@@ -2133,9 +2137,5 @@ public class DataLoader implements CommandLineRunner{
                     .build();
             reservationRepository.save(reservation11);
         }
-
-
-
-
     }
 }

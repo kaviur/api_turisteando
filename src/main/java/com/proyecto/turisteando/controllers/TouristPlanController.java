@@ -66,7 +66,7 @@ public class TouristPlanController {
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> updateTouristPlan(
-            @Validated @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
+            @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
             @RequestPart(value = "images", required = false) List<MultipartFile> images,
             @PathVariable Long id) {
 

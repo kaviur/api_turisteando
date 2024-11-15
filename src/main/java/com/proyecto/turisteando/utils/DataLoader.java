@@ -93,31 +93,31 @@ public class DataLoader implements CommandLineRunner {
         }
 
         // Cargar categorías (si no existen)
-//        List<CategoryEntity> categories = categoryRepository.findAll();
-//        if (categories.isEmpty()) {
-//            // Guardar imágenes como entidades
-//            List<ImageEntity> images = Arrays.asList(
-//                    ImageEntity.builder().imageUrl("https://example.com/images/tours.jpg").build(),
-//                    ImageEntity.builder().imageUrl("https://example.com/images/activities.jpg").build()
-//            );
-//            List<ImageEntity> savedImages = imageRepository.saveAll(images);
-//
-//            // Crear categorías con las imágenes asociadas
-//            categoryRepository.saveAll(Arrays.asList(
-//                    CategoryEntity.builder()
-//                            .name("Tours")
-//                            .status((byte) 1)
-//                            .description("Recorridos turísticos...")
-//                            .image(savedImages.get(0)) // Asociar la primera imagen
-//                            .build(),
-//                    CategoryEntity.builder()
-//                            .name("Actividades")
-//                            .status((byte) 1)
-//                            .description("Actividades al aire libre...")
-//                            .image(savedImages.get(1)) // Asociar la segunda imagen
-//                            .build()
-//            ));
-//        }
+        List<CategoryEntity> categories = categoryRepository.findAll();
+        if (categories.isEmpty()) {
+            // Guardar imágenes como entidades
+            List<ImageEntity> images = Arrays.asList(
+                    ImageEntity.builder().imageUrl("https://example.com/images/tours.jpg").build(),
+                    ImageEntity.builder().imageUrl("https://example.com/images/activities.jpg").build()
+            );
+            List<ImageEntity> savedImages = imageRepository.saveAll(images);
+
+            // Crear categorías con las imágenes asociadas
+            categoryRepository.saveAll(Arrays.asList(
+                    CategoryEntity.builder()
+                            .name("Tours")
+                            .status((byte) 1)
+                            .description("Recorridos turísticos...")
+                            .image(savedImages.get(0)) // Asociar la primera imagen
+                            .build(),
+                    CategoryEntity.builder()
+                            .name("Actividades")
+                            .status((byte) 1)
+                            .description("Actividades al aire libre...")
+                            .image(savedImages.get(1)) // Asociar la segunda imagen
+                            .build()
+            ));
+        }
 //
 //
 //        if (categories.isEmpty()) {
@@ -161,6 +161,50 @@ public class DataLoader implements CommandLineRunner {
 //            ).toList();
 //            characteristicRepository.saveAll(newCharacteristicsList);
 //        }
+
+        List<CharacteristicEntity> characteristicsListEntities = characteristicRepository.findAll();
+        if (characteristicsListEntities.isEmpty()) {
+            List<String> characteristics = Arrays.asList(
+                    "Caminata",
+                    "Tren",
+                    "Hotel",
+                    "Comida incluida",
+                    "Wifi incluido",
+                    "Piscina",
+                    "Parque",
+                    "Accesibilidad",
+                    "Pets Friendly",
+                    "Niños"
+            );
+
+            // Crear y guardar las entidades de imagen primero
+            List<ImageEntity> images = characteristics.stream().map(characteristic -> {
+                ImageEntity imageEntity = new ImageEntity();
+                imageEntity.setImageUrl("https://example.com/images/" + characteristic.toLowerCase().replace(" ", "-") + ".jpg");
+                return imageEntity;
+            }).toList();
+
+            // Guardar todas las imágenes y obtener las entidades persistidas
+            List<ImageEntity> savedImages = imageRepository.saveAll(images);
+
+            // Asociar cada característica con su imagen correspondiente
+            List<CharacteristicEntity> newCharacteristicsList = characteristics.stream()
+                    .map(characteristic -> {
+                        // Obtener la imagen correspondiente para esta característica
+                        ImageEntity associatedImage = savedImages.get(characteristics.indexOf(characteristic));
+
+                        // Crear la característica y asociarla con la imagen
+                        return CharacteristicEntity.builder()
+                                .name(characteristic)
+                                .status((byte) 1)
+                                .icon(associatedImage)
+                                .build();
+                    })
+                    .toList();
+
+            // Guardar todas las entidades de características con las imágenes asociadas
+            characteristicRepository.saveAll(newCharacteristicsList);
+        }
 
         List<CharacteristicEntity> characteristicsList = characteristicRepository.findAll();
         List<CityEntity> cities = cityRepository.findAll();

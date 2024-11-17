@@ -33,7 +33,7 @@ public class CharacteristicEntity {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private ImageEntity icon;
+    private ImageEntity image;
 
     @ManyToMany(mappedBy = "characteristic")
     private List<TouristPlanEntity> touristPlan;

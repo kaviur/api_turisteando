@@ -1,10 +1,8 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.IDto;
-import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
 import com.proyecto.turisteando.dtos.requestDto.CharacteristicRequestDto;
 
-import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.entities.CharacteristicEntity;
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CharacteristicNotFoundException;
@@ -94,7 +92,7 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
                 iconEntity.setImageUrl(iconUrl);
 
                 CharacteristicEntity characteristicEntity = characteristicMapper.toEntity(characteristicDto);
-                characteristicEntity.setIcon(iconEntity);
+                characteristicEntity.setImage(iconEntity);
 
                 CharacteristicEntity savedCharacteristic = characteristicRepository.save(characteristicEntity);
 
@@ -130,7 +128,7 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
         if (characteristicDto.getIcon() != null && !characteristicDto.getIcon().isEmpty()) {
 
             // Eliminar la imagen anterior de Cloudinary si existe
-            fileUploadService.deleteExistingImages(Collections.singletonList(characteristic.getIcon().getImageUrl()));
+            fileUploadService.deleteExistingImages(Collections.singletonList(characteristic.getImage().getImageUrl()));
 
             // Validar y guardar la nueva imagen
             fileValidator.validateFiles(Collections.singletonList(characteristicDto.getIcon()));  // Validación
@@ -141,7 +139,7 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
             iconEntity.setImageUrl(imageUrl);
             imageRepository.save(iconEntity); // Guardar la nueva imagen en la base de datos
 
-            characteristic.setIcon(iconEntity);
+            characteristic.setImage(iconEntity);
         }
 
         // Actualizar los demás campos de la característica con los valores del DTO recibido

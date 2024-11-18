@@ -110,8 +110,8 @@ public class DataLoader implements CommandLineRunner{
         if (categories.isEmpty()) {
             // Guardar imágenes como entidades
             List<ImageEntity> images = Arrays.asList(
-                    ImageEntity.builder().imageUrl("https://example.com/images/tours.jpg").build(),
-                    ImageEntity.builder().imageUrl("https://example.com/images/activities.jpg").build()
+                    ImageEntity.builder().imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706042/toursico_hhtvjd.png").build(),
+                    ImageEntity.builder().imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706279/Actividadico_vwoocb.png").build()
             );
 //            List<ImageEntity> savedImages = imageRepository.saveAll(images);
 
@@ -148,24 +148,34 @@ public class DataLoader implements CommandLineRunner{
                     "Niños"
             );
 
+            List<String> imageUrls = Arrays.asList(
+                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/caminataIco_hkgi1a.png",
+                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/trenIco_als9ww.png",
+                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/hotelIco_qckl5o.png",
+                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/comidaIco_bvsss0.png",
+                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706774/wifiIco_rc3911.png",
+                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706894/swimming-pool_7492829_lw1sjf.png",
+                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706963/playground_2204154_shilwq.png",
+                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706905/disabled_1467235_sntidk.png",
+                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706901/pet-friendly_2059755_mogvk2.png",
+                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706911/age-group_3787843_n0ervf.png"
+            );
+
             // Crear y guardar las entidades de imagen primero
             List<ImageEntity> images = characteristics.stream().map(characteristic -> {
                 ImageEntity imageEntity = new ImageEntity();
-                imageEntity.setImageUrl("https://example.com/images/" + characteristic.toLowerCase().replace(" ", "-") + ".jpg");
+                imageEntity.setImageUrl(imageUrls.get(characteristics.indexOf(characteristic)));
                 return imageEntity;
             }).toList();
 
             // Asociar cada característica con su imagen correspondiente
             List<CharacteristicEntity> newCharacteristicsList = characteristics.stream()
                     .map(characteristic -> {
-                        // Obtener la imagen correspondiente para esta característica
-                        ImageEntity associatedImage = images.get(characteristics.indexOf(characteristic));
-
                         // Crear la característica y asociarla con la imagen
                         return CharacteristicEntity.builder()
                                 .name(characteristic)
                                 .status((byte) 1)
-                                .image(associatedImage)
+                                .image(images.get(characteristics.indexOf(characteristic))) // Asociar la imagen correspondiente
                                 .build();
                     })
                     .toList();

@@ -43,7 +43,8 @@ public class GlobalExceptionHandler {
             CountryNotFoundException.class,
             ImageNotFoundException.class,
             ReservationNotFoundException.class,
-            ReviewNotFoundException.class
+            ReviewNotFoundException.class,
+            FavoriteNotFoundException.class,
     })
 
     public ResponseEntity<Object> handleNotFoundException(Exception ex) {

@@ -170,20 +170,26 @@ public class CategoryServiceImpl implements ICategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException("No se encontró la categoría"));
 
         if (categoryDto.getImage() != null && !categoryDto.getImage().isEmpty()) {
-
-            // Eliminar la imagen anterior de Cloudinary
-            fileUploadService.deleteExistingImages(Collections.singletonList(category.getImage().getImageUrl()));
-
-            // Validar y guardar la nueva imagen
-            fileValidator.validateFiles(Collections.singletonList(categoryDto.getImage()));  // Validación
+            // Validar y subir la nueva imagen en cloudinary
+            fileValidator.validateFiles(Collections.singletonList(categoryDto.getImage()));
             List<String> imageUrls = fileUploadService.saveImage(Collections.singletonList(categoryDto.getImage()));
-            String imageUrl = imageUrls.get(0); // sólo se carga una imagen
+            String newImageUrl = imageUrls.get(0);
 
-            ImageEntity imageEntity = new ImageEntity();
-            imageEntity.setImageUrl(imageUrl);
-            imageRepository.save(imageEntity);
+            // Actualizar los datos de la imagen existente
+            ImageEntity existingImage = category.getImage();
+            if (existingImage != null) {
+                // Eliminar el archivo anterior de Cloudinary
+                fileUploadService.deleteExistingImages(Collections.singletonList(category.getImage().getImageUrl()));
 
-            category.setImage(imageEntity);
+                existingImage.setImageUrl(newImageUrl);
+                imageRepository.save(existingImage); // Guardar cambios en la imagen existente
+            } else {
+                // Si no hay imagen existente, crear una nueva
+                ImageEntity newImage = new ImageEntity();
+                newImage.setImageUrl(newImageUrl);
+                imageRepository.save(newImage);
+                category.setImage(newImage);
+            }
         }
 
         // Actualizar los demás campos de la categoría con el DTO recibido

@@ -125,26 +125,34 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
         CharacteristicEntity characteristic = characteristicRepository.findById(id)
                 .orElseThrow(() -> new CharacteristicNotFoundException("No se encontró la característica"));
 
+        // Si se proporciona un nuevo ícono, validar y subir a Cloudinary
         if (characteristicDto.getIcon() != null && !characteristicDto.getIcon().isEmpty()) {
-
-            // Eliminar la imagen anterior de Cloudinary si existe
-            fileUploadService.deleteExistingImages(Collections.singletonList(characteristic.getImage().getImageUrl()));
-
-            // Validar y guardar la nueva imagen
-            fileValidator.validateFiles(Collections.singletonList(characteristicDto.getIcon()));  // Validación
+            fileValidator.validateFiles(Collections.singletonList(characteristicDto.getIcon()));
             List<String> imageUrls = fileUploadService.saveImage(Collections.singletonList(characteristicDto.getIcon()));
-            String imageUrl = imageUrls.get(0); // Solo se carga una imagen
+            String newImageUrl = imageUrls.get(0);
 
-            ImageEntity iconEntity = new ImageEntity();
-            iconEntity.setImageUrl(imageUrl);
-            imageRepository.save(iconEntity); // Guardar la nueva imagen en la base de datos
+            // Manejo del ícono existente o creación de uno nuevo
+            ImageEntity existingIcon = characteristic.getImage();
+            if (existingIcon != null) {
+                // Eliminar el ícono anterior de Cloudinary
+                fileUploadService.deleteExistingImages(Collections.singletonList(existingIcon.getImageUrl()));
 
-            characteristic.setImage(iconEntity);
+                // Actualizar la URL del ícono existente
+                existingIcon.setImageUrl(newImageUrl);
+                imageRepository.save(existingIcon);
+            } else {
+                // Crear un nuevo ícono si no existe uno asociado
+                ImageEntity newIcon = new ImageEntity();
+                newIcon.setImageUrl(newImageUrl);
+                imageRepository.save(newIcon);
+                characteristic.setImage(newIcon);
+            }
         }
 
         // Actualizar los demás campos de la característica con los valores del DTO recibido
         characteristicMapper.partialUpdate(characteristicDto, characteristic);
 
+        // Guardar la característica actualizada
         CharacteristicEntity updatedCharacteristic = characteristicRepository.save(characteristic);
 
         return characteristicMapper.toDto(updatedCharacteristic);

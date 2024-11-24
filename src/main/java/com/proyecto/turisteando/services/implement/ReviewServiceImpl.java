@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -100,12 +102,25 @@ public class ReviewServiceImpl implements IReviewService {
     public ReviewResponseDto delete(Long id) {
         ReviewEntity reviewEntity = reviewRepository.findById(id)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id " + id + " not found"));
+
+        // Obtener la autenticación del contexto de seguridad
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = auth.getName(); // Nombre del usuario autenticado
+
+        // Verificar si el usuario tiene el rol de ADMIN
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        // Validar si el usuario logueado es el creador de la review o un administrador
+        if (!reviewEntity.getUser().getUsername().equals(currentUsername) && !isAdmin) {
+            throw new UnauthorizedActionException("No tienes permisos para eliminar esta review");
+        }
+
         reviewEntity.setStatus((byte) 0);
         ReviewEntity deletedReview = reviewRepository.save(reviewEntity);
 
-        TouristPlanEntity plan = reviewEntity.getTouristPlan();
-
         // Actualizar el total de reseñas y estrellas en el plan tras eliminar reseña
+        TouristPlanEntity plan = reviewEntity.getTouristPlan();
         plan.setTotalReviews(plan.getTotalReviews() - 1);
         plan.setTotalStars(plan.getTotalStars() - reviewEntity.getRating());
         touristPlanRepository.save(plan);

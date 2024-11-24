@@ -71,7 +71,7 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
                     false,
                     HttpStatus.NOT_FOUND,
-                    "No reviews found for the given plan ID"
+                    "Aún no hay reseñas para este producto"
             ));
         }
         return ResponseEntity.ok(new Response(
@@ -91,7 +91,7 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
                     false,
                     HttpStatus.NOT_FOUND,
-                    "No reviews found for the given plan ID"
+                    "Aún no hay reseñas para este producto"
             ));
         }
         return ResponseEntity.ok(new Response(
@@ -110,7 +110,7 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
                     false,
                     HttpStatus.NOT_FOUND,
-                    "No reviews found for the given user ID"
+                    "No tienes reseñas aún"
             ));
         }
         return ResponseEntity.ok(new Response(
@@ -129,7 +129,7 @@ public class ReviewController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
                     false,
                     HttpStatus.NOT_FOUND,
-                    "No reviews found for the given plan ID and rating"
+                    "Aún no hay reseñas para este producto con ese rating"
             ));
         }
         return ResponseEntity.ok(new Response(

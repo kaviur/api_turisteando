@@ -52,11 +52,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ImageLimitExceededException.class)
-    public ResponseEntity<Response> handleImageLimitExceededException(ImageLimitExceededException ex) {
-        Response response = new Response(false, HttpStatus.BAD_REQUEST, ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> handleImageLimitExceededException(ImageLimitExceededException ex) {
+        log.warn("Límite de imágenes excedido: {}", ex.getMessage());
+        return buildErrorResponse(List.of(ex.getMessage()), ex, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UnauthorizedActionException.class)
+    public ResponseEntity<Object> handleUnauthorizedActionException(UnauthorizedActionException ex) {
+        log.warn("Acción no autorizada: {}", ex.getMessage());
+        return buildErrorResponse(List.of(ex.getMessage()), ex, HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(FileValidationException.class)
     public ResponseEntity<Object> handleFileValidationException(FileValidationException ex) {

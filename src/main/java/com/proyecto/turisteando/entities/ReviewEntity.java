@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,9 +25,10 @@ public class ReviewEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tourist_plan_id", nullable = false)
-    private TouristPlanEntity touristPlan;
+    @JsonIgnoreProperties("reviews") // Evitar recursión al serializar
+    private TouristPlanEntity touristPlan; // Relación con el plan turístico
 
     private int rating;
     private String comment;

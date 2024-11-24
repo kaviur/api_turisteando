@@ -25,7 +25,7 @@ public interface TouristPlanMapper {
     })
     TouristPlanEntity toEntity(TouristPlanRequestDto touristPlanRequestDto);
 
-    @Mapping(target = "rating", expression = "java(calculateRating(touristPlan))")
+    @Mapping(target = "rating", expression = "java(calculateRating(touristPlanEntity))")
     TouristPlanResponseDto toDto(TouristPlanEntity touristPlanEntity);
 
     List<TouristPlanResponseDto> toDtoList(List<TouristPlanEntity> touristPlanEntityList);

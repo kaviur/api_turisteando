@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TouristPlanRepository extends JpaRepository<TouristPlanEntity, Long> {
+    boolean existsByCategoryId(Long categoryId);
 }

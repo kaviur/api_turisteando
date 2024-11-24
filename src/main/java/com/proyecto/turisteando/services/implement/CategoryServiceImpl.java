@@ -5,9 +5,11 @@ import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
 import com.proyecto.turisteando.entities.CategoryEntity;
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CategoryNotFoundException;
+import com.proyecto.turisteando.exceptions.customExceptions.UnauthorizedActionException;
 import com.proyecto.turisteando.mappers.CategoryMapper;
 import com.proyecto.turisteando.repositories.CategoryRepository;
 import com.proyecto.turisteando.repositories.ImageRepository;
+import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.FileUploadService;
 import com.proyecto.turisteando.services.ICategoryService;
 import com.proyecto.turisteando.services.ICrudService;
@@ -43,6 +45,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private final FileValidator fileValidator;
     private final FileUploadService fileUploadService;
     private final ImageRepository imageRepository;
+    private final TouristPlanRepository touristPlanRepository;
 
     /**
      * Retrieves all available categories.
@@ -215,6 +218,12 @@ public class CategoryServiceImpl implements ICategoryService {
         CategoryEntity categoryEntity = categoryRepository.findByIdAndStatus(id, 1)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la categorá a eliminar"));
 
+        // Verificar si hay productos asociados a esta categoría
+        boolean hasProducts = touristPlanRepository.existsByCategoryId(id); // Verificar si hay planes turísticos asociados
+        if (hasProducts) {
+            throw new UnauthorizedActionException("No se puede eliminar la categoría porque tiene productos asociados.");
+        }
+
         categoryEntity.setStatus((byte) 0);
         categoryRepository.save(categoryEntity);
 
@@ -229,6 +238,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @param id The ID of the category to toggle its status.
      * @return The DTO of the category with the updated status.
      */
+    //este no tiene la validación para que no se pueda desactivar una categoría con planes turísticos ya que podría ser una acción para un super admin
     @Override
     public IDto toggleStatus(Long id) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)

@@ -5,11 +5,10 @@ import com.proyecto.turisteando.dtos.responseDto.ReviewResponseDto;
 import com.proyecto.turisteando.entities.ReviewEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.entities.UserEntity;
-import com.proyecto.turisteando.exceptions.customExceptions.ReviewNotFoundException;
-import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
-import com.proyecto.turisteando.exceptions.customExceptions.UnauthorizedActionException;
+import com.proyecto.turisteando.exceptions.customExceptions.*;
 import com.proyecto.turisteando.mappers.ReviewMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
+import com.proyecto.turisteando.repositories.ReservationRepository;
 import com.proyecto.turisteando.repositories.ReviewRepository;
 import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.IReviewService;
@@ -30,6 +29,7 @@ public class ReviewServiceImpl implements IReviewService {
     private final TouristPlanRepository touristPlanRepository;
     private final IUserRepository userRepository;
     private final ReviewMapper reviewMapper;
+    private final ReservationRepository reservationRepository;
 
 
     @Override
@@ -47,6 +47,20 @@ public class ReviewServiceImpl implements IReviewService {
     @Override
     public ReviewResponseDto create(ReviewRequestDto reviewRequestDto) {
         try {
+            boolean hasReservation = reservationRepository.existsByUserIdAndTouristPlanId(
+                    reviewRequestDto.getIdUser(),
+                    reviewRequestDto.getPlanId());
+            if (!hasReservation) {
+                throw new ReviewWithoutReservationException("No se puede crear una reseña sin haber reservado el plan turístico");
+            }
+
+            boolean alreadyReviewed = reviewRepository.existsByUserIdAndTouristPlanId(
+                    reviewRequestDto.getIdUser(),
+                    reviewRequestDto.getPlanId());
+            if (alreadyReviewed) {
+                throw new ReviewAlreadyExistsException("Ya has realizado una reseña para este plan turístico");
+            }
+
             TouristPlanEntity touristPlan = touristPlanRepository.findById(reviewRequestDto.getPlanId())
                     .orElseThrow(() -> new TouristPlanNotFoundException("Tourist plan with id " + reviewRequestDto.getPlanId() + " not found"));
             UserEntity user = userRepository.findById(reviewRequestDto.getIdUser())

@@ -14,4 +14,5 @@ public class UserResponseDto {
     private String role;
     private Boolean isActive;
 
+
 }

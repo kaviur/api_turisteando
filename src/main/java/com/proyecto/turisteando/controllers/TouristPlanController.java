@@ -1,7 +1,9 @@
 package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
+import com.proyecto.turisteando.dtos.requestDto.UserFavoriteTouristPlan;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
+import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.services.ITouristPlanService;
 import com.proyecto.turisteando.utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,24 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/allfavoritesbyuserid/{userId}")
+    public ResponseEntity<Response> findAllFavoritesByUserId (@PathVariable Long userId) {
+        Response response = new Response(true, HttpStatus.OK, touristPlanService.findAllFavoritesByUserId(userId));
+        return ResponseEntity.ok(response);
+    }
+
+
+    @PutMapping("/addFavoriteToUser")
+    public ResponseEntity<Response> addUserFavoritePlan (@RequestBody UserFavoriteTouristPlan userPlans) {
+        touristPlanService.addUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
+        return ResponseEntity.ok(null);
+    }
+
+    @DeleteMapping("/deleteFavoriteToUser")
+    public ResponseEntity<Response> deleteUserFavoritePlan (@RequestBody UserFavoriteTouristPlan userPlans) {
+        touristPlanService.deleteUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
+        return ResponseEntity.ok(null);
+    }
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> updateTouristPlan(

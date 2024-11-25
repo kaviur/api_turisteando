@@ -1,6 +1,8 @@
 
 package com.proyecto.turisteando.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -36,6 +38,7 @@ public class CharacteristicEntity {
     private ImageEntity image;
 
     @ManyToMany(mappedBy = "characteristic")
+    @JsonBackReference
     private List<TouristPlanEntity> touristPlan;
 
 

@@ -4,6 +4,7 @@ import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageLimitExceededException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageNotFoundException;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
@@ -60,6 +61,21 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
         return filteredTouristPlans.stream()
                 .map(touristPlanMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TouristPlanEntity> findAllFavoritesByUserId(Long userId) {
+        return touristPlanRepository.usersFavorites(userId);
+    }
+
+    @Override
+    public void addUsersFavorites(Long userId, Long touristPlanId) {
+        touristPlanRepository.addUsersFavorites(userId, touristPlanId);
+    }
+
+    @Override
+    public void deleteUsersFavorites(Long userId, Long touristPlanId) {
+        touristPlanRepository.deleteUsersFavorites(userId, touristPlanId);
     }
 
     @Override

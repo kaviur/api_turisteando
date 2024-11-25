@@ -1,6 +1,8 @@
 package com.proyecto.turisteando.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.proyecto.turisteando.entities.enums.Role;
 import jakarta.persistence.*;
@@ -12,10 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -86,4 +85,15 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    // Relación muchos a muchos con los planes turísticos favoritos
+
+    @ManyToMany
+    @JoinTable(
+            name = "favorites_user_tourist_plan",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tourist_plan_id", unique = true)
+    )
+    private Set<TouristPlanEntity> favoritesTouristPlans;
+
 }

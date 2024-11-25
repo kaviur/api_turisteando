@@ -1,5 +1,7 @@
 package com.proyecto.turisteando.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -13,7 +15,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -64,6 +69,7 @@ public class TouristPlanEntity {
             name = "tourist_plan_characteristic",
             joinColumns = @JoinColumn(name = "tourist_plan_id"),
             inverseJoinColumns =  @JoinColumn(name = "characteristic_id"))
+    @JsonManagedReference
     private List<CharacteristicEntity> characteristic;
 
     @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -76,6 +82,11 @@ public class TouristPlanEntity {
 
     @Column(nullable = false)
     private Integer totalStars = 0; // Suma total de las estrellas para obtener el rating
+
+    // Relación muchos a muchos con los usuarios que tienen este plan como favorito
+    @ManyToMany(mappedBy = "favoritesTouristPlans" )
+    @JsonIgnore
+    private Set<UserEntity> usersFavorites;
 
     private boolean isActive;
 

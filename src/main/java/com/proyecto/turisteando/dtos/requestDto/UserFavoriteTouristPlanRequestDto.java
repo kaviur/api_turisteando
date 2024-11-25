@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserFavoriteTouristPlan {
+public class UserFavoriteTouristPlanRequestDto {
 
     private Long userId;
 

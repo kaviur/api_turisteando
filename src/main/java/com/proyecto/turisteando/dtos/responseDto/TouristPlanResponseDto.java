@@ -30,5 +30,9 @@ public class TouristPlanResponseDto implements IDto {
     private int capacity;
     private String duration;
     private List<CharacteristicResponseDto> characteristic;
+    private List<ReviewResponseDto> reviews;
+    private Integer totalReviews;
+    private Integer totalStars;
+    private Double rating; // Este será calculado en el mapper
     private boolean isActive;
 }

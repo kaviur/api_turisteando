@@ -72,6 +72,17 @@ public class TouristPlanEntity {
     @JsonManagedReference
     private List<CharacteristicEntity> characteristic;
 
+    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("touristPlan") // Evitar recursión al serializar
+    @JsonManagedReference // Manejar relaciones bidireccionales
+    private List<ReviewEntity> reviews;
+
+    @Column(nullable = false)
+    private Integer totalReviews = 0; // Cantidad total de reseñas para obtener el rating
+
+    @Column(nullable = false)
+    private Integer totalStars = 0; // Suma total de las estrellas para obtener el rating
+
     // Relación muchos a muchos con los usuarios que tienen este plan como favorito
     @ManyToMany(mappedBy = "favoritesTouristPlans" )
     @JsonIgnore

@@ -25,6 +25,7 @@ public interface TouristPlanMapper {
     })
     TouristPlanEntity toEntity(TouristPlanRequestDto touristPlanRequestDto);
 
+    @Mapping(target = "rating", expression = "java(calculateRating(touristPlanEntity))")
     TouristPlanResponseDto toDto(TouristPlanEntity touristPlanEntity);
 
     List<TouristPlanResponseDto> toDtoList(List<TouristPlanEntity> touristPlanEntityList);
@@ -48,6 +49,14 @@ public interface TouristPlanMapper {
     default List<CharacteristicEntity> getCharacteristicByIds(List<Long> characteristicIds,
                                                               @Context CharacteristicServiceImpl characteristicService) {
         return characteristicService.getCharacteristicsByIds(characteristicIds);
+    }
+
+    // Método para calcular el rating
+    default Double calculateRating(TouristPlanEntity touristPlan) {
+        if (touristPlan.getTotalReviews() == 0) {
+            return 0.0;
+        }
+        return (double) touristPlan.getTotalStars() / touristPlan.getTotalReviews();
     }
 
 }

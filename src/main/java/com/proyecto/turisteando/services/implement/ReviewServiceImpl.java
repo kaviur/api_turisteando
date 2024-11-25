@@ -7,6 +7,7 @@ import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.ReviewNotFoundException;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
+import com.proyecto.turisteando.exceptions.customExceptions.UnauthorizedActionException;
 import com.proyecto.turisteando.mappers.ReviewMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
 import com.proyecto.turisteando.repositories.ReviewRepository;
@@ -17,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,6 +54,13 @@ public class ReviewServiceImpl implements IReviewService {
             ReviewEntity reviewEntity = reviewMapper.toEntity(reviewRequestDto);
             reviewEntity.setTouristPlan(touristPlan);
             reviewEntity.setUser(user);
+
+            // Actualizar el total de reseñas y estrellas en el plan
+            touristPlan.setTotalReviews(touristPlan.getTotalReviews() + 1);
+            touristPlan.setTotalStars(touristPlan.getTotalStars() + reviewRequestDto.getRating());
+
+            touristPlanRepository.save(touristPlan); // Guardar el plan turístico con el nuevo cálculo
+
             return reviewMapper.toResponseDto(reviewRepository.save(reviewEntity));
         } catch (Exception e) {
             throw new ServiceException("Error creating review entity " + e.getMessage());
@@ -59,18 +69,62 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Override
     public ReviewResponseDto update(ReviewRequestDto reviewRequestDto, Long id) {
-        ReviewEntity reviewEntity = reviewRepository.findById(id)
+
+        ReviewEntity existingReview = reviewRepository.findById(id)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id " + id + " not found"));
-        ReviewEntity reviewEntityUpdated = reviewMapper.partialUpdate(reviewRequestDto, reviewEntity);
-        return reviewMapper.toResponseDto(reviewRepository.save(reviewEntityUpdated));
+
+        // Verificar que el usuario que está intentando actualizar sea el mismo que creó la review
+        if (!existingReview.getUser().getId().equals(reviewRequestDto.getIdUser())) {
+            throw new UnauthorizedActionException("Sólo el creador de la review puede modificarla");
+        }
+
+        // Obtener el plan turístico asociado
+        TouristPlanEntity touristPlan = existingReview.getTouristPlan();
+
+        // Restar el rating actual del total de estrellas del plan
+        touristPlan.setTotalStars(touristPlan.getTotalStars() - existingReview.getRating());
+
+        // Actualizar la review con el nuevo rating
+        ReviewEntity updatedReview = reviewMapper.partialUpdate(reviewRequestDto, existingReview);
+
+        // Agregar el nuevo rating al total de estrellas del plan
+        touristPlan.setTotalStars(touristPlan.getTotalStars() + updatedReview.getRating());
+
+        // Guardar los cambios en el plan turístico
+        touristPlanRepository.save(touristPlan);
+
+        // Guardar y retornar la review actualizada
+        return reviewMapper.toResponseDto(reviewRepository.save(updatedReview));
+
     }
 
     @Override
     public ReviewResponseDto delete(Long id) {
         ReviewEntity reviewEntity = reviewRepository.findById(id)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id " + id + " not found"));
+
+        // Obtener la autenticación del contexto de seguridad
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = auth.getName(); // Nombre del usuario autenticado
+
+        // Verificar si el usuario tiene el rol de ADMIN
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        // Validar si el usuario logueado es el creador de la review o un administrador
+        if (!reviewEntity.getUser().getUsername().equals(currentUsername) && !isAdmin) {
+            throw new UnauthorizedActionException("No tienes permisos para eliminar esta review");
+        }
+
         reviewEntity.setStatus((byte) 0);
         ReviewEntity deletedReview = reviewRepository.save(reviewEntity);
+
+        // Actualizar el total de reseñas y estrellas en el plan tras eliminar reseña
+        TouristPlanEntity plan = reviewEntity.getTouristPlan();
+        plan.setTotalReviews(plan.getTotalReviews() - 1);
+        plan.setTotalStars(plan.getTotalStars() - reviewEntity.getRating());
+        touristPlanRepository.save(plan);
+
         return reviewMapper.toResponseDto(deletedReview);
     }
 

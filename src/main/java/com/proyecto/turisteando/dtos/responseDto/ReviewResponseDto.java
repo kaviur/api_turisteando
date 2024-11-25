@@ -15,4 +15,5 @@ public class ReviewResponseDto implements Serializable, IDto {
     int rating;
     Date date;
     String comment;
+    UserResponseDto user;
 }

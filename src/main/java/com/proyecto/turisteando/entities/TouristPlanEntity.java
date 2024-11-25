@@ -1,6 +1,5 @@
 package com.proyecto.turisteando.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -15,8 +14,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -72,15 +69,17 @@ public class TouristPlanEntity {
     @JsonManagedReference
     private List<CharacteristicEntity> characteristic;
 
-    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("touristPlan") // Evitar recursión al serializar
     @JsonManagedReference // Manejar relaciones bidireccionales
     private List<ReviewEntity> reviews;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer totalReviews = 0; // Cantidad total de reseñas para obtener el rating
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer totalStars = 0; // Suma total de las estrellas para obtener el rating
 
     // Relación muchos a muchos con los usuarios que tienen este plan como favorito

@@ -92,8 +92,9 @@ public class UserEntity implements UserDetails {
     @JoinTable(
             name = "favorites_user_tourist_plan",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "tourist_plan_id", unique = true)
-    )
+            inverseJoinColumns = @JoinColumn(name = "tourist_plan_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tourist_plan_id"})
+                )
     private Set<TouristPlanEntity> favoritesTouristPlans;
 
 }

@@ -52,7 +52,7 @@ public class AuthService {
                     .build();
             userRepository.save(user);
 
-            // Enviar email de confirmación de registro para el usuario
+            // Enviar email de confirmación de registro para el usuario nuevo
 //            emailService.sendEmail(user.getEmail(), user.getName());
 
             String token = jwtService.generateToken(user);

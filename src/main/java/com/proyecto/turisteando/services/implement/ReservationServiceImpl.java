@@ -14,6 +14,7 @@ import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.IReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +80,7 @@ public class ReservationServiceImpl implements IReservationService {
             ReservationEntity savedReservation = reservationRepository.save(reservationEntity);
             return reservationMapper.toDto(savedReservation);
             } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
+                throw new ServiceException(e.getMessage());
             }
     }
 
@@ -91,7 +92,7 @@ public class ReservationServiceImpl implements IReservationService {
         reservationMapper.partialUpdate(dto, reservation);
         return reservationMapper.toDto(reservationRepository.save(reservation));
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -104,7 +105,7 @@ public class ReservationServiceImpl implements IReservationService {
             reservationRepository.delete(reservation);
             return reservationMapper.toDto(reservation);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -117,7 +118,7 @@ public class ReservationServiceImpl implements IReservationService {
             ReservationEntity updatedReservation = reservationRepository.save(reservation);
             return reservationMapper.toDto(updatedReservation);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 

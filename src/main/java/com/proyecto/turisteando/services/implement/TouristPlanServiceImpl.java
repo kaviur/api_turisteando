@@ -5,6 +5,7 @@ import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.entities.UserEntity;
+import com.proyecto.turisteando.exceptions.customExceptions.FileValidationException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageLimitExceededException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageNotFoundException;
 import com.proyecto.turisteando.exceptions.customExceptions.TouristPlanNotFoundException;
@@ -15,8 +16,10 @@ import com.proyecto.turisteando.services.FileUploadService;
 import com.proyecto.turisteando.services.IImageService;
 import com.proyecto.turisteando.services.ITouristPlanService;
 import com.proyecto.turisteando.utils.FileValidator;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +88,7 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
             return touristPlanMapper.toDto(touristPlan);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException("Error al leer el plan turistico: "  + e.getMessage());
         }
     }
 
@@ -115,124 +118,53 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
 
     @Override
     public TouristPlanResponseDto update(TouristPlanRequestDto dto, Long id) {
-        try {
-            TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
-                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turístico con el id: " + id));
 
-            // Actualizar el resto de los campos del plan turístico
-            touristPlanMapper.partialUpdate(dto, touristPlan);
+        TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
+                .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turístico con el id: " + id));
 
-            // Validación y eliminación de imágenes antiguas
-            List<String> imagesToDelete = dto.getImagesToDelete();
+        // Actualizar el resto de los campos del plan turístico
+        touristPlanMapper.partialUpdate(dto, touristPlan);
 
-            if (imagesToDelete != null && !imagesToDelete.isEmpty()) {
-                fileUploadService.deleteExistingImages(imagesToDelete);
+        // Obtener imágenes a eliminar y las nuevas imágenes
+        List<String> imagesToDelete = dto.getImagesToDelete();
+        List<MultipartFile> newImages = dto.getMultipartImages();
 
-                // Eliminar las entidades de imagen correspondientes de la base de datos
-                for (String imageUrl : imagesToDelete) {
-                    imageRepository.deleteByImageUrl(imageUrl);
-                }
+        if (imagesToDelete != null && !imagesToDelete.isEmpty()) {
+            if (newImages == null || newImages.size() != imagesToDelete.size()) {
+                throw new FileValidationException("La cantidad de imágenes nuevas debe coincidir con las imágenes a eliminar.");
             }
 
-            //guardar las nuevas imágenes
-            if (dto.getMultipartImages() != null && !dto.getMultipartImages().isEmpty()) {
+            fileValidator.validateFiles(newImages);
+            // Subir nuevas imágenes a Cloudinary
+            List<String> newImageUrls = fileUploadService.saveImage(newImages);
+            dto.setImagesUrl(newImageUrls);
 
-                fileValidator.validateFiles(dto.getMultipartImages());
+            // Reemplazar imágenes en la base de datos
+            for (int i = 0; i < imagesToDelete.size(); i++) {
+                String oldImageUrl = imagesToDelete.get(i);
+                String newImageUrl = newImageUrls.get(i);
 
-                List<String> newImageUrls = fileUploadService.saveImage(dto.getMultipartImages());
-                dto.setImagesUrl(newImageUrls);
+                // Buscar la entidad de imagen en la base de datos
+                ImageEntity imageEntity = imageRepository.findByImageUrl(oldImageUrl)
+                        .orElseThrow(() -> new ImageNotFoundException("La imagen con URL: " + oldImageUrl + " no existe."));
 
-                // Crear entidades de imagen para cada URL nueva y asociarlas al plan
-                List<ImageEntity> newImageEntities = newImageUrls.stream()
-                        .map(url -> ImageEntity.builder()
-                                .imageUrl(url)
-                                .touristPlan(touristPlan)
-                                .build())
-                        .collect(Collectors.toList());
-
-                // Añadir las nuevas imágenes a las imágenes existentes del plan
-                touristPlan.getImages().addAll(newImageEntities);
-                imageRepository.saveAll(newImageEntities);
+                // Actualizar la URL en la entidad
+                imageEntity.setImageUrl(newImageUrl);
+                imageRepository.save(imageEntity);
             }
 
-            // Validar que el total de imágenes no exceda el límite de 5
-            if (touristPlan.getImages().size() > 5) {
-                throw new ImageLimitExceededException("No se pueden cargar más de 5 imágenes por plan turístico");
-            }
-
-            return touristPlanMapper.toDto(touristPlanRepository.save(touristPlan));
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar el plan turístico: " + e.getMessage());
+            // Eliminar las imágenes antiguas de Cloudinary
+            fileUploadService.deleteExistingImages(imagesToDelete);
         }
-    }
 
-//    @Override
-//    public TouristPlanResponseDto update(TouristPlanRequestDto dto, Long id) {
-//        try {
-//            TouristPlanEntity touristPlan = touristPlanRepository.findById(id)
-//                    .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turístico con el id: " + id));
-//
-//            // Actualizar el resto de los campos del plan turístico
-//            touristPlanMapper.partialUpdate(dto, touristPlan);
-//
-//            // Si hay imágenes en el DTO, gestionarlas
-//            if (dto.getMultipartImages() != null && !dto.getMultipartImages().isEmpty()) {
-//                // Obtener las imágenes existentes asociadas al plan turístico
-//                List<String> existingImages = touristPlan.getImages().stream()
-//                        .map(ImageEntity::getImageUrl)
-//                        .collect(Collectors.toList());
-//
-//                // Comparar imágenes existentes con las nuevas imágenes para determinar qué imágenes eliminar
-//                List<String> imagesToKeep = new ArrayList<>(existingImages);  // Inicialmente, conservar todas las imágenes existentes
-//                List<String> imagesToDelete = new ArrayList<>();
-//
-//                // Identificar las imágenes que deben eliminarse
-//                for (String existingImage : existingImages) {
-//                    if (!dto.getMultipartImages().contains(existingImage)) {
-//                        imagesToDelete.add(existingImage);
-//                        imagesToKeep.remove(existingImage); // Si se elimina, quitarla de las que se conservan
-//                    }
-//                }
-//
-//                // Eliminar las entidades de imagen en la base de datos usando el método `delete` del servicio
-//                for (String imageUrl : imagesToDelete) {
-//                    // Obtener el ID de la imagen basada en la URL
-//                    Long imageId = touristPlan.getImages().stream()
-//                            .filter(img -> img.getImageUrl().equals(imageUrl))
-//                            .map(ImageEntity::getId)
-//                            .findFirst()
-//                            .orElseThrow(() -> new ImageNotFoundException("No existe una imagen con URL: " + imageUrl));
-//
-//                    // Llamar al método delete del servicio de imágenes para eliminar la imagen de la base de datos
-//                    imageService.delete(imageId);
-//                }
-//
-//                // Llamar al servicio para actualizar las imágenes, gestionando las imágenes a conservar, eliminar y las nuevas
-//                List<String> finalImages = fileUploadService.updateImage(imagesToKeep, imagesToDelete, dto.getMultipartImages());
-//
-//                // Validar que el total de imágenes no exceda el límite de 5
-//                if (finalImages.size() > 5) {
-//                    throw new ImageLimitExceededException("No se pueden cargar más de 5 imágenes por plan turístico");
-//                }
-//
-//                // Crear las nuevas entidades de imagen con las URLs de las imágenes finales
-//                List<ImageEntity> imageEntities = finalImages.stream()
-//                        .map(url -> ImageEntity.builder()
-//                                .imageUrl(url)
-//                                .touristPlan(touristPlan)
-//                                .build())
-//                        .collect(Collectors.toList());
-//
-//
-//                touristPlan.setImages(imageEntities);
-//            }
-//
-//            return touristPlanMapper.toDto(touristPlanRepository.save(touristPlan));
-//        } catch (Exception e) {
-//            throw new RuntimeException("Error al actualizar el plan turístico: " + e.getMessage());
-//        }
-//    }
+        // Validar que el total de imágenes no exceda el límite de 5
+        if (touristPlan.getImages().size() > 5) {
+            throw new ImageLimitExceededException("No se pueden cargar más de 5 imágenes por plan turístico");
+        }
+
+        return touristPlanMapper.toDto(touristPlanRepository.save(touristPlan));
+
+    }
 
 
     @Override
@@ -244,7 +176,7 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
             touristPlanRepository.save(touristPlan);
             return touristPlanMapper.toDto(touristPlan);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -257,7 +189,7 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
             touristPlanRepository.save(touristPlan);
             return touristPlanMapper.toDto(touristPlan);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 

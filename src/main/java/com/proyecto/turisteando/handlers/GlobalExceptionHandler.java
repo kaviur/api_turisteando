@@ -4,6 +4,7 @@ import com.proyecto.turisteando.exceptions.customExceptions.*;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.QueryTimeoutException;
@@ -73,6 +74,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleFileUploadException(FileUploadException ex) {
         log.error("Error de carga de archivo: {}", ex.getMessage(), ex);
         return buildErrorResponse(List.of(ex.getMessage()), ex, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ServiceException.class)
+    public ResponseEntity<Object> handleServiceException(ServiceException ex) {
+        log.error("Error en el servicio: {}", ex.getMessage(), ex);
+        return buildErrorResponse(List.of(ex.getMessage()), ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

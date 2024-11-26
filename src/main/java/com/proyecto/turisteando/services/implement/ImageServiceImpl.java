@@ -14,6 +14,7 @@ import com.proyecto.turisteando.repositories.TouristPlanRepository;
 import com.proyecto.turisteando.services.ICrudService;
 import com.proyecto.turisteando.services.IImageService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -47,7 +48,7 @@ public class ImageServiceImpl implements IImageService {
             return imageMapper.toDto(imageEntity);
 
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
 
 
@@ -69,7 +70,7 @@ public class ImageServiceImpl implements IImageService {
         return imageMapper.toDto(imageEntity);
 
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -82,7 +83,7 @@ public class ImageServiceImpl implements IImageService {
             imageMapper.partialUpdate((ImageRequestDto) dto, imageEntity);
             return imageMapper.toDto(imageRepository.save(imageEntity));
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
 
     }
@@ -96,7 +97,7 @@ public class ImageServiceImpl implements IImageService {
             imageRepository.save(imageEntity);
             return imageMapper.toDto(imageEntity);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 

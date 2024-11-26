@@ -145,9 +145,9 @@ public class CategoryServiceImpl implements ICategoryService {
             if (e.getMessage().contains("name")) {
                 throw new ServiceException("Ya existe la categoría", e);
             }
-            throw new ServiceException("Error al crear la categoría", e);
+            throw new ServiceException("Error al crear la categoría: " + e.getMessage());
         } catch (Exception e) {
-            throw new ServiceException("Error al crear la categoría: ", e);
+            throw new ServiceException("Error al crear la categoría: " + e.getMessage());
         }
     }
 

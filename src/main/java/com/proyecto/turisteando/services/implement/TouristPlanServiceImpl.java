@@ -48,7 +48,7 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
 
     @Override
     public Iterable<TouristPlanResponseDto> getAll() {
-        Iterable<TouristPlanEntity> allTouristPlans = touristPlanRepository.findAll();
+        Iterable<TouristPlanEntity> allTouristPlans = touristPlanRepository.findByIsActiveTrue();
         return StreamSupport.stream(allTouristPlans.spliterator(), false)
                 .map(touristPlanMapper::toDto)
                 .collect(Collectors.toList());

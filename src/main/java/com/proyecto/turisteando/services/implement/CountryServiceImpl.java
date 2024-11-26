@@ -6,6 +6,7 @@ import com.proyecto.turisteando.exceptions.customExceptions.CountryNotFoundExcep
 import com.proyecto.turisteando.mappers.CountryMapper;
 import com.proyecto.turisteando.repositories.CountryRepository;
 import com.proyecto.turisteando.services.CrudService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
                     .map(countryMapper::toDto)
                     .toList();
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -39,7 +40,7 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
                     .orElseThrow(() -> new CountryNotFoundException("No existe un país con el id: " + id));
             return countryMapper.toDto(country);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -54,7 +55,7 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
             CountryEntity country = countryMapper.toEntity(dto);
             return countryMapper.toDto(country);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -67,7 +68,7 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
             countryRepository.save(country);
             return countryMapper.toDto(country);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -79,7 +80,7 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
             countryRepository.delete(country);
             return countryMapper.toDto(country);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 

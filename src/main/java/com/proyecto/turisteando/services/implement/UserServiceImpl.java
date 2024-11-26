@@ -6,6 +6,7 @@ import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.mappers.IUserMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
 import com.proyecto.turisteando.services.IUserService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         try {
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -55,7 +56,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             userRepository.save(userEntity);
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -68,7 +69,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             userRepository.save(userEntity);
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -81,7 +82,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             userRepository.save(userEntity);
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -98,7 +99,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         try {
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 

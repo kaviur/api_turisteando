@@ -3,7 +3,6 @@ package com.proyecto.turisteando.dtos.requestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proyecto.turisteando.dtos.IDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import com.proyecto.turisteando.entities.CharacteristicEntity;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

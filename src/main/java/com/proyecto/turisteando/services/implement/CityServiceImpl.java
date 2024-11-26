@@ -7,6 +7,7 @@ import com.proyecto.turisteando.exceptions.customExceptions.CityNotFoundExceptio
 import com.proyecto.turisteando.mappers.CityMapper;
 import com.proyecto.turisteando.repositories.CityRepository;
 import com.proyecto.turisteando.services.CrudService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class CityServiceImpl implements CrudService<CityRequestDto, CityResponse
                     .map(cityMapper::toDto)
                     .toList();
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -40,7 +41,7 @@ public class CityServiceImpl implements CrudService<CityRequestDto, CityResponse
                     .orElseThrow(() -> new CityNotFoundException("No existe la ciudad con id: " + id));
             return cityMapper.toDto(city);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -55,7 +56,7 @@ public class CityServiceImpl implements CrudService<CityRequestDto, CityResponse
             CityEntity city = cityMapper.toEntity(dto);
             return cityMapper.toDto(cityRepository.save(city));
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
     }
 

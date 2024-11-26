@@ -111,9 +111,9 @@ public class CharacteristicServiceImpl implements ICharacteristicService {
             if (e.getMessage().contains("name")) {
                 throw new ServiceException("Ya existe la característica con ese nombre", e);
             }
-            throw new ServiceException("Error al crear la característica", e);
+            throw new ServiceException("Error al crear la característica: "+ e.getMessage());
         } catch (Exception e) {
-            throw new ServiceException("Error al crear la característica", e);
+            throw new ServiceException("Error al crear la característica: "+ e.getMessage());
         }
     }
 

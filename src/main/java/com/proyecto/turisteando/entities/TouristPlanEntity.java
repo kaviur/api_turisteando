@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -75,12 +73,10 @@ public class TouristPlanEntity {
     private List<ReviewEntity> reviews;
 
     @Column(nullable = false)
-    @Builder.Default
-    private Integer totalReviews = 0; // Cantidad total de reseñas para obtener el rating
+    private Integer totalReviews; // Cantidad total de reseñas para obtener el rating
 
     @Column(nullable = false)
-    @Builder.Default
-    private Integer totalStars = 0; // Suma total de las estrellas para obtener el rating
+    private Integer totalStars; // Suma total de las estrellas para obtener el rating
 
     // Relación muchos a muchos con los usuarios que tienen este plan como favorito
     @ManyToMany(mappedBy = "favoritesTouristPlans" )
@@ -99,6 +95,12 @@ public class TouristPlanEntity {
 
     @PrePersist
     protected void onCreate(){
+        if (this.totalReviews == null) {
+            this.totalReviews = 0;
+        }
+        if (this.totalStars == null) {
+            this.totalStars = 0;
+        }
         this.isActive = true;
     }
 

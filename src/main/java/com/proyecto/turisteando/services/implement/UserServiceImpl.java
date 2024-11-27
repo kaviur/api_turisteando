@@ -28,7 +28,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public Iterable<UserResponseDto> getAll() {
-        return userMapper.toDtoList(userRepository.findAll());
+        return userMapper.toDtoList(userRepository.findByIsActiveTrue());
     }
 
     @Override
@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public UserResponseDto getCurrentUser(Authentication authentication) {
-        UserEntity  userEntity = userRepository.findByEmail(authentication.getName())
+        UserEntity userEntity = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
         try {
             return userMapper.toDto(userEntity);

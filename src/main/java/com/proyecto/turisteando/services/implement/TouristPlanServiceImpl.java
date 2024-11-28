@@ -5,7 +5,6 @@ import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
-import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.FileValidationException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageLimitExceededException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageNotFoundException;
@@ -68,12 +67,16 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
     }
 
     @Override
-    public List<TouristPlanEntity> findAllFavoritesByUserId(Long userId) {
-        return touristPlanRepository.usersFavorites(userId);
+    public List<TouristPlanResponseDto> findAllFavoritesByUserId(Long userId) {
+        return touristPlanMapper.toDtoList(touristPlanRepository.usersFavorites(userId));
     }
 
     @Override
     public void addUsersFavorites(Long userId, Long touristPlanId) {
+        boolean exists = touristPlanRepository.existsByIdAndUsersFavorites_Id(touristPlanId, userId);
+        if (exists) {
+            throw new ServiceException("El usuario ya tiene este plan turístico como favorito.");
+        }
         touristPlanRepository.addUsersFavorites(userId, touristPlanId);
     }
 
@@ -89,7 +92,7 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
             return touristPlanMapper.toDto(touristPlan);
         } catch (Exception e) {
-            throw new ServiceException("Error al leer el plan turistico: "  + e.getMessage());
+            throw new ServiceException("Error al leer el plan turistico: " + e.getMessage());
         }
     }
 

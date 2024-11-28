@@ -32,8 +32,16 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth
-                            .requestMatchers("/api/categories/**").hasAuthority(Role.ADMIN.toString())
-                            .requestMatchers("/api/cities/**").hasAuthority(Role.ADMIN.name())
+                            .requestMatchers(HttpMethod.POST ,"/api/categories/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.PUT ,"/api/categories/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.PATCH ,"/api/categories/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.POST ,"/api/characteristics/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.PUT ,"/api/characteristics/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.PATCH ,"/api/characteristics/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.POST ,"/api/cities/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.PUT ,"/api/cities/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.PATCH ,"/api/cities/**").hasAuthority(Role.ADMIN.toString())
+                            .requestMatchers(HttpMethod.DELETE ,"/api/cities/**").hasAuthority(Role.ADMIN.toString())
                             .requestMatchers("/api/images/**").hasAuthority(Role.ADMIN.name())
                             .requestMatchers("/api/reservations/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
                             .requestMatchers("/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())

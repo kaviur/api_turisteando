@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,6 @@ public class EmailService {
         helper.setSubject(subjectEmail);
         helper.setText(htmlContent, true);
 
-//        URL url = new URL("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         helper.addInline("logoImage", new ClassPathResource("static/images/logo.png"));
 //        Resource resource = new InputStreamResource()
         helper.addInline("emailStyles", new File("src/main/resources/static/css/styles.css"));
@@ -69,5 +69,57 @@ public class EmailService {
         List<String> urls = List.of(frontendUrls.split(","));
         String url = urls.size() > 1 && !urls.get(1).isEmpty() ? urls.get(1) : urls.get(0);
         return url + "/login";
+    }
+
+    public void sendSimpleMessage(String toEmail, String userName, String lastName) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        String confirmationLink = getConfirmLink();
+        String subjectEmail = "Confirmación de cuenta de Turisteando";
+        String messageText = """
+                    Gracias por registrarte en Turisteando. Estamos encantados de tenerte a bordo.
+                   \s
+                    Para completar tu registro, por favor confirma tu cuenta haciendo clic en el siguiente enlace:
+                    %s
+                   \s
+                    Si no te registraste en Turisteando, puedes ignorar este correo.
+               \s""".formatted(confirmationLink);
+
+        message.setFrom("noreply@turisteando.com");
+        message.setTo(toEmail);
+        message.setSubject(subjectEmail);
+        message.setText("""
+                    Estimado(a) %s %s,
+                   \s
+                    %s
+               \s""".formatted(userName, lastName, messageText));
+
+        javaMailSender.send(message);
+    }
+
+    public void sendHtmlMessage(String toEmail, String userName, String lastName) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true); // 'true' indica contenido HTML
+
+        String confirmationLink = getConfirmLink();
+        String subjectEmail = "Confirmación de cuenta de Turisteando";
+        String htmlContent = """
+                    <html>
+                    <body>
+                        <p>Estimado(a) %s %s,</p>
+                        <p>Gracias por registrarte en <strong>Turisteando</strong>. Estamos encantados de tenerte a bordo.</p>
+                        <p>Para completar tu registro, por favor confirma tu cuenta haciendo clic en el botón a continuación:</p>
+                        <a href="%s" style="display:inline-block;padding:10px 20px;color:white;background-color:#ff0178;text-decoration:none;border-radius:5px;font-weight:bold;">Confirmar Cuenta</a>
+                        <p>Si no te registraste en Turisteando, puedes ignorar este correo.</p>
+                    </body>
+                    </html>
+                """.formatted(userName, lastName, confirmationLink);
+
+        helper.setFrom("noreply@turisteando.com");
+        helper.setTo(toEmail);
+        helper.setSubject(subjectEmail);
+        helper.setText(htmlContent, true);
+
+        javaMailSender.send(message);
     }
 }

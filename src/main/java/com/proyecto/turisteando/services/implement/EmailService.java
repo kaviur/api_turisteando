@@ -4,10 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.*;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -148,8 +145,10 @@ public class EmailService {
 
         // Adjunta el logo si es necesario
 //        helper.addInline("logoImage", new FileSystemResource(new ClassPathResource("static/images/logo.png").getFile()));
-        helper.addInline("logoImage", new InputStreamResource(
-                new ClassPathResource("static/images/logo.png").getInputStream()), "image/png");
+        ClassPathResource imageResource = new ClassPathResource("static/images/logo.png");
+        ByteArrayResource imageBytes = new ByteArrayResource(imageResource.getInputStream().readAllBytes());
+
+        helper.addInline("logoImage", imageBytes, "image/png");
 
         javaMailSender.send(message);
     }

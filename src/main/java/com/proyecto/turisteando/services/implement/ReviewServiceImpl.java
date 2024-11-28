@@ -2,6 +2,7 @@ package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.requestDto.ReviewRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReviewResponseDto;
+import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ReviewEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.entities.UserEntity;
@@ -142,6 +143,7 @@ public class ReviewServiceImpl implements IReviewService {
         return reviewMapper.toResponseDto(deletedReview);
     }
 
+
     @Override
     public ReviewResponseDto toggleStatus(Long id) {
         ReviewEntity reviewEntity = reviewRepository.findById(id)
@@ -149,6 +151,12 @@ public class ReviewServiceImpl implements IReviewService {
         reviewEntity.setStatus(reviewEntity.getStatus() == 1 ? (byte) 0 : (byte) 1);
         ReviewEntity updatedReview = reviewRepository.save(reviewEntity);
         return reviewMapper.toResponseDto(updatedReview);
+    }
+
+
+    @Override
+    public ReviewResponseDto toggleUserRole(Long id) {
+        return null;
     }
 
     @Override

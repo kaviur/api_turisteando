@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.requestDto.ReservationRequestDto;
+import com.proyecto.turisteando.dtos.responseDto.CityResponseDto;
 import com.proyecto.turisteando.dtos.responseDto.ReservationResponseDto;
 import com.proyecto.turisteando.entities.ReservationEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
@@ -158,5 +159,9 @@ public class ReservationServiceImpl implements IReservationService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ReservationResponseDto toggleUserRole(Long id) {
+        return null;
+    }
 
 }

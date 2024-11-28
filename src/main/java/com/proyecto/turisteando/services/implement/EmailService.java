@@ -147,7 +147,9 @@ public class EmailService {
         helper.setText(htmlContent, true);
 
         // Adjunta el logo si es necesario
-        helper.addInline("logoImage", new FileSystemResource(new ClassPathResource("static/images/logo.png").getFile()));
+//        helper.addInline("logoImage", new FileSystemResource(new ClassPathResource("static/images/logo.png").getFile()));
+        helper.addInline("logoImage", new InputStreamResource(
+                new ClassPathResource("static/images/logo.png").getInputStream()), "image/png");
 
         javaMailSender.send(message);
     }

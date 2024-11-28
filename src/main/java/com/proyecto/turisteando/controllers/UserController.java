@@ -59,6 +59,12 @@ public class UserController {
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userResponseDto));
     }
 
+    @PatchMapping("/toggle-role/{id}")
+    public ResponseEntity<Response> toggleUserRole(@PathVariable Long id) {
+        UserResponseDto userResponseDto = userService.toggleUserRole(id);
+        return ResponseEntity.ok(new Response(true, HttpStatus.OK, userResponseDto));
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userService.delete(id)));

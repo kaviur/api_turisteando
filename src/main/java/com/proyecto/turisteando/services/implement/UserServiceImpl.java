@@ -3,6 +3,7 @@ package com.proyecto.turisteando.services.implement;
 import com.proyecto.turisteando.dtos.requestDto.UserRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import com.proyecto.turisteando.entities.UserEntity;
+import com.proyecto.turisteando.entities.enums.Role;
 import com.proyecto.turisteando.mappers.IUserMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
 import com.proyecto.turisteando.services.IUserService;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,9 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Autowired
     IUserMapper userMapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public Iterable<UserResponseDto> getAll() {
@@ -52,7 +57,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
         try {
-            userMapper.partialUpdate(userRequestDto, userEntity);
+            userMapper.partialUpdate(userRequestDto, userEntity, passwordEncoder);
             userRepository.save(userEntity);
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
@@ -100,6 +105,27 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public UserResponseDto toggleUserRole(Long id) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        try {
+            // Cambiar el rol entre ADMIN y BUYER
+            if (userEntity.getRole() == Role.BUYER) {
+                userEntity.setRole(Role.ADMIN);
+            } else if (userEntity.getRole() == Role.ADMIN) {
+                userEntity.setRole(Role.BUYER);
+            }
+            // Guardar el cambio en la base de datos
+            userRepository.save(userEntity);
+
+            // Devolver el DTO actualizado
+            return userMapper.toDto(userEntity);
+        } catch (Exception e) {
+            throw new ServiceException("Error al cambiar el rol del usuario: " + e.getMessage());
         }
     }
 

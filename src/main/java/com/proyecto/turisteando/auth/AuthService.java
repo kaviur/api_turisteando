@@ -54,7 +54,8 @@ public class AuthService {
 
             // Enviar email de confirmación de registro para el usuario nuevo
 //            emailService.sendEmail(user.getEmail(), user.getName());
-            emailService.sendHtmlMessage(user.getEmail(), user.getName(), user.getLastName());
+//            emailService.sendHtmlMessage(user.getEmail(), user.getName(), user.getLastName());
+            emailService.sendHtmlTemplate(user.getEmail(), user.getName(), user.getLastName());
 
             String token = jwtService.generateToken(user);
 

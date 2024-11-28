@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
@@ -71,32 +72,6 @@ public class EmailService {
         return url + "/login";
     }
 
-    public void sendSimpleMessage(String toEmail, String userName, String lastName) {
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        String confirmationLink = getConfirmLink();
-        String subjectEmail = "Confirmación de cuenta de Turisteando";
-        String messageText = """
-                    Gracias por registrarte en Turisteando. Estamos encantados de tenerte a bordo.
-                   \s
-                    Para completar tu registro, por favor confirma tu cuenta haciendo clic en el siguiente enlace:
-                    %s
-                   \s
-                    Si no te registraste en Turisteando, puedes ignorar este correo.
-               \s""".formatted(confirmationLink);
-
-        message.setFrom("noreply@turisteando.com");
-        message.setTo(toEmail);
-        message.setSubject(subjectEmail);
-        message.setText("""
-                    Estimado(a) %s %s,
-                   \s
-                    %s
-               \s""".formatted(userName, lastName, messageText));
-
-        javaMailSender.send(message);
-    }
-
     public void sendHtmlMessage(String toEmail, String userName, String lastName) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true); // 'true' indica contenido HTML
@@ -122,4 +97,59 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+
+    public void sendHtmlTemplate(String toEmail, String userName, String lastName) throws MessagingException, IOException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        String confirmationLink = getConfirmLink();
+        String subjectEmail = "Confirmación de cuenta de Turisteando";
+
+        String htmlContent = """
+                    <!DOCTYPE html>
+                    <html lang="es">
+                    <head>
+                        <meta charset="UTF-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <title>Bienvenido a Turisteando</title>
+                    </head>
+                    <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+                        <div style="width: 100%%; max-width: 550px; margin: 0 auto; padding: 16px; text-align: center;">
+                            <div style="border-radius: 8px; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                                <div style="padding: 16px; background-color: #fff; text-align: center; border-bottom: 1px solid #e6e6e6;">
+                                    <img src="cid:logoImage" alt="Logo Turisteando" style="height: 60px;" />
+                                </div>
+                                <div style="padding: 24px;">
+                                    <h1 style="font-size: 24px; font-weight: bold; color: #333333; text-align: center;">¡Bienvenido(a), %s %s!</h1>
+                                    <p style="font-size: 16px; color: #666666; text-align: center; line-height: 1.5;">
+                                        Gracias por registrarte en <strong>Turisteando</strong>. Estamos encantados de tenerte a bordo.
+                                        Para completar tu registro, por favor confirma tu cuenta haciendo clic en el siguiente botón.
+                                    </p>
+                                    <a href="%s" style="display: block; width: 100%%; max-width: 192px; padding: 12px; font-size: 16px; color: #ffffff !important; background-color: #ff0178; text-align: center; border-radius: 5px; text-decoration: none; margin: 16px auto 0;">Confirmar Cuenta</a>
+                                    <p style="font-size: 12px; color: #999999; text-align: center; margin-top: 20px;">
+                                        Si no creó una cuenta, puede ignorar este correo electrónico con seguridad.
+                                    </p>
+                                </div>
+                                <div style="padding: 16px; background-color: #f8f9fa; text-align: center;">
+                                    <p style="font-size: 12px; color: #999999;">© 2024 Turisteando. Todos los derechos reservados.</p>
+                                    <a href="#" style="margin: 0 8px; font-size: 12px; color: #ff0178; text-decoration: none;">Privacy Policy</a>
+                                    <a href="#" style="margin: 0 8px; font-size: 12px; color: #ff0178; text-decoration: none;">Terms of Service</a>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                """.formatted(userName, lastName, confirmationLink);
+
+        helper.setFrom("noreply@turisteando.com");
+        helper.setTo(toEmail);
+        helper.setSubject(subjectEmail);
+        helper.setText(htmlContent, true);
+
+        // Adjunta el logo si es necesario
+        helper.addInline("logoImage", new FileSystemResource(new ClassPathResource("static/images/logo.png").getFile()));
+
+        javaMailSender.send(message);
+    }
+
 }

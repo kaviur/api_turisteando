@@ -28,7 +28,8 @@ public interface TouristPlanRepository extends JpaRepository<TouristPlanEntity, 
     @Query(value = "DELETE FROM favorites_user_tourist_plan WHERE user_id = ?1 AND tourist_plan_id = ?2", nativeQuery = true)
     void deleteUsersFavorites (Long userId, Long touristPlanId);
 
-    // buscar todos los planes turisticos activos
     List<TouristPlanEntity> findByIsActiveTrue();
+
+    boolean existsByIdAndUsersFavorites_Id(Long planId, Long userId);
 
 }

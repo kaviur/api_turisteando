@@ -72,6 +72,10 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
 
     @Override
     public void addUsersFavorites(Long userId, Long touristPlanId) {
+        boolean exists = touristPlanRepository.existsByIdAndUsersFavorites_Id(touristPlanId, userId);
+        if (exists) {
+            throw new ServiceException("El usuario ya tiene este plan turístico como favorito.");
+        }
         touristPlanRepository.addUsersFavorites(userId, touristPlanId);
     }
 
@@ -87,7 +91,7 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + id));
             return touristPlanMapper.toDto(touristPlan);
         } catch (Exception e) {
-            throw new ServiceException("Error al leer el plan turistico: "  + e.getMessage());
+            throw new ServiceException("Error al leer el plan turistico: " + e.getMessage());
         }
     }
 

@@ -1,9 +1,5 @@
 package com.proyecto.turisteando.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.proyecto.turisteando.entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +36,17 @@ public class UserEntity implements UserDetails {
 
     private Role role;
 
+    // Relación muchos a muchos con los planes turísticos favoritos
+
+    @ManyToMany
+    @JoinTable(
+            name = "favorites_user_tourist_plan",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tourist_plan_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tourist_plan_id"})
+    )
+    private Set<TouristPlanEntity> favoritesTouristPlans;
+
     private Boolean isActive;
 
     @CreationTimestamp()
@@ -51,7 +58,7 @@ public class UserEntity implements UserDetails {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.isActive = true;
     }
 
@@ -85,16 +92,5 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    // Relación muchos a muchos con los planes turísticos favoritos
-
-    @ManyToMany
-    @JoinTable(
-            name = "favorites_user_tourist_plan",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "tourist_plan_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tourist_plan_id"})
-                )
-    private Set<TouristPlanEntity> favoritesTouristPlans;
 
 }

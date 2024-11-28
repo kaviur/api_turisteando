@@ -11,7 +11,7 @@ import java.util.List;
 public interface ITouristPlanService extends CrudService<TouristPlanRequestDto, TouristPlanResponseDto, Long> {
 
     Iterable<TouristPlanResponseDto> getAllByFilters(TouristPlanRequestDto dto);
-    List<TouristPlanEntity> findAllFavoritesByUserId (Long userId);
+    List<TouristPlanResponseDto> findAllFavoritesByUserId (Long userId);
     void addUsersFavorites (Long userId, Long touristPlanId);
     void deleteUsersFavorites (Long userId, Long touristPlanId);
 

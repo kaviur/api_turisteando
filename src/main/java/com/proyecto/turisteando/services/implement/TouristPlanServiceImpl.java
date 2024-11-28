@@ -67,8 +67,8 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
     }
 
     @Override
-    public List<TouristPlanEntity> findAllFavoritesByUserId(Long userId) {
-        return touristPlanRepository.usersFavorites(userId);
+    public List<TouristPlanResponseDto> findAllFavoritesByUserId(Long userId) {
+        return touristPlanMapper.toDtoList(touristPlanRepository.usersFavorites(userId));
     }
 
     @Override

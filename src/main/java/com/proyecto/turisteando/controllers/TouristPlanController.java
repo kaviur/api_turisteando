@@ -74,13 +74,15 @@ public class TouristPlanController {
     @PutMapping("/addFavoriteToUser")
     public ResponseEntity<Response> addUserFavoritePlan (@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
         touristPlanService.addUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
-        return ResponseEntity.ok(null);
+        Response response = new Response(true, HttpStatus.OK, "Plan agregado a favoritos");
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/deleteFavoriteToUser")
     public ResponseEntity<Response> deleteUserFavoritePlan (@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
         touristPlanService.deleteUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
-        return ResponseEntity.ok(null);
+        Response response = new Response(true, HttpStatus.OK, "Plan eliminado de favoritos");
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

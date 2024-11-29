@@ -18,7 +18,7 @@ import java.util.List;
  * after the application context has been loaded.
  */
 @Component
-public class DataLoader implements CommandLineRunner{
+public class DataLoader implements CommandLineRunner {
     @Autowired
     private CountryRepository countryRepository;
 
@@ -195,6 +195,152 @@ public class DataLoader implements CommandLineRunner{
             CategoryEntity activitiesCategory = categoryRepository.findByName("Actividades");
 
             // Crear planes turísticos
+            TouristPlanEntity tour2 = TouristPlanEntity.builder()
+                    .title("Tour por el Valle Sagrado")
+                    .description("Un tour de un día completo para explorar el Valle Sagrado de los Incas, que incluye visitas a Pisac, Ollantaytambo y los vibrantes mercados de Chinchero. Conocerás la cultura inca, verás pueblos tradicionales y disfrutarás de paisajes impresionantes.")
+                    .price(100.00)
+                    .seller("Valle Sagrado Tours")
+                    .city(cities.get(7))
+                    .category(categoryRepository.findByName("Tours"))
+                    .capacity(200)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .duration("2 días")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
+            touristPlanRepository.save(tour2);
+
+
+            ImageEntity image1T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639695/2._Tour_por_el_Valle_Sagrado_ktha78.webp")
+                    .touristPlan(tour2)
+                    .build();
+            imageRepository.save(image1T2);
+
+
+            ImageEntity image2T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639695/2._Tour_por_el_Valle_Sagrado_ktha78.webp")
+                    .touristPlan(tour2)
+                    .build();
+            imageRepository.save(image2T2);
+
+
+            ImageEntity image3T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639654/3._Tour_por_el_Valle_Sagrado_iu9iie.webp")
+                    .touristPlan(tour2)
+                    .build();
+            imageRepository.save(image3T2);
+
+
+            ImageEntity image4T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639645/5._Tour_por_el_Valle_Sagrado_tgusn6.jpg")
+                    .touristPlan(tour2)
+                    .build();
+            imageRepository.save(image4T2);
+
+
+            ImageEntity image5T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639839/5._Tour_por_el_Valle_Sagrado_hiykz1.jpg")
+                    .touristPlan(tour2)
+                    .build();
+            imageRepository.save(image5T2);
+
+
+            TouristPlanEntity tour3 = TouristPlanEntity.builder()
+                    .title("Tour por la Reserva Nacional de Paracas")
+                    .description("Explora la hermosa Reserva Nacional de Paracas, ubicada en la costa del Pacífico. Este tour te permite disfrutar de impresionantes paisajes desérticos, playas aisladas y una rica fauna marina. Puedes avistar flamencos, lobos marinos y aves guaneras. Además, visitarás la famosa Catedral de Paracas, una formación rocosa icónica, y disfrutarás de las vistas del Océano Pacífico desde diversos miradores.")
+                    .price(100.00)
+                    .seller("Paracas Tours")
+                    .city(cities.get(10))
+                    .category(categoryRepository.findByName("Tours"))
+                    .capacity(80)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .duration("4 días")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(7),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
+            touristPlanRepository.save(tour3);
+
+
+            ImageEntity image1T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640255/1._Tour_por_la_Reserva_Nacional_de_Paracas_hcwnd4.avif")
+                    .touristPlan(tour3)
+                    .build();
+            imageRepository.save(image1T3);
+
+
+            ImageEntity image2T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640392/2._Tour_por_la_Reserva_Nacional_de_Paracas_jxuacy.avif")
+                    .touristPlan(tour3)
+                    .build();
+            imageRepository.save(image2T3);
+            ImageEntity image3T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640395/3._Tour_por_la_Reserva_Nacional_de_Paracas_auq3k1.avif")
+                    .touristPlan(tour3)
+                    .build();
+            imageRepository.save(image3T3);
+            ImageEntity image4T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640400/4._Tour_por_la_Reserva_Nacional_de_Paracas_xhmygb.avif")
+                    .touristPlan(tour3)
+                    .build();
+            imageRepository.save(image4T3);
+            ImageEntity image5T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640422/5._Tour_por_la_Reserva_Nacional_de_Paracas_fdztgy.avif")
+                    .touristPlan(tour3)
+                    .build();
+            imageRepository.save(image5T3);
+
+
+            TouristPlanEntity tour5 = TouristPlanEntity.builder()
+                    .title("Tour a las Islas Flotantes del Lago Titicaca")
+                    .description("Visita las islas flotantes de los Uros en el Lago Titicaca, donde podrás conocer a las comunidades locales que viven en islas hechas de totora, una planta acuática. Además, puedes hacer una visita a la Isla Taquile.")
+                    .price(300.00)
+                    .seller("Titicaca Tours")
+                    .city(cities.get(20))
+                    .category(categoryRepository.findByName("Tours"))
+                    .capacity(150)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2025, 2, 25))
+                    .duration("1 semana")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
+            touristPlanRepository.save(tour5);
+
+
+            ImageEntity image1T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641347/1._Tour_a_las_Islas_Flotantes_del_Lago_Titicaca_ptt0d4.jpg")
+                    .touristPlan(tour5)
+                    .build();
+            imageRepository.save(image1T5);
+
+
+            ImageEntity image2T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641509/2._Titicaca_bddtpa.jpg")
+                    .touristPlan(tour5)
+                    .build();
+            imageRepository.save(image2T5);
+
+
+            ImageEntity image3T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641770/3_titicaca_xkldlr.jpg")
+                    .touristPlan(tour5)
+                    .build();
+            imageRepository.save(image3T5);
+
+
+            ImageEntity image4T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641779/4.titicaca_e5digo.jpg")
+                    .touristPlan(tour5)
+                    .build();
+            imageRepository.save(image4T5);
+            ImageEntity image5T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641783/5_titicaca_btuokl.jpg")
+                    .touristPlan(tour5)
+                    .build();
+            imageRepository.save(image5T5);
 
 
             //Tour 7
@@ -205,9 +351,9 @@ public class DataLoader implements CommandLineRunner{
                     .seller("Cusco Tours")
                     .city(cities.get(3))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(20)
+                    .capacity(400)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 28))
+                    .availabilityEndDate(LocalDate.of(2025, 3, 28))
                     .duration("1 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -256,14 +402,14 @@ public class DataLoader implements CommandLineRunner{
             TouristPlanEntity tour8 = TouristPlanEntity.builder()
                     .title("Recorre el valle Sur del Cusco")
                     .description("Reserva con FWTP nuestro tour al valle sur del Cusco, durante este tour visitarás Tipón, Piquillaqta y Andahuaylillas — en un tour de medio día. Tipón es un sitio arqueológico donde aun se pueden canales de irrigación que denotan lo mejor de la ingeniería hidráulica del imperio de los incas; por el otro lado, Andahuaylillas es un sitio arqueológico que perteneció a la cultura Wari")
-                    .price(75.00)
+                    .price(40.00)
                     .seller("freewalkingtours")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 28))
-                    .duration("1 días")
+                    .availabilityEndDate(LocalDate.of(2025, 3, 15))
+                    .duration("3 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -317,9 +463,9 @@ public class DataLoader implements CommandLineRunner{
                     .seller("Arequipa Explorer")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(20)
+                    .capacity(200)
                     .availabilityStartDate(LocalDate.of(2024, 11, 25))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 28))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("3 días")
                     .characteristic(List.of(
                             characteristicsList.get(9),
@@ -362,7 +508,7 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5Tour9);
 
 
-           //TOUR 10
+            //TOUR 10
             TouristPlanEntity tour10 = TouristPlanEntity.builder()
                     .title("Tour al valle Sur del Cusco")
                     .description("Visita a Las Huacas del Sol y la Luna, grandes construcciones Moche con impresionantes murales de divinidades. Parada para almorzar en Trujillo. Continuamos hacia Chanchan (Palacio Nikan) y la playa Huanchaco. Luego, visitaremos El Brujo, compuesto por Huaca Cortada, Huaca Prieta y la Huaca Cao Viejo. En el Museo Cao se exhibe la Señora de Cao, la única mujer gobernante del Perú antiguo.")
@@ -370,10 +516,10 @@ public class DataLoader implements CommandLineRunner{
                     .seller("Viajando tours")
                     .city(cities.get(12))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(20)
+                    .capacity(250)
                     .availabilityStartDate(LocalDate.of(2024, 11, 25))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 28))
-                    .duration("3 días")
+                    .availabilityEndDate(LocalDate.of(2025, 4, 10))
+                    .duration("5 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -414,8 +560,8 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5Tour10);
 
 
-           //TOUR 11
-           TouristPlanEntity tour11 = TouristPlanEntity.builder()
+            //TOUR 11
+            TouristPlanEntity tour11 = TouristPlanEntity.builder()
                     .title("Tour- Expedición al Huascaran")
                     .description("¡Conquista el Techo del Perú! Adéntrate en el majestuoso Nevado Huascarán, también llamado “Mataraju”, con sus impresionantes picos gemelos. Vive la emoción de ascender a la cima más alta del país (6,877 m) en el Parque Nacional Huascarán. Supera desafíos únicos como grietas y seracs, siempre guiado por expertos. ¡Haz realidad esta inolvidable experiencia llena de adrenalina y naturaleza!.")
                     .price(12000.00)
@@ -424,7 +570,7 @@ public class DataLoader implements CommandLineRunner{
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2024, 11, 20))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 27))
+                    .availabilityEndDate(LocalDate.of(2025, 1, 27))
                     .duration("7 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -467,60 +613,163 @@ public class DataLoader implements CommandLineRunner{
 
 
 //Actividad 6
-
-            TouristPlanEntity activity6 = TouristPlanEntity.builder()
-                    .title("7 lagunas de Ausangate aguas termales")
-                    .description("Explora las 7 Lagunas de Ausangate y relájate en sus aguas termales. Si amas la naturaleza y la aventura, este tour es para ti. Recorre un sendero rodeado de imponentes montañas, donde descubrirás lagunas de origen glaciar en tonos azul turquesa y verde esmeralda. Disfruta de vistas panorámicas únicas y culmina con un baño relajante en las aguas termales de Pacchanta. ¡Conecta con el encanto natural en esta experiencia inolvidable!")
-                    .price(75.00)
-                    .seller("Freewalking Tours Peru")
+            TouristPlanEntity activity1 = TouristPlanEntity.builder()
+                    .title("Trekking en la Montaña de 7 Colores")
+                    .description("Realiza una caminata hacia la famosa Montaña de los Siete Colores, cerca de Cusco. Este destino es conocido por sus impresionantes colores naturales debido a los minerales presentes en la tierra.")
+                    .price(19.00)
+                    .seller("Machupicchu Tours")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
-                    .capacity(15)
+                    .capacity(120)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
                             characteristicsList.get(3),
-                            characteristicsList.get(4),
-                            characteristicsList.get(7)))
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
                     .isActive(true)
                     .build();
-            touristPlanRepository.save(activity6);
+            touristPlanRepository.save(activity1);
 
-            ImageEntity image1activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633840/tour-ausangate-7-lagunas-aguas-termales_Ppal_jtxrgg.jpg")
-                    .touristPlan(activity6)
+            ImageEntity image1activity1 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647705/7colores_to6zcp.jpg")
+                    .touristPlan(activity1)
                     .build();
-            imageRepository.save(image1activity6);
+            imageRepository.save(image1activity1);
 
-            ImageEntity image2activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633837/tour-ausangate-7-lagunas-aguas-termales_7_r2k0mp.jpg")
-                    .touristPlan(activity6)
+            ImageEntity image2activity1 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644029/montana-7-colores1-1000x650_bjlgjs.jpg")
+                    .touristPlan(activity1)
                     .build();
-            imageRepository.save(image2activity6);
+            imageRepository.save(image2activity1);
 
-            ImageEntity image3activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633835/tour-ausangate-7-lagunas-aguas-termales_6_werrt4.jpg")
-                    .touristPlan(activity6)
+            ImageEntity image3activity1 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644025/chicas-cartel-montana-7-colores2-1000x650_r68cq2.jpg")
+                    .touristPlan(activity1)
                     .build();
-            imageRepository.save(image3activity6);
+            imageRepository.save(image3activity1);
 
-            ImageEntity image4activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633833/tour-ausangate-7-lagunas-aguas-termales_4_xkg9cj.jpg")
-                    .touristPlan(activity6)
+            ImageEntity image4activity1 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644020/montana-colores-caballos1-1000x650_f4nbpi.jpg")
+                    .touristPlan(activity1)
                     .build();
-            imageRepository.save(image4activity6);
+            imageRepository.save(image4activity1);
 
-            ImageEntity image5activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633829/tour-ausangate-7-lagunas-aguas-termales_2_zqxkfb.jpg")
-                    .touristPlan(activity6)
+            ImageEntity image5activity1 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644022/montana-llamas-vinicunca1-1000x650_bjlrty.jpg")
+                    .touristPlan(activity1)
                     .build();
-            imageRepository.save(image5activity6);
+            imageRepository.save(image5activity1);
 
 
-           //Actividad 7
+            //Actividad 2
+            TouristPlanEntity activity2 = TouristPlanEntity.builder()
+                    .title("Exploración de la Selva Amazónica")
+                    .description("Vive la experiencia de explorar la selva amazónica peruana desde Iquitos o Puerto Maldonado. Puedes realizar caminatas por la selva, avistamiento de fauna y paseos en bote por ríos llenos de vida.")
+                    .price(250.00)
+                    .seller("Titicaca Tours")
+                    .city(cities.get(15))
+                    .category(categoryRepository.findByName("Activity"))
+                    .capacity(300)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .duration("6 días")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
+            touristPlanRepository.save(activity2);
+            ImageEntity image1activity2 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647840/selva-amazonicaPpal_eru4un.jpg")
+                    .touristPlan(activity2)
+                    .build();
+            imageRepository.save(image1activity2);
+
+            ImageEntity image2activity2 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646596/SELVA-AMAZONICA3_ll3tnw.jpg")
+                    .touristPlan(activity2)
+                    .build();
+            imageRepository.save(image2activity2);
+
+            ImageEntity image3activity2 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646587/SELVA-AMAZONICA2_acsrvk.jpg")
+                    .touristPlan(activity2)
+                    .build();
+            imageRepository.save(image3activity2);
+
+            ImageEntity image4activity2 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646583/SELVA-AMAZONICA_mebrcv.jpg")
+                    .touristPlan(activity2)
+                    .build();
+            imageRepository.save(image4activity2);
+
+            ImageEntity image5activity2 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646580/SELVA-AMAZONICA5_yyp1y8.jpg")
+                    .touristPlan(activity2)
+                    .build();
+            imageRepository.save(image5activity2);
+
+
+            //Actividad 3
+            TouristPlanEntity activity3 = TouristPlanEntity.builder()
+                    .title("Sandboarding en Huacachina")
+                    .description("Deslízate por las dunas de arena de Huacachina, cerca de Ica. El sandboarding es una actividad emocionante, y también puedes hacer recorridos en buggies por el desierto.")
+                    .price(83.00)
+                    .seller("Titicaca Tours")
+                    .city(cities.get(10))
+                    .category(categoryRepository.findByName("Activity"))
+                    .capacity(10)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .duration("4 días")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(3),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
+            touristPlanRepository.save(activity3);
+            ImageEntity image1activity3 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dworm9bnx/image/upload/v1732837706/turisteando/file_dskvau.webp")
+                    .touristPlan(activity3)
+                    .build();
+            imageRepository.save(image1activity3);
+
+            ImageEntity image2activity3 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648180/Huacachina2_m1qnlw.jpg")
+                    .touristPlan(activity3)
+                    .build();
+            imageRepository.save(image2activity3);
+
+            ImageEntity image3activity3 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648184/Huacachina3_amcryz.jpg")
+                    .touristPlan(activity3)
+                    .build();
+            imageRepository.save(image3activity3);
+
+            ImageEntity image4activity3 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648188/Huacachina4_cnucrh.jpg")
+                    .touristPlan(activity3)
+                    .build();
+            imageRepository.save(image4activity3);
+
+            ImageEntity image5activity3 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648161/Huacachina5_xsdoz3.jpg")
+                    .touristPlan(activity3)
+                    .build();
+            imageRepository.save(image5activity3);
+
+
+            //Actividad 7
             TouristPlanEntity activity7 = TouristPlanEntity.builder()
                     .title("Excursión a laguna Humantay por Cusco")
                     .description("Descubre la Laguna Humantay: un paraíso en los Andes Vive una experiencia única en los alrededores de Cusco. Partiremos temprano en bus hacia Mollepata para disfrutar de un delicioso desayuno. Luego, continuaremos hasta Soraypampa, una pintoresca comunidad indígena, desde donde iniciaremos nuestra caminata hacia la impresionante Laguna Humantay, rodeada de la majestuosa cordillera de Salkantay. ¡Una aventura que no te puedes perder!")
@@ -528,10 +777,10 @@ public class DataLoader implements CommandLineRunner{
                     .seller("Freewalking Tours Perú")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
-                    .capacity(18)
+                    .capacity(90)
                     .availabilityStartDate(LocalDate.of(2024, 11, 26))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 26))
-                    .duration("1 días")
+                    .availabilityEndDate(LocalDate.of(2025, 3, 26))
+                    .duration("5 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -580,17 +829,17 @@ public class DataLoader implements CommandLineRunner{
 
 
             //Activity 8
-             TouristPlanEntity activity8 = TouristPlanEntity.builder()
+            TouristPlanEntity activity8 = TouristPlanEntity.builder()
                     .title("City tour Cusco + 4 ruinas de Sacsayhuamán")
                     .description("Descubre Cusco con el City Tour Original. Sumérgete en la historia y belleza de Cusco en nuestro city tour de 5 horas. A pie, exploraremos la imponente Catedral del Cusco y el Templo de Coricancha. Luego, tomaremos un bus hacia las ruinas de Sacsayhuamán, donde descubrirás los secretos de la arquitectura Inca. Una experiencia única para conocer los puntos más emblemáticos de la antigua capital del Imperio Inca. ¡No te lo puedes perder!")
-                    .price(75.00)
+                    .price(500.00)
                     .seller("Cusco Tours")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
-                    .capacity(20)
+                    .capacity(500)
                     .availabilityStartDate(LocalDate.of(2024, 11, 29))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 29))
-                    .duration("1 días")
+                    .availabilityEndDate(LocalDate.of(2025, 5, 29))
+                    .duration("8 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(4),
@@ -644,10 +893,10 @@ public class DataLoader implements CommandLineRunner{
                     .seller("Macchu Pichu Viajes Peru")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
-                    .capacity(20)
+                    .capacity(30)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 28))
-                    .duration("1 día")
+                    .availabilityEndDate(LocalDate.of(2025, 1, 10))
+                    .duration("5 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(3),
@@ -694,22 +943,22 @@ public class DataLoader implements CommandLineRunner{
             TouristPlanEntity activity10 = TouristPlanEntity.builder()
                     .title("Aventura en el Planetario del Cusco")
                     .description("Vive la magia del Planetario de Cusco. Ubicado en el Parque Arqueológico de Sacsayhuamán y la reserva ecológica de Llaullipata, el Planetario de Cusco ofrece una experiencia única de astronomía. A solo 15 minutos del centro histórico, disfrutarás de un entorno natural impresionante. Explora la astronomía inca, leyendas de los cielos del Sur, y observa las estrellas, nebulosas y planetas con telescopios avanzados. ¡Una experiencia única que conecta historia y ciencia!")
-                                    .price(135.00)
-                                    .seller("Macchu Pichu Viajes Peru")
-                                    .city(cities.get(7))
-                                    .category(categoryRepository.findByName("Activity"))
-                                    .capacity(25)
-                                    .availabilityStartDate(LocalDate.of(2024, 11, 27))
-                                    .availabilityEndDate(LocalDate.of(2024, 11, 27))
-                                    .duration("1 día")
-                                    .characteristic(List.of(
-                                            characteristicsList.get(0),
-                                            characteristicsList.get(3),
-                                            characteristicsList.get(4),
-                                            characteristicsList.get(6),
-                                            characteristicsList.get(7)))
-                                    .isActive(true)
-                                    .build();
+                    .price(135.00)
+                    .seller("Macchu Pichu Viajes Peru")
+                    .city(cities.get(7))
+                    .category(categoryRepository.findByName("Activity"))
+                    .capacity(350)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 27))
+                    .availabilityEndDate(LocalDate.of(2024, 2, 5))
+                    .duration("4 días")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(3),
+                            characteristicsList.get(4),
+                            characteristicsList.get(6),
+                            characteristicsList.get(7)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(activity10);
 
             ImageEntity image1activity10 = ImageEntity.builder()
@@ -718,7 +967,7 @@ public class DataLoader implements CommandLineRunner{
                     .build();
             imageRepository.save(image1activity10);
 
-            ImageEntity image2activity10= ImageEntity.builder()
+            ImageEntity image2activity10 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635250/aventura-en-el-planetario-del-cusco_7_umqru2.jpg")
                     .touristPlan(activity10)
                     .build();
@@ -748,23 +997,23 @@ public class DataLoader implements CommandLineRunner{
             TouristPlanEntity tour12 = TouristPlanEntity.builder()
                     .title("Tour Lima Antigua y Moderna")
                     .description("El tour Lima Antigua y Moderna ofrece un recorrido completo por la capital peruana, combinando su fascinante historia colonial con su vibrante vida moderna. Explora la majestuosidad de su arquitectura histórica en el centro antiguo, Patrimonio de la Humanidad, y descubre los barrios residenciales y modernos de Miraflores y San Isidro, con vistas espectaculares del Océano Pacífico")
-                    .price(41.00)
+                    .price(320.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(30)
+                    .capacity(50)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("2 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(0),
-                                    characteristicsList.get(3),
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(7),
-                                    characteristicsList.get(8),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(0),
+                            characteristicsList.get(3),
+                            characteristicsList.get(6),
+                            characteristicsList.get(7),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(tour12);
             ImageEntity image1T12 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731633797/1.Tour_Lima_Antigua_y_Moderna_ekbooh.jpg")
@@ -797,27 +1046,26 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5T12);
 
 
-
             TouristPlanEntity tour13 = TouristPlanEntity.builder()
                     .title("Tour al complejo arqueológico Pachacamac y Barranco")
                     .description("Este tour te lleva al fascinante complejo arqueológico de Pachacamac, un antiguo centro ceremonial preinca ubicado al sur de Lima, donde podrás explorar templos y pirámides sagradas. Luego, continúa hacia el bohemio barrio de Barranco, famoso por su arte, coloridas calles, y vistas al mar, donde experimentarás el espíritu creativo y romántico de Lima.")
-                    .price(55.87)
+                    .price(430.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(35)
+                    .capacity(160)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("2 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(0),
-                                    characteristicsList.get(3),
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(7),
-                                    characteristicsList.get(8),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(0),
+                            characteristicsList.get(3),
+                            characteristicsList.get(6),
+                            characteristicsList.get(7),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(tour13);
 
 
@@ -850,23 +1098,23 @@ public class DataLoader implements CommandLineRunner{
             TouristPlanEntity tour14 = TouristPlanEntity.builder()
                     .title("Tour gastronómico por Miraflores")
                     .description("Descubre los sabores auténticos de Perú en un tour gastronómico por Miraflores. Degusta platos emblemáticos, como el ceviche y la causa limeña, mientras exploras mercados locales, restaurantes y cafeterías que muestran la rica diversidad culinaria peruana. Este recorrido es una inmersión en la cultura y tradición gastronómica de Lima, ubicada en uno de sus barrios más vibrantes y modernos.")
-                    .price(116.20)
+                    .price(300.20)
                     .seller("XTravel Perú")
                     .city(cities.get(14))
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("2 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(0),
-                                    characteristicsList.get(3),
-                                    characteristicsList.get(4),
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(7),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(0),
+                            characteristicsList.get(3),
+                            characteristicsList.get(4),
+                            characteristicsList.get(6),
+                            characteristicsList.get(7),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(tour14);
             ImageEntity image1T14 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631772/1._Tour_gastrono%CC%81mico_por_Miraflores_o5n4f8.jpg")
@@ -895,27 +1143,24 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5T14);
 
 
-
-
-
             TouristPlanEntity tour15 = TouristPlanEntity.builder()
                     .title("Waqrapukara Tour")
                     .description("El tour a Waqrapukara te lleva a una impresionante fortaleza inca enclavada en las montañas de Cusco, conocida por sus formaciones rocosas en forma de cuernos. Este recorrido combina naturaleza y arqueología, ofreciendo vistas panorámicas, caminatas por paisajes andinos y la oportunidad de explorar un sitio sagrado lleno de historia y misticismo, ideal para aventureros y amantes de la cultura inca.")
-                    .price(50.20)
+                    .price(830.20)
                     .seller("XTravel Perú")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(30)
+                    .capacity(200)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("9 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(0),
-                                    characteristicsList.get(3),
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(0),
+                            characteristicsList.get(3),
+                            characteristicsList.get(6),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(tour15);
             ImageEntity image1T15 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731635060/1._Waqrapukara_Tour_hsozd0.jpg")
@@ -944,25 +1189,23 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5T15);
 
 
-
-
             TouristPlanEntity tour16 = TouristPlanEntity.builder()
                     .title("Tour Cañón de los Perdidos")
                     .description("El tour al Cañón de los Perdidos te lleva a un enigmático paisaje desértico en Ica, donde podrás explorar formaciones rocosas impresionantes y profundos cañones esculpidos por el tiempo y la naturaleza. Este recorrido te permite descubrir fósiles marinos y vistas panorámicas únicas, brindando una experiencia inolvidable en uno de los secretos mejor guardados del desierto peruano.")
-                    .price(25.50)
+                    .price(250.50)
                     .seller("XTravel Perú")
                     .city(cities.get(10))
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(30)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("5 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(0),
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(0),
+                            characteristicsList.get(6),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(tour16);
             ImageEntity image1T16 = ImageEntity.builder()
                     .imageUrl("https://www.rumbosdelperu.com/wp-content/uploads/2019/04/Ca%C3%B1on-de-los-Perdidos-.jpg")
@@ -996,20 +1239,20 @@ public class DataLoader implements CommandLineRunner{
             TouristPlanEntity activity11 = TouristPlanEntity.builder()
                     .title("Descubriendo el Street food limeño, tour privado.")
                     .description("Te sumergirás en los sabores callejeros más auténticos de Lima. Recorre mercados y puestos tradicionales, donde podrás degustar delicias como los anticuchos, picarones y butifarras, mientras conoces las historias y tradiciones detrás de cada plato. Ideal para amantes de la gastronomía que desean explorar Lima como un verdadero local.")
-                    .price(49.50)
+                    .price(490.50)
                     .seller("Lima Tours")
                     .city(cities.get(14))
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("6 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(0),
-                                    characteristicsList.get(3),
-                                    characteristicsList.get(7)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(0),
+                            characteristicsList.get(3),
+                            characteristicsList.get(7)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(activity11);
             ImageEntity image1A11 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643877/1._Descubriendo_el__Street_food__limen%CC%83o_tour_privado_d6fj6x.jpg")
@@ -1040,12 +1283,6 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5A11);
 
 
-
-
-
-
-
-
             TouristPlanEntity activity12 = TouristPlanEntity.builder()
                     .title("Clase de surf: Domina la ola perfecta para principiantes y surfistas avanzados")
                     .description("En esta clase de surf, aprenderás a dominar la ola perfecta, ya seas principiante o surfista avanzado. Instructores experimentados te guiarán paso a paso, desde las técnicas básicas de equilibrio y remada hasta movimientos avanzados en olas de mayor desafío. Disfruta de una experiencia segura y personalizada en las mejores playas, ideal para quienes buscan mejorar sus habilidades y vivir la emoción del surf.")
@@ -1056,13 +1293,13 @@ public class DataLoader implements CommandLineRunner{
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
+                    .duration("3 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(8),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(6),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(activity12);
             ImageEntity image1A12 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631232/1._Paramotor_Sky_Activity_bmtdz2.jpg")
@@ -1093,11 +1330,10 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5A12);
 
 
-
             TouristPlanEntity activity13 = TouristPlanEntity.builder()
                     .title("Paramotor Sky Activity - Explorando la costa sur de Lima")
                     .description("Vuela en un emocionante tour en paramotor sobre la costa sur de Lima y disfruta de una perspectiva única del océano Pacífico y sus acantilados. Esta experiencia de vuelo libre te permite sentir la libertad de surcar los cielos con seguridad, acompañado por pilotos expertos. Ideal para quienes buscan una aventura inolvidable, el tour ofrece vistas panorámicas y una conexión inigualable con el paisaje costero limeño.")
-                    .price(60.00)
+                    .price(85.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
                     .category(categoryRepository.findByName("Activity"))
@@ -1106,11 +1342,11 @@ public class DataLoader implements CommandLineRunner{
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(7),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(6),
+                            characteristicsList.get(7),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(activity13);
 
 
@@ -1141,8 +1377,6 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5A13);
 
 
-
-
             TouristPlanEntity activity14 = TouristPlanEntity.builder()
                     .title("Nado con lobos marinos en Islas Palomino")
                     .description("Vive una experiencia inolvidable nadando con lobos marinos en las Islas Palomino, frente a la costa de Lima. Este tour te llevará en un viaje en barco hasta la reserva natural, donde podrás sumergirte en aguas cristalinas y disfrutar de un encuentro cercano y seguro con estos juguetones animales marinos en su hábitat natural. Una aventura única para los amantes de la naturaleza y la vida marina.")
@@ -1155,12 +1389,12 @@ public class DataLoader implements CommandLineRunner{
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(3),
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(7),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(3),
+                            characteristicsList.get(6),
+                            characteristicsList.get(7),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(activity14);
             ImageEntity image1A14 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631943/1._Nado_con_lobos_marinos_en_Islas_Palomino_dxejfi.jpg")
@@ -1189,12 +1423,6 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5A14);
 
 
-
-
-
-
-
-
             TouristPlanEntity activity15 = TouristPlanEntity.builder()
                     .title("Tour en kayak: Explorando el horizonte de Lima por mar")
                     .description("Embárcate en una emocionante aventura en kayak y explora el horizonte de Lima desde el mar. Navega a lo largo de sus costas, disfrutando de impresionantes vistas panorámicas de los acantilados, playas y el Océano Pacífico. Este tour es perfecto para quienes buscan una experiencia tranquila pero aventurera, en contacto directo con la naturaleza y el paisaje costero limeño.")
@@ -1207,11 +1435,11 @@ public class DataLoader implements CommandLineRunner{
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
                     .duration("1 días")
                     .characteristic(List.of(
-                                    characteristicsList.get(6),
-                                    characteristicsList.get(7),
-                                    characteristicsList.get(9)))
-                            .isActive(true)
-                            .build();
+                            characteristicsList.get(6),
+                            characteristicsList.get(7),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
             touristPlanRepository.save(activity15);
             ImageEntity image1A15 = ImageEntity.builder()
                     .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731630362/1._Clase_de_surf_xfdqdt.jpg")
@@ -1300,118 +1528,6 @@ public class DataLoader implements CommandLineRunner{
             imageRepository.save(image5T1);
 
 
-
-
-
-
-
-
-
-
-            TouristPlanEntity tour2 = TouristPlanEntity.builder()
-                    .title("Tour por el Valle Sagrado")
-                    .description("Un tour de un día completo para explorar el Valle Sagrado de los Incas, que incluye visitas a Pisac, Ollantaytambo y los vibrantes mercados de Chinchero. Conocerás la cultura inca, verás pueblos tradicionales y disfrutarás de paisajes impresionantes.")
-                    .price(19.00)
-                    .seller("Valle Sagrado Tours")
-                    .city(cities.get(7))
-                    .category(categoryRepository.findByName("Tours"))
-                    .capacity(50)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
-                    .characteristic(List.of(
-                            characteristicsList.get(0),
-                            characteristicsList.get(2),
-                            characteristicsList.get(8),
-                            characteristicsList.get(9)))
-                    .isActive(true)
-                    .build();
-            touristPlanRepository.save(tour2);
-
-
-            ImageEntity image1T2 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639695/2._Tour_por_el_Valle_Sagrado_ktha78.webp")
-                    .touristPlan(tour2)
-                    .build();
-            imageRepository.save(image1T2);
-
-
-            ImageEntity image2T2 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639695/2._Tour_por_el_Valle_Sagrado_ktha78.webp")
-                    .touristPlan(tour2)
-                    .build();
-            imageRepository.save(image2T2);
-
-
-            ImageEntity image3T2 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639654/3._Tour_por_el_Valle_Sagrado_iu9iie.webp")
-                    .touristPlan(tour2)
-                    .build();
-            imageRepository.save(image3T2);
-
-
-            ImageEntity image4T2 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639645/5._Tour_por_el_Valle_Sagrado_tgusn6.jpg")
-                    .touristPlan(tour2)
-                    .build();
-            imageRepository.save(image4T2);
-
-
-            ImageEntity image5T2 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639839/5._Tour_por_el_Valle_Sagrado_hiykz1.jpg")
-                    .touristPlan(tour2)
-                    .build();
-            imageRepository.save(image5T2);
-
-
-
-
-
-
-
-
-            TouristPlanEntity tour3 = TouristPlanEntity.builder()
-                    .title("Tour por la Reserva Nacional de Paracas")
-                    .description("Explora la hermosa Reserva Nacional de Paracas, ubicada en la costa del Pacífico. Este tour te permite disfrutar de impresionantes paisajes desérticos, playas aisladas y una rica fauna marina. Puedes avistar flamencos, lobos marinos y aves guaneras. Además, visitarás la famosa Catedral de Paracas, una formación rocosa icónica, y disfrutarás de las vistas del Océano Pacífico desde diversos miradores.")
-                    .price(45.00)
-                    .seller("Paracas Tours")
-                    .city(cities.get(10))
-                    .category(categoryRepository.findByName("Tours"))
-                    .capacity(20)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
-                    .characteristic(List.of(
-                            characteristicsList.get(0),
-                            characteristicsList.get(2),
-                            characteristicsList.get(3),
-                            characteristicsList.get(7),
-                            characteristicsList.get(8),
-                            characteristicsList.get(9)))
-                    .isActive(true)
-                    .build();
-            touristPlanRepository.save(tour3);
-
-
-            ImageEntity image1T3 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640255/1._Tour_por_la_Reserva_Nacional_de_Paracas_hcwnd4.avif")
-                    .touristPlan(tour3)
-                    .build();
-            imageRepository.save(image1T3);
-
-
-            ImageEntity image2T3 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640392/2._Tour_por_la_Reserva_Nacional_de_Paracas_jxuacy.avif")
-                    .touristPlan(tour3)
-                    .build();
-            imageRepository.save(image2T3);
-            ImageEntity image3T3 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640395/3._Tour_por_la_Reserva_Nacional_de_Paracas_auq3k1.avif")
-                    .touristPlan(tour3)
-                    .build();
-            imageRepository.save(image3T3);
-            ImageEntity image4T3 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640400/4._Tour_por_la_Reserva_Nacional_de_Paracas_xhmygb.avif")
-                    .touristPlan(tour3)
-                    .build();
-            imageRepository.save(image4T3);
-            ImageEntity image5T3 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640422/5._Tour_por_la_Reserva_Nacional_de_Paracas_fdztgy.avif")
-                    .touristPlan(tour3)
-                    .build();
-            imageRepository.save(image5T3);
-
-
             TouristPlanEntity tour4 = TouristPlanEntity.builder()
                     .title("Tour aéreo sobre las Líneas de Nazca")
                     .description("Sobrevuela las misteriosas Líneas de Nazca, antiguos geoglifos gigantes trazados en el desierto. El tour suele salir desde Nazca o Ica, y podrás observar las famosas figuras como el mono, la araña y el colibrí.")
@@ -1434,101 +1550,47 @@ public class DataLoader implements CommandLineRunner{
             touristPlanRepository.save(tour4);
 
 
-            ImageEntity image1T4 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641062/1._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_1_dffufd.webp")
+            ImageEntity image1T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641062/1._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_1_dffufd.webp")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image1T4);
 
 
-            ImageEntity image2T4 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641070/2._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_jps0io.jpg")
+            ImageEntity image2T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641070/2._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_jps0io.jpg")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image2T4);
 
 
-            ImageEntity image3T4 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641066/3._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_udfdbx.jpg")
+            ImageEntity image3T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641066/3._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_udfdbx.jpg")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image3T4);
 
 
-            ImageEntity image4T4 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641055/4._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_uvde2e.jpg")
+            ImageEntity image4T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641055/4._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_uvde2e.jpg")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image4T4);
 
 
-            ImageEntity image5T4 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643486/nasca5_xgms6c.jpg")
+            ImageEntity image5T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643486/nasca5_xgms6c.jpg")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image5T4);
 
 
-
-
-            TouristPlanEntity tour5 = TouristPlanEntity.builder()
-                    .title("Tour a las Islas Flotantes del Lago Titicaca")
-                    .description("Visita las islas flotantes de los Uros en el Lago Titicaca, donde podrás conocer a las comunidades locales que viven en islas hechas de totora, una planta acuática. Además, puedes hacer una visita a la Isla Taquile.")
-                    .price(30.00)
-                    .seller("Titicaca Tours")
-                    .city(cities.get(20))
-                    .category(categoryRepository.findByName("Tours"))
-                    .capacity(15)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 días")
-                    .characteristic(List.of(
-                            characteristicsList.get(0),
-                            characteristicsList.get(2),
-                            characteristicsList.get(3),
-                            characteristicsList.get(8),
-                            characteristicsList.get(9)))
-                    .isActive(true)
-                    .build();
-            touristPlanRepository.save(tour5);
-
-
-            ImageEntity image1T5 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641347/1._Tour_a_las_Islas_Flotantes_del_Lago_Titicaca_ptt0d4.jpg")
-                    .touristPlan(tour5)
-                    .build();
-            imageRepository.save(image1T5);
-
-
-            ImageEntity image2T5 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641509/2._Titicaca_bddtpa.jpg")
-                    .touristPlan(tour5)
-                    .build();
-            imageRepository.save(image2T5);
-
-
-            ImageEntity image3T5 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641770/3_titicaca_xkldlr.jpg")
-                    .touristPlan(tour5)
-                    .build();
-            imageRepository.save(image3T5);
-
-
-            ImageEntity image4T5 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641779/4.titicaca_e5digo.jpg")
-                    .touristPlan(tour5)
-                    .build();
-            imageRepository.save(image4T5);
-            ImageEntity image5T5 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641783/5_titicaca_btuokl.jpg")
-                    .touristPlan(tour5)
-                    .build();
-            imageRepository.save(image5T5);
-
-
-
-
             TouristPlanEntity tour6 = TouristPlanEntity.builder()
                     .title("Tour en el Cañón del Colca")
                     .description("Un tour de dos días al Cañón del Colca, uno de los cañones más profundos del mundo. Además de disfrutar de paisajes espectaculares, puedes avistar el majestuoso cóndor andino. El tour suele partir desde Arequipa.")
-                    .price(80.00)
+                    .price(140.00)
                     .seller("Colca Tours")
                     .city(cities.get(3))
                     .category(categoryRepository.findByName("Tours"))
-                    .capacity(15)
+                    .capacity(25)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("2 días")
+                    .duration("3 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -1540,29 +1602,29 @@ public class DataLoader implements CommandLineRunner{
             touristPlanRepository.save(tour6);
 
 
-            ImageEntity image1T6 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642473/1._canon_del_colca_h0dv6v.jpg")
+            ImageEntity image1T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642473/1._canon_del_colca_h0dv6v.jpg")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image1T6);
 
 
-            ImageEntity image2T6 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642674/2._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_elrugf.jpg")
+            ImageEntity image2T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642674/2._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_elrugf.jpg")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image2T6);
 
 
-            ImageEntity image3T6 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642642/3._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_eebimm.jpg")
+            ImageEntity image3T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642642/3._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_eebimm.jpg")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image3T6);
-            ImageEntity image4T6 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642637/4._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_p9x5wv.jpg")
+            ImageEntity image4T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642637/4._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_p9x5wv.jpg")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image4T6);
 
 
-            ImageEntity image5T6 = ImageEntity.builder()       .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642631/5._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_mykeyo.jpg")
+            ImageEntity image5T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642631/5._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_mykeyo.jpg")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image5T6);
@@ -1570,182 +1632,69 @@ public class DataLoader implements CommandLineRunner{
 
 //Primeras Actividades
 
-
-            TouristPlanEntity activity1 = TouristPlanEntity.builder()
-                    .title("Trekking en la Montaña de 7 Colores")
-                    .description("Realiza una caminata hacia la famosa Montaña de los Siete Colores, cerca de Cusco. Este destino es conocido por sus impresionantes colores naturales debido a los minerales presentes en la tierra.")
-                    .price(19.00)
-                    .seller("Machupicchu Tours")
+            TouristPlanEntity activity6 = TouristPlanEntity.builder()
+                    .title("7 lagunas de Ausangate aguas termales")
+                    .description("Explora las 7 Lagunas de Ausangate y relájate en sus aguas termales. Si amas la naturaleza y la aventura, este tour es para ti. Recorre un sendero rodeado de imponentes montañas, donde descubrirás lagunas de origen glaciar en tonos azul turquesa y verde esmeralda. Disfruta de vistas panorámicas únicas y culmina con un baño relajante en las aguas termales de Pacchanta. ¡Conecta con el encanto natural en esta experiencia inolvidable!")
+                    .price(75.00)
+                    .seller("Freewalking Tours Peru")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
-                    .capacity(30)
+                    .capacity(15)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 día")
-                    .characteristic(List.of(
-                            characteristicsList.get(0),
-                            characteristicsList.get(2),
-                            characteristicsList.get(3),
-                            characteristicsList.get(8),
-                            characteristicsList.get(9)))
-                    .isActive(true)
-                    .build();
-            touristPlanRepository.save(activity1);
-
-            ImageEntity image1activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647705/7colores_to6zcp.jpg")
-                    .touristPlan(activity1)
-                    .build();
-            imageRepository.save(image1activity1);
-
-            ImageEntity image2activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644029/montana-7-colores1-1000x650_bjlgjs.jpg")
-                    .touristPlan(activity1)
-                    .build();
-            imageRepository.save(image2activity1);
-
-            ImageEntity image3activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644025/chicas-cartel-montana-7-colores2-1000x650_r68cq2.jpg")
-                    .touristPlan(activity1)
-                    .build();
-            imageRepository.save(image3activity1);
-
-            ImageEntity image4activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644020/montana-colores-caballos1-1000x650_f4nbpi.jpg")
-                    .touristPlan(activity1)
-                    .build();
-            imageRepository.save(image4activity1);
-
-            ImageEntity image5activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644022/montana-llamas-vinicunca1-1000x650_bjlrty.jpg")
-                    .touristPlan(activity1)
-                    .build();
-            imageRepository.save(image5activity1);
-
-
-           //Actividad 2
-            TouristPlanEntity activity2 = TouristPlanEntity.builder()
-                    .title("Exploración de la Selva Amazónica")
-                    .description("Vive la experiencia de explorar la selva amazónica peruana desde Iquitos o Puerto Maldonado. Puedes realizar caminatas por la selva, avistamiento de fauna y paseos en bote por ríos llenos de vida.")
-                    .price(250.00)
-                    .seller("Titicaca Tours")
-                    .city(cities.get(15))
-                    .category(categoryRepository.findByName("Activity"))
-                    .capacity(10)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2024, 11, 1))
                     .duration("2 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
                             characteristicsList.get(3),
-                            characteristicsList.get(8),
-                            characteristicsList.get(9)))
+                            characteristicsList.get(4),
+                            characteristicsList.get(7)))
                     .isActive(true)
                     .build();
-            touristPlanRepository.save(activity2);
-            ImageEntity image1activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647840/selva-amazonicaPpal_eru4un.jpg")
-       .touristPlan(activity2)
+            touristPlanRepository.save(activity6);
+
+            ImageEntity image1activity6 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633840/tour-ausangate-7-lagunas-aguas-termales_Ppal_jtxrgg.jpg")
+                    .touristPlan(activity6)
                     .build();
-            imageRepository.save(image1activity2);
+            imageRepository.save(image1activity6);
 
-
-
-
-            ImageEntity image2activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646596/SELVA-AMAZONICA3_ll3tnw.jpg")
-                    .touristPlan(activity2)
+            ImageEntity image2activity6 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633837/tour-ausangate-7-lagunas-aguas-termales_7_r2k0mp.jpg")
+                    .touristPlan(activity6)
                     .build();
-            imageRepository.save(image2activity2);
+            imageRepository.save(image2activity6);
 
-
-            ImageEntity image3activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646587/SELVA-AMAZONICA2_acsrvk.jpg")
-                    .touristPlan(activity2)
+            ImageEntity image3activity6 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633835/tour-ausangate-7-lagunas-aguas-termales_6_werrt4.jpg")
+                    .touristPlan(activity6)
                     .build();
-            imageRepository.save(image3activity2);
+            imageRepository.save(image3activity6);
 
-
-            ImageEntity image4activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646583/SELVA-AMAZONICA_mebrcv.jpg")
-                    .touristPlan(activity2)
+            ImageEntity image4activity6 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633833/tour-ausangate-7-lagunas-aguas-termales_4_xkg9cj.jpg")
+                    .touristPlan(activity6)
                     .build();
-            imageRepository.save(image4activity2);
+            imageRepository.save(image4activity6);
 
-
-            ImageEntity image5activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646580/SELVA-AMAZONICA5_yyp1y8.jpg")
-                    .touristPlan(activity2)
+            ImageEntity image5activity6 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633829/tour-ausangate-7-lagunas-aguas-termales_2_zqxkfb.jpg")
+                    .touristPlan(activity6)
                     .build();
-            imageRepository.save(image5activity2);
-
-
-//Actividad 3
-
-
-            TouristPlanEntity activity3 = TouristPlanEntity.builder()
-                    .title("Sandboarding en Huacachina")
-                    .description("Deslízate por las dunas de arena de Huacachina, cerca de Ica. El sandboarding es una actividad emocionante, y también puedes hacer recorridos en buggies por el desierto.")
-                    .price(83.00)
-                    .seller("Titicaca Tours")
-                    .city(cities.get(10))
-                    .category(categoryRepository.findByName("Activity"))
-                    .capacity(10)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 día")
-                    .characteristic(List.of(
-                            characteristicsList.get(0),
-                            characteristicsList.get(2),
-                            characteristicsList.get(3),
-                            characteristicsList.get(8),
-                            characteristicsList.get(9)))
-                    .isActive(true)
-                    .build();
-            touristPlanRepository.save(activity3);
-            ImageEntity image1activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647993/HuacachinaPpal_xbsqeq.jpg")
-                    .touristPlan(activity3)
-                    .build();
-            imageRepository.save(image1activity3);
-
-            ImageEntity image2activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648180/Huacachina2_m1qnlw.jpg")
-                    .touristPlan(activity3)
-                    .build();
-            imageRepository.save(image2activity3);
-
-            ImageEntity image3activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648184/Huacachina3_amcryz.jpg")
-                    .touristPlan(activity3)
-                    .build();
-            imageRepository.save(image3activity3);
-
-            ImageEntity image4activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648188/Huacachina4_cnucrh.jpg")
-                    .touristPlan(activity3)
-                    .build();
-            imageRepository.save(image4activity3);
-
-            ImageEntity image5activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648161/Huacachina5_xsdoz3.jpg")
-                    .touristPlan(activity3)
-                    .build();
-            imageRepository.save(image5activity3);
+            imageRepository.save(image5activity6);
 
             //Actividad 4
             TouristPlanEntity activity4 = TouristPlanEntity.builder()
                     .title("Visita al Mercado de San Pedro en Cusco")
                     .description("Sumérgete en la cultura local visitando el Mercado de San Pedro, donde podrás comprar artesanías, probar comida tradicional peruana y conocer más sobre los ingredientes locales.")
-                    .price(10.00)
+                    .price(100.00)
                     .seller("Machupicchu Tours")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 día")
+                    .availabilityEndDate(LocalDate.of(2024, 1, 15))
+                    .duration("2 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -1791,14 +1740,14 @@ public class DataLoader implements CommandLineRunner{
             TouristPlanEntity activity5 = TouristPlanEntity.builder()
                     .title("Visita a las Salineras de Maras")
                     .description("Visita las impresionantes terrazas de sal en Maras, un sitio único donde se extrae sal de manera tradicional desde la época inca. Es una actividad cercana al Valle Sagrado, ideal para combinar con otros tours.")
-                    .price(35.00)
+                    .price(50.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
-                    .duration("1 día")
+                    .availabilityEndDate(LocalDate.of(2024, 3, 30))
+                    .duration("2 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
                             characteristicsList.get(2),
@@ -1896,7 +1845,7 @@ public class DataLoader implements CommandLineRunner{
         }
 
         List<ReviewEntity> reviews = reviewRepository.findAll();
-        if (reviews.isEmpty()){
+        if (reviews.isEmpty()) {
             ReviewEntity review1 = ReviewEntity.builder()
                     .user(userRepository.findById(1L).get())
                     .touristPlan(touristPlanRepository.findById(1L).get())
@@ -2054,7 +2003,7 @@ public class DataLoader implements CommandLineRunner{
         }
 
         List<ReservationEntity> reservations = reservationRepository.findAll();
-        if (reservations.isEmpty()){
+        if (reservations.isEmpty()) {
             ReservationEntity reservation1 = ReservationEntity.builder()
                     .touristPlan(touristPlanRepository.findById(1L).get())
                     .user(userRepository.findById(1L).get())

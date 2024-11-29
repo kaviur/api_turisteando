@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.StreamSupport;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -34,7 +36,14 @@ public class ReviewServiceImpl implements IReviewService {
 
     @Override
     public Iterable<ReviewResponseDto> getAll() {
-        return null;
+        try {
+            Iterable<ReviewEntity> countries = reviewRepository.findAll();
+            return StreamSupport.stream(countries.spliterator(), false)
+                    .map(reviewMapper::toResponseDto)
+                    .toList();
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
@@ -164,7 +173,7 @@ public class ReviewServiceImpl implements IReviewService {
     public Iterable<ReviewResponseDto> getAllByRating(Long idPlan, int rating) {
         TouristPlanEntity plan = touristPlanRepository.findById(idPlan)
                 .orElseThrow(() -> new TouristPlanNotFoundException("Tourist plan with id " + idPlan + " not found"));
-        return reviewRepository.findByRatingAndTouristPlanIdAndStatus(rating, idPlan,1)
+        return reviewRepository.findByRatingAndTouristPlanIdAndStatus(rating, idPlan, 1)
                 .stream().map(reviewMapper::toResponseDto)
                 .toList();
 

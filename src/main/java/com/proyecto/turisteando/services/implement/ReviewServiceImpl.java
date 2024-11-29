@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements IReviewService {
         try {
             Iterable<ReviewEntity> countries = reviewRepository.findAll();
             return StreamSupport.stream(countries.spliterator(), false)
-                    .map(reviewMapper::toDto)
+                    .map(reviewMapper::toResponseDto)
                     .toList();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
@@ -186,7 +186,7 @@ public class ReviewServiceImpl implements IReviewService {
     public Iterable<ReviewResponseDto> getAllByRating(Long idPlan, int rating) {
         TouristPlanEntity plan = touristPlanRepository.findById(idPlan)
                 .orElseThrow(() -> new TouristPlanNotFoundException("Tourist plan with id " + idPlan + " not found"));
-        return reviewRepository.findByRatingAndTouristPlanIdAndStatus(rating, idPlan,1)
+        return reviewRepository.findByRatingAndTouristPlanIdAndStatus(rating, idPlan, 1)
                 .stream().map(reviewMapper::toResponseDto)
                 .toList();
 

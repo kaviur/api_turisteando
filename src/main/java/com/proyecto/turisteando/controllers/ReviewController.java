@@ -24,7 +24,7 @@ public class ReviewController {
     private final IReviewService reviewService;
 
     @GetMapping("/all")
-    public ResponseEntity<Response> getReview() {
+    public ResponseEntity<Response> getAllReviews() {
         Iterable<ReviewResponseDto> reviewResponseDto = reviewService.getAll();
         if (!reviewResponseDto.iterator().hasNext()) {
             Response response = new Response(false, HttpStatus.NO_CONTENT, "No se encontraron reseñas");
@@ -94,11 +94,11 @@ public class ReviewController {
 
     @GetMapping("/plan/{idPlan}/reviews")
     public ResponseEntity<Response> getAllReviewsByPlanPage(
-            @PageableDefault(page =0, size = 2, sort = "id") Pageable pageable,
+            @PageableDefault(page = 0, size = 2, sort = "id") Pageable pageable,
             @PathVariable Long idPlan) {
 
         Page<ReviewResponseDto> reviews = reviewService.getAllByPlanP(idPlan, pageable);
-        if (reviews.isEmpty()){
+        if (reviews.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(
                     false,
                     HttpStatus.NOT_FOUND,

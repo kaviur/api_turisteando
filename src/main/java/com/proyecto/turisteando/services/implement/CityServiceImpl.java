@@ -88,9 +88,5 @@ public class CityServiceImpl implements CrudService<CityRequestDto, CityResponse
     public CityResponseDto toggleStatus(Long id) {
         return null;
     }
-
-    @Override
-    public CityResponseDto toggleUserRole(Long id) {
-        return null;
-    }
 }
+

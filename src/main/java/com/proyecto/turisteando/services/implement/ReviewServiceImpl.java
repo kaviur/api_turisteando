@@ -167,12 +167,6 @@ public class ReviewServiceImpl implements IReviewService {
         return reviewMapper.toResponseDto(updatedReview);
     }
 
-
-    @Override
-    public ReviewResponseDto toggleUserRole(Long id) {
-        return null;
-    }
-
     @Override
     public Iterable<ReviewResponseDto> getAllByPlan(Long idPlan) {
         TouristPlanEntity plan = touristPlanRepository.findById(idPlan)

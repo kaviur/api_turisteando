@@ -10,8 +10,6 @@ import org.mapstruct.*;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ReviewMapper {
 
-    ReviewResponseDto toDto(ReviewEntity reviewEntity);
-
     ReviewEntity toEntity(ReviewRequestDto reviewRequestDto);
 
     ReviewRequestDto toRequestDto(ReviewEntity review);

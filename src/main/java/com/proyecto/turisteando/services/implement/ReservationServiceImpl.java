@@ -158,10 +158,4 @@ public class ReservationServiceImpl implements IReservationService {
                 .map(reservationMapper::toDto)
                 .collect(Collectors.toList());
     }
-
-    @Override
-    public ReservationResponseDto toggleUserRole(Long id) {
-        return null;
-    }
-
 }

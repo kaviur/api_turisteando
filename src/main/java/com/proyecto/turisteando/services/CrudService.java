@@ -22,7 +22,4 @@ public interface CrudService <RequestDto, ResponseDto, I>{
     @Transactional
     ResponseDto toggleStatus(I id);
 
-    @Transactional
-    ResponseDto toggleUserRole(I id);
-
 }

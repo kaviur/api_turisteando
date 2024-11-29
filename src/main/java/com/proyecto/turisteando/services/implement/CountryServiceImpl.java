@@ -90,8 +90,4 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
         return null;
     }
 
-    @Override
-    public CountryDto toggleUserRole(Long id) {
-        return null;
-    }
 }

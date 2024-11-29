@@ -197,11 +197,6 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
         }
     }
 
-    @Override
-    public TouristPlanResponseDto toggleUserRole(Long id) {
-        return null;
-    }
-
     private List<TouristPlanEntity> filterTouristPlans(List<TouristPlanEntity> allTouristPlans, TouristPlanRequestDto iDto) {
         return allTouristPlans.stream()
                 .filter(touristPlan -> iDto.getCategoryId() == null ||

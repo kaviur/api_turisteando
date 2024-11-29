@@ -564,7 +564,7 @@ public class DataLoader implements CommandLineRunner {
             TouristPlanEntity tour11 = TouristPlanEntity.builder()
                     .title("Tour- Expedición al Huascaran")
                     .description("¡Conquista el Techo del Perú! Adéntrate en el majestuoso Nevado Huascarán, también llamado “Mataraju”, con sus impresionantes picos gemelos. Vive la emoción de ascender a la cima más alta del país (6,877 m) en el Parque Nacional Huascarán. Supera desafíos únicos como grietas y seracs, siempre guiado por expertos. ¡Haz realidad esta inolvidable experiencia llena de adrenalina y naturaleza!.")
-                    .price(12000.00)
+                    .price(2000.00)
                     .seller(" Huascaran tours")
                     .city(cities.get(1))
                     .category(categoryRepository.findByName("Tours"))

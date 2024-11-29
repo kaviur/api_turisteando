@@ -2,6 +2,7 @@ package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.dtos.requestDto.ReviewRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReviewResponseDto;
+import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import com.proyecto.turisteando.services.IReviewService;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;

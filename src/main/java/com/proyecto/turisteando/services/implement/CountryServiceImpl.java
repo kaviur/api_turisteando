@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.services.implement;
 
 import com.proyecto.turisteando.dtos.CountryDto;
+import com.proyecto.turisteando.dtos.responseDto.ReservationResponseDto;
 import com.proyecto.turisteando.entities.CountryEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.CountryNotFoundException;
 import com.proyecto.turisteando.mappers.CountryMapper;
@@ -86,6 +87,11 @@ public class CountryServiceImpl implements CrudService<CountryDto, CountryDto, L
 
     @Override
     public CountryDto toggleStatus(Long id) {
+        return null;
+    }
+
+    @Override
+    public CountryDto toggleUserRole(Long id) {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.services.implement;
 
+import com.proyecto.turisteando.dtos.CountryDto;
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ImageEntity;
@@ -194,6 +195,11 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
+    }
+
+    @Override
+    public TouristPlanResponseDto toggleUserRole(Long id) {
+        return null;
     }
 
     private List<TouristPlanEntity> filterTouristPlans(List<TouristPlanEntity> allTouristPlans, TouristPlanRequestDto iDto) {

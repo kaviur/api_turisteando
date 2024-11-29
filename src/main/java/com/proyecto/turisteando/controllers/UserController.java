@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.controllers;
 
+import com.proyecto.turisteando.dtos.requestDto.RoleRequestDto;
 import com.proyecto.turisteando.dtos.requestDto.UserRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import com.proyecto.turisteando.services.IUserService;
@@ -17,6 +18,17 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+
+
+    @PostMapping("/create")
+    public ResponseEntity<Response> createUser(@RequestBody UserRequestDto userRequestDto) {
+        Response response = new Response(
+                true,
+                HttpStatus.OK,
+                userService.create(userRequestDto)
+        );
+        return ResponseEntity.ok(response);
+    }
     @GetMapping("/all")
     public ResponseEntity<Response> getUser() {
         Iterable<UserResponseDto> userResponseDtos = userService.getAll();
@@ -53,15 +65,15 @@ public class UserController {
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userResponseDto));
     }
 
-    @PatchMapping("/toggle-status/{id}")
-    public ResponseEntity<Response> toggleUserStatus(@PathVariable Long id) {
-        UserResponseDto userResponseDto = userService.toggleStatus(id);
+    @PatchMapping("/update-role/{id}")
+    public ResponseEntity<Response> updateRole(@PathVariable Long id, @RequestBody RoleRequestDto roleRequestDto) {
+        UserResponseDto userResponseDto = userService.updateRole(id, roleRequestDto);
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userResponseDto));
     }
 
-    @PatchMapping("/toggle-role/{id}")
-    public ResponseEntity<Response> toggleUserRole(@PathVariable Long id) {
-        UserResponseDto userResponseDto = userService.toggleUserRole(id);
+    @PatchMapping("/toggle-status/{id}")
+    public ResponseEntity<Response> toggleUserStatus(@PathVariable Long id) {
+        UserResponseDto userResponseDto = userService.toggleStatus(id);
         return ResponseEntity.ok(new Response(true, HttpStatus.OK, userResponseDto));
     }
 

@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.services.implement;
 
+import com.proyecto.turisteando.dtos.requestDto.RoleRequestDto;
 import com.proyecto.turisteando.dtos.requestDto.UserRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import com.proyecto.turisteando.entities.UserEntity;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
@@ -49,7 +51,16 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
     @Override
     public UserResponseDto create(UserRequestDto userRequestDto) {
-        return null;
+        try {
+            Role role = Optional.ofNullable(userRequestDto.getRole())
+                    .orElse(Role.BUYER);
+            UserEntity userEntity = userMapper.toEntity(userRequestDto);
+            userEntity.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
+            userEntity.setRole(role);
+            return userMapper.toDto(userRepository.save(userEntity));
+        } catch (Exception e) {
+            throw new ServiceException("Error al crear el usuario"+ e.getMessage());
+        }
     }
 
     @Override
@@ -62,6 +73,19 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             return userMapper.toDto(userEntity);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
+        }
+    }
+
+    @Override
+    public UserResponseDto updateRole(Long id, RoleRequestDto roleRequestDto) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        try {
+            userEntity.setRole(roleRequestDto.getRole());
+            userRepository.save(userEntity);
+            return userMapper.toDto(userEntity);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar el rol del usuario" + e.getMessage());
         }
     }
 

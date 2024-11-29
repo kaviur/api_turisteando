@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.dtos.requestDto;
 
+import com.proyecto.turisteando.entities.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -27,5 +28,7 @@ public class UserRequestDto implements Serializable {
     @NotBlank(message = "La contraseña es requerida")
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String password;
+
+    private Role role;
 
 }

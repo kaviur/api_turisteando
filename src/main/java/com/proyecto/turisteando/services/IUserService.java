@@ -1,5 +1,6 @@
 package com.proyecto.turisteando.services;
 
+import com.proyecto.turisteando.dtos.requestDto.RoleRequestDto;
 import com.proyecto.turisteando.dtos.requestDto.UserRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import org.springframework.security.core.Authentication;
@@ -13,4 +14,6 @@ public interface IUserService extends CrudService<UserRequestDto, UserResponseDt
 
     @Transactional
     UserResponseDto toggleUserRole(Long id);
+
+    UserResponseDto updateRole(Long id, RoleRequestDto roleRequestDto);
 }

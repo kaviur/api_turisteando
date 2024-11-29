@@ -2,6 +2,7 @@ package com.proyecto.turisteando.controllers;
 
 import com.proyecto.turisteando.dtos.requestDto.ReviewRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReviewResponseDto;
+import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import com.proyecto.turisteando.services.IReviewService;
 import com.proyecto.turisteando.utils.Response;
 import jakarta.validation.Valid;
@@ -21,6 +22,16 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class ReviewController {
     private final IReviewService reviewService;
+
+    @GetMapping("/all")
+    public ResponseEntity<Response> getReview() {
+        Iterable<ReviewResponseDto> reviewResponseDto = reviewService.getAll();
+        if (!reviewResponseDto.iterator().hasNext()) {
+            Response response = new Response(false, HttpStatus.NO_CONTENT, "No se encontraron reseñas");
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.ok(new Response(true, HttpStatus.OK, reviewResponseDto));
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Response> createReview(@RequestBody @Valid ReviewRequestDto reviewDto) {

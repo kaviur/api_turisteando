@@ -92,28 +92,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         }
     }
 
-    @Override
-    public UserResponseDto toggleUserRole(Long userId) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        try {
-            // Cambiar el rol entre ADMIN y BUYER
-            if (userEntity.getRole() == Role.BUYER) {
-                userEntity.setRole(Role.ADMIN);
-            } else if (userEntity.getRole() == Role.ADMIN) {
-                userEntity.setRole(Role.BUYER);
-            }
-
-            // Guardar el cambio en la base de datos
-            userRepository.save(userEntity);
-
-            // Devolver el DTO actualizado
-            return userMapper.toDto(userEntity);
-        } catch (Exception e) {
-            throw new ServiceException("Error al cambiar el rol del usuario: " + e.getMessage());
-        }
-    }
 
     @Override
     public Iterable<UserResponseDto> getAllByFilters(UserRequestDto dto) {

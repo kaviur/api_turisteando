@@ -1,8 +1,10 @@
 package com.proyecto.turisteando.services.implement;
 
+import com.proyecto.turisteando.dtos.CountryDto;
 import com.proyecto.turisteando.dtos.requestDto.ReviewRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.ReviewResponseDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
+import com.proyecto.turisteando.entities.CountryEntity;
 import com.proyecto.turisteando.entities.ReviewEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
 import com.proyecto.turisteando.entities.UserEntity;
@@ -22,6 +24,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.StreamSupport;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -33,10 +37,20 @@ public class ReviewServiceImpl implements IReviewService {
     private final ReservationRepository reservationRepository;
 
 
+
     @Override
     public Iterable<ReviewResponseDto> getAll() {
-        return null;
+        try {
+            Iterable<ReviewEntity> countries = reviewRepository.findAll();
+            return StreamSupport.stream(countries.spliterator(), false)
+                    .map(reviewMapper::toDto)
+                    .toList();
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
+
+
 
     @Override
     public ReviewResponseDto read(Long id) {

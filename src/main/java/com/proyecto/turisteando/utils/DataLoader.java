@@ -949,7 +949,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(350)
                     .availabilityStartDate(LocalDate.of(2024, 11, 27))
-                    .availabilityEndDate(LocalDate.of(2024, 2, 5))
+                    .availabilityEndDate(LocalDate.of(2025, 2, 5))
                     .duration("4 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1198,7 +1198,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(30)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2025, 1, 31))
                     .duration("5 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1292,7 +1292,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2025, 2, 3))
                     .duration("3 días")
                     .characteristic(List.of(
                             characteristicsList.get(6),
@@ -1386,7 +1386,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2025, 3, 1))
                     .duration("1 días")
                     .characteristic(List.of(
                             characteristicsList.get(3),
@@ -1432,7 +1432,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(6)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2025, 1, 16))
                     .duration("1 días")
                     .characteristic(List.of(
                             characteristicsList.get(6),
@@ -1480,7 +1480,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(100)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2025, 4, 20))
                     .duration("3 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1536,8 +1536,8 @@ public class DataLoader implements CommandLineRunner {
                     .city(cities.get(10))
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(10)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityStartDate(LocalDate.of(2024, 11, 29))
+                    .availabilityEndDate(LocalDate.of(2025, 1, 5))
                     .duration("1 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1589,7 +1589,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Tours"))
                     .capacity(25)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .availabilityEndDate(LocalDate.of(2025, 2, 2))
                     .duration("3 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1640,8 +1640,8 @@ public class DataLoader implements CommandLineRunner {
                     .city(cities.get(7))
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(15)
-                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 11, 1))
+                    .availabilityStartDate(LocalDate.of(2024, 12, 2))
+                    .availabilityEndDate(LocalDate.of(2025, 1, 25))
                     .duration("2 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1693,7 +1693,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 1, 15))
+                    .availabilityEndDate(LocalDate.of(2025, 1, 15))
                     .duration("2 día")
                     .characteristic(List.of(
                             characteristicsList.get(0),
@@ -1746,7 +1746,7 @@ public class DataLoader implements CommandLineRunner {
                     .category(categoryRepository.findByName("Activity"))
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
-                    .availabilityEndDate(LocalDate.of(2024, 3, 30))
+                    .availabilityEndDate(LocalDate.of(2025, 3, 30))
                     .duration("2 días")
                     .characteristic(List.of(
                             characteristicsList.get(0),

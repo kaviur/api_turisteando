@@ -1924,7 +1924,7 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(1L).get())
                     .touristPlan(touristPlanRepository.findById(6L).get())
                     .rating(5)
-                    .comment("Lo mejor en mucho tiempo\n" +
+                    .comment("Lo mejor en mucho tiempo " +
                             "Habíamos probado otros servicios, pero el plan TURISTEANDO realmente se destacó. La calidad, el servicio y la experiencia fueron excepcionales.")
                     .build();
             reviewRepository.save(review11);
@@ -1932,8 +1932,8 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(2L).get())
                     .touristPlan(touristPlanRepository.findById(6L).get())
                     .rating(4)
-                    .comment("Una maravilla natural\n" +
-                            "El Tour de TURISTEANDO nos dejó sin palabras. Los paisajes eran de ensueño, y el servicio excelente. ¡Lo recomendamos a todos!")
+                    .comment("Una maravilla natural " +
+                            "el Tour de TURISTEANDO nos dejó sin palabras. Los paisajes eran de ensueño, y el servicio excelente. ¡Lo recomendamos a todos!")
                     .build();
             reviewRepository.save(review12);
             ReviewEntity review13 = ReviewEntity.builder()
@@ -1968,8 +1968,8 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(2L).get())
                     .touristPlan(touristPlanRepository.findById(9L).get())
                     .rating(4)
-                    .comment("Aventura para recordar\n" +
-                            "Hicimos el plan completo, no nos podíamos perder de todas las actividades recomendadas por el grupo de TURISTEANDO y cada momento fue emocionante. Las actividades estuvieron muy bien organizadas. ¡Excelente!")
+                    .comment("Aventura para recordar " +
+                            "hicimos el plan completo, no nos podíamos perder de todas las actividades recomendadas por el grupo de TURISTEANDO y cada momento fue emocionante. Las actividades estuvieron muy bien organizadas. ¡Excelente!")
                     .build();
             reviewRepository.save(review17);
             ReviewEntity review18 = ReviewEntity.builder()

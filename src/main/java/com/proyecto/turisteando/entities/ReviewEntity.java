@@ -2,6 +2,7 @@ package com.proyecto.turisteando.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,8 @@ public class ReviewEntity {
     private TouristPlanEntity touristPlan; // Relación con el plan turístico
 
     private int rating;
+
+    @Size(max = 500, message = "El comentario no puede tener más de 500 caracteres")
     private String comment;
 
     @Temporal(TemporalType.DATE)

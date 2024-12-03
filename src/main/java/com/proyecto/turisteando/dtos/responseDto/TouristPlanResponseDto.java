@@ -1,8 +1,7 @@
 package com.proyecto.turisteando.dtos.responseDto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proyecto.turisteando.dtos.IDto;
-import com.proyecto.turisteando.entities.CityEntity;
-import com.proyecto.turisteando.dtos.requestDto.CategoryRequestDto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,4 +34,7 @@ public class TouristPlanResponseDto implements IDto {
     private Integer totalStars;
     private Double rating; // Este será calculado en el mapper
     private boolean isActive;
+
+    @JsonProperty("isFavorite")
+    private boolean isFavorite;
 }

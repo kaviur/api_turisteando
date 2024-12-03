@@ -5,6 +5,7 @@ import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
 import com.proyecto.turisteando.entities.ImageEntity;
 import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.exceptions.customExceptions.FileValidationException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageLimitExceededException;
 import com.proyecto.turisteando.exceptions.customExceptions.ImageNotFoundException;
@@ -19,11 +20,11 @@ import com.proyecto.turisteando.utils.FileValidator;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -67,8 +68,12 @@ public class TouristPlanServiceImpl implements ITouristPlanService {
     }
 
     @Override
-    public List<TouristPlanResponseDto> findAllFavoritesByUserId(Long userId) {
-        return touristPlanMapper.toDtoList(touristPlanRepository.usersFavorites(userId));
+    public List<TouristPlanResponseDto> findAllFavoritesByUser(UserEntity user) {
+        List<TouristPlanEntity> plans = touristPlanRepository.findAll();
+        Set<Long> favoritePlanIds = touristPlanRepository.usersFavorites(user.getId())
+                .stream()
+                .map(TouristPlanEntity::getId).collect(Collectors.toSet());
+        return touristPlanMapper.toDtoListWithFavorites(plans, favoritePlanIds);
     }
 
     @Override

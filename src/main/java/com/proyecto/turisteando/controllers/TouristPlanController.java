@@ -3,17 +3,22 @@ package com.proyecto.turisteando.controllers;
 import com.proyecto.turisteando.dtos.requestDto.TouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.requestDto.UserFavoriteTouristPlanRequestDto;
 import com.proyecto.turisteando.dtos.responseDto.TouristPlanResponseDto;
+import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.services.ITouristPlanService;
 import com.proyecto.turisteando.utils.Response;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/tourist-plans")
@@ -64,22 +69,23 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/allfavoritesbyuserid/{userId}")
-    public ResponseEntity<Response> findAllFavoritesByUserId (@PathVariable Long userId) {
-        Response response = new Response(true, HttpStatus.OK, touristPlanService.findAllFavoritesByUserId(userId));
+    @GetMapping("/allfavoritesbyuser")
+    public ResponseEntity<Response> findAllFavoritesByUser(@AuthenticationPrincipal UserEntity user) {
+        List<TouristPlanResponseDto> touristPlans = touristPlanService.findAllFavoritesByUser(user);
+        Response response = new Response(true, HttpStatus.OK, touristPlans);
         return ResponseEntity.ok(response);
     }
 
 
     @PutMapping("/addFavoriteToUser")
-    public ResponseEntity<Response> addUserFavoritePlan (@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
+    public ResponseEntity<Response> addUserFavoritePlan(@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
         touristPlanService.addUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
         Response response = new Response(true, HttpStatus.OK, "Plan agregado a favoritos");
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/deleteFavoriteToUser")
-    public ResponseEntity<Response> deleteUserFavoritePlan (@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
+    public ResponseEntity<Response> deleteUserFavoritePlan(@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
         touristPlanService.deleteUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
         Response response = new Response(true, HttpStatus.OK, "Plan eliminado de favoritos");
         return ResponseEntity.ok(response);

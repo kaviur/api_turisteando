@@ -12,6 +12,7 @@ import com.proyecto.turisteando.services.implement.CityServiceImpl;
 import org.mapstruct.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring",
         uses = {CategoryMapper.class, CategoryServiceImpl.class, CityMapper.class, CityServiceImpl.class,
@@ -28,13 +29,23 @@ public interface TouristPlanMapper {
     @Mapping(target = "rating", expression = "java(calculateRating(touristPlanEntity))")
     TouristPlanResponseDto toDto(TouristPlanEntity touristPlanEntity);
 
+    @IterableMapping(qualifiedByName = "toDtoWithFavorites")
+    List<TouristPlanResponseDto> toDtoListWithFavorites(List<TouristPlanEntity> touristPlanEntities, @Context Set<Long> favoriteIds);
+
+    @Named("toDtoWithFavorites")
+    @Mappings({
+            @Mapping(target = "rating", expression = "java(calculateRating(touristPlanEntity))"),
+            @Mapping(target = "favorite", source = "id", qualifiedByName = "isFavoriteChecked")
+    })
+    TouristPlanResponseDto toDtoWithFavorites(TouristPlanEntity touristPlanEntity, @Context Set<Long> favoriteIds);
+
     List<TouristPlanResponseDto> toDtoList(List<TouristPlanEntity> touristPlanEntityList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mappings({
             @Mapping(target = "city", source = "cityId"),
-            @Mapping(target = "category", source = "categoryId")
-            ,@Mapping(target = "characteristic", source = "characteristicIds")
+            @Mapping(target = "category", source = "categoryId"),
+            @Mapping(target = "characteristic", source = "characteristicIds")
     })
     TouristPlanEntity partialUpdate(TouristPlanRequestDto touristPlanRequestDto, @MappingTarget TouristPlanEntity touristPlanEntity1);
 
@@ -57,6 +68,11 @@ public interface TouristPlanMapper {
             return 0.0;
         }
         return (double) touristPlan.getTotalStars() / touristPlan.getTotalReviews();
+    }
+
+    @Named("isFavoriteChecked")
+    default boolean isFavoriteCheck(Long touristPlanId, @Context Set<Long> favoriteIds) {
+        return favoriteIds.contains(touristPlanId);
     }
 
 }

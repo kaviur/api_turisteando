@@ -53,6 +53,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.DELETE, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
                             .requestMatchers(HttpMethod.PATCH, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
                             .requestMatchers(HttpMethod.GET, "/api/tourist-plans/allfavoritesbyuser").authenticated()
+                            .requestMatchers(HttpMethod.GET, "/api/reservations/**").authenticated()
                             .requestMatchers("/api/users/**").hasAuthority(Role.ADMIN.name())
                             .anyRequest().permitAll();
                 })

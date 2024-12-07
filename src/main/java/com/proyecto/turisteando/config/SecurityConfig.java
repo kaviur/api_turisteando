@@ -47,11 +47,6 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.PUT, "/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
                             .requestMatchers(HttpMethod.PATCH, "/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
                             .requestMatchers(HttpMethod.DELETE, "/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
-                            .requestMatchers(HttpMethod.POST, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.PUT, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.DELETE, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.PATCH, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers(HttpMethod.GET, "/api/tourist-plans/allfavoritesbyuser").authenticated()
                             .requestMatchers( "/api/reservations/**").authenticated()
                             .requestMatchers("/api/users/**").hasAuthority(Role.ADMIN.name())
                             .anyRequest().permitAll();

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class TouristPlanController {
     @Autowired
     private ITouristPlanService touristPlanService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> createTouristPlan(
             @Validated @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
@@ -69,6 +71,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/allfavoritesbyuser")
     public ResponseEntity<Response> findAllFavoritesByUser(@AuthenticationPrincipal UserEntity user) {
         List<TouristPlanResponseDto> touristPlans = touristPlanService.findAllFavoritesByUser(user);
@@ -76,7 +79,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
-
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/addFavoriteToUser")
     public ResponseEntity<Response> addUserFavoritePlan(@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
         touristPlanService.addUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
@@ -84,6 +87,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/deleteFavoriteToUser")
     public ResponseEntity<Response> deleteUserFavoritePlan(@RequestBody UserFavoriteTouristPlanRequestDto userPlans) {
         touristPlanService.deleteUsersFavorites(userPlans.getUserId(), userPlans.getPlanId());
@@ -91,6 +95,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Response> updateTouristPlan(
             @RequestPart("touristPlan") TouristPlanRequestDto touristPlan,
@@ -108,6 +113,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> deleteTouristPlan(@PathVariable Long id) {
         TouristPlanResponseDto deletedTouristPlan = touristPlanService.delete(id);
@@ -115,6 +121,7 @@ public class TouristPlanController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/toggle-status/{id}")
     public ResponseEntity<Response> toggleTouristPlanStatus(@PathVariable Long id) {
         TouristPlanResponseDto toggledTouristPlan = touristPlanService.toggleStatus(id);

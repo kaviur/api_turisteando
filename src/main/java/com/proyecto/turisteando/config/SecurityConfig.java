@@ -43,7 +43,6 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.PATCH, "/api/cities/**").hasAuthority(Role.ADMIN.toString())
                             .requestMatchers(HttpMethod.DELETE, "/api/cities/**").hasAuthority(Role.ADMIN.toString())
                             .requestMatchers("/api/images/**").hasAuthority(Role.ADMIN.name())
-                            .requestMatchers("/api/reservations/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
                             .requestMatchers(HttpMethod.POST, "/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
                             .requestMatchers(HttpMethod.PUT, "/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
                             .requestMatchers(HttpMethod.PATCH, "/api/reviews/**").hasAnyAuthority(Role.ADMIN.name(), Role.BUYER.name())
@@ -53,7 +52,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.DELETE, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
                             .requestMatchers(HttpMethod.PATCH, "/api/tourist-plans/**").hasAuthority(Role.ADMIN.name())
                             .requestMatchers(HttpMethod.GET, "/api/tourist-plans/allfavoritesbyuser").authenticated()
-                            .requestMatchers(HttpMethod.GET, "/api/reservations/**").authenticated()
+                            .requestMatchers( "/api/reservations/**").authenticated()
                             .requestMatchers("/api/users/**").hasAuthority(Role.ADMIN.name())
                             .anyRequest().permitAll();
                 })

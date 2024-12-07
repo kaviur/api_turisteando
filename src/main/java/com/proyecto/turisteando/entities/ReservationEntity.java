@@ -49,6 +49,9 @@ public class ReservationEntity {
     @Column(name = "people_count", nullable = false)
     private int peopleCount;
 
+    @Column(name = "total_price", nullable = false)
+    private double totalPrice;
+
     @PrePersist
     protected void onCreate() { this.status = true; }
 }

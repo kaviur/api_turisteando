@@ -42,6 +42,9 @@ public class ReservationServiceImpl implements IReservationService {
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public Iterable<ReservationResponseDto> getAll() {
         Iterable<ReservationEntity> allReservations = reservationRepository.findAll();
@@ -62,36 +65,38 @@ public class ReservationServiceImpl implements IReservationService {
         try {
             TouristPlanEntity touristPlan = touristPlanRepository.findById(dto.getTouristPlanId())
                     .orElseThrow(() -> new TouristPlanNotFoundException("No existe un plan turistico con el id: " + dto.getTouristPlanId()));
-                // Validar que las fechas de la reserva estén dentro del rango de disponibilidad del plan turístico
-                if (dto.getStartDate().isBefore(touristPlan.getAvailabilityStartDate()) ||
-                    dto.getEndDate().isAfter(touristPlan.getAvailabilityEndDate()) ) {
+            // Validar que las fechas de la reserva estén dentro del rango de disponibilidad del plan turístico
+            if (dto.getStartDate().isBefore(touristPlan.getAvailabilityStartDate()) ||
+                    dto.getEndDate().isAfter(touristPlan.getAvailabilityEndDate())) {
                 throw new ReservationNotFoundException("La fecha de la reserva debe estar entre las fechas de disponibilidad del plan turístico y la fecha de inicio no puede ser después de la fecha de fin.");
             }
 
             UserEntity user = userRepository.findById(dto.getUserId())
                     .orElseThrow(() -> new ReservationNotFoundException("No existe un usuario con el id: " + dto.getUserId()));
 
-            System.out.println(user.toString());
-
             ReservationEntity reservationEntity = reservationMapper.toEntity(dto);
             reservationEntity.setTouristPlan(touristPlan);
             reservationEntity.setUser(user);
-
+            reservationEntity.setTotalPrice(dto.getPeopleCount() * touristPlan.getPrice());
 
             ReservationEntity savedReservation = reservationRepository.save(reservationEntity);
+
+            // Enviar correo electrónico de confirmación
+            emailService.sendReservationConfirmationEmail(savedReservation, user, touristPlan);
+
             return reservationMapper.toDto(savedReservation);
-            } catch (Exception e) {
-                throw new ServiceException(e.getMessage());
-            }
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
     public ReservationResponseDto update(ReservationRequestDto dto, Long id) {
-        try{
-        ReservationEntity reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new ReservationNotFoundException("No existe una reserva con el id: " + id));
-        reservationMapper.partialUpdate(dto, reservation);
-        return reservationMapper.toDto(reservationRepository.save(reservation));
+        try {
+            ReservationEntity reservation = reservationRepository.findById(id)
+                    .orElseThrow(() -> new ReservationNotFoundException("No existe una reserva con el id: " + id));
+            reservationMapper.partialUpdate(dto, reservation);
+            return reservationMapper.toDto(reservationRepository.save(reservation));
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }

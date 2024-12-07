@@ -1,20 +1,24 @@
 package com.proyecto.turisteando.services.implement;
 
+import com.proyecto.turisteando.dtos.requestDto.ReservationRequestDto;
+import com.proyecto.turisteando.dtos.requestDto.UserRequestDto;
+import com.proyecto.turisteando.entities.ReservationEntity;
+import com.proyecto.turisteando.entities.TouristPlanEntity;
+import com.proyecto.turisteando.entities.UserEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.*;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,11 +99,12 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void sendHtmlTemplate(String toEmail, String userName, String lastName) throws MessagingException, IOException {
+    public void sendRegisterConfirmationEmail(String toEmail, String userName, String lastName) throws MessagingException, IOException {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         String confirmationLink = getConfirmLink();
+        ByteArrayResource logo = getLogoImage();
         String subjectEmail = "Confirmación de cuenta de Turisteando";
 
         String htmlContent = """
@@ -143,14 +148,91 @@ public class EmailService {
         helper.setSubject(subjectEmail);
         helper.setText(htmlContent, true);
 
-        // Adjunta el logo si es necesario
-//        helper.addInline("logoImage", new FileSystemResource(new ClassPathResource("static/images/logo.png").getFile()));
-        ClassPathResource imageResource = new ClassPathResource("static/images/logo.png");
-        ByteArrayResource imageBytes = new ByteArrayResource(imageResource.getInputStream().readAllBytes());
-
-        helper.addInline("logoImage", imageBytes, "image/png");
+        helper.addInline("logoImage", logo, "image/png");
 
         javaMailSender.send(message);
+    }
+
+    public void sendReservationConfirmationEmail(ReservationEntity reservation, UserEntity user, TouristPlanEntity touristPlan) throws MessagingException, IOException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        String subjectEmail = "Confirmación de Reserva de Turisteando";
+        ByteArrayResource logo = getLogoImage();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String htmlContent = """
+                 <!DOCTYPE html>
+                 <html lang="es">
+                 <head>
+                     <meta charset="UTF-8" />
+                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                     <title>Confirmación de Reserva</title>
+                 </head>
+                 <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+                        <div style="width: 100%%; max-width: 550px; margin: 0 auto; padding: 16px;">
+                            <div style="border-radius: 8px; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width:550px;">
+                                <div style="padding: 16px; background-color: #fff; text-align: center; border-bottom: 1px solid #e6e6e6;">
+                                    <img src="cid:logoImage" alt="Logo Turisteando" style="height: 60px;" />
+                                </div>
+                                <div style="max-width: 550px; margin: 0 auto; padding: 10px 24px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                     <h2 style="text-align: center; color: #333;">Resumen de la Reserva</h2>
+                                     <p>Gracias por reservar con Turisteando, a continuación
+                                      encontrarás los detalles de tu reserva:</p>
+                                    \s
+                                     <h3>Datos del Usuario</h3>
+                                     <p><strong>Nombre:</strong> %s</p>
+                                     <p><strong>Apellido:</strong> %s</p>
+                                     <p style="padding-bottom: 20px;"><strong>Email:</strong> %s</p>
+                                    \s
+                                     <h3>Detalles de la Reserva</h3>
+                                     <p><strong>Desde:</strong> %s</p>
+                                     <p><strong>Hasta:</strong> %s</p>
+                                     <p><strong>Número de personas:</strong> %s</p>
+                                     <p><strong>Precio por persona:</strong> S/. %s</p>
+                                     <p style="padding-bottom: 20px;"><strong>Precio total:</strong> S/. %s</p>
+                                    \s
+                                     <h3>Detalles del Plan Turístico</h3>
+                                     <p><strong>Plan Turístico:</strong> %s</p>
+                                     <p><strong>Empresa:</strong> %s</p>
+                                     <p><strong>Categoría:</strong> %s</p>
+                                </div>
+                                <div style="padding: 16px; background-color: #f8f9fa; text-align: center;">
+                                    <p style="font-size: 12px; color: #999999;">© 2024 Turisteando. Todos los derechos reservados.</p>
+                                    <a href="#" style="margin: 0 8px; font-size: 12px; color: #ff0178; text-decoration: none;">Privacy Policy</a>
+                                    <a href="#" style="margin: 0 8px; font-size: 12px; color: #ff0178; text-decoration: none;">Terms of Service</a>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                 </html>
+                \s""".formatted(
+                user.getName(),
+                user.getLastName(),
+                user.getEmail(),
+                reservation.getStartDate().format(formatter),
+                reservation.getEndDate().format(formatter),
+                reservation.getPeopleCount(),
+                touristPlan.getPrice(),
+                reservation.getTotalPrice(),
+                touristPlan.getTitle(),
+                touristPlan.getSeller(),
+                touristPlan.getCategory().getName()
+        );
+
+        helper.setFrom("noreply@turisteando.com");
+        helper.setTo(user.getEmail());
+        helper.setSubject(subjectEmail);
+        helper.setText(htmlContent, true);
+        helper.addInline("logoImage", logo, "image/png");
+
+        javaMailSender.send(message);
+    }
+
+    public ByteArrayResource getLogoImage() throws IOException {
+        ClassPathResource imageResource = new ClassPathResource("static/images/logo.png");
+        return new ByteArrayResource(imageResource.getInputStream().readAllBytes());
     }
 
 }

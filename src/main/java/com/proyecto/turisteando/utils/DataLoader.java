@@ -110,8 +110,8 @@ public class DataLoader implements CommandLineRunner {
         if (categories.isEmpty()) {
             // Guardar imágenes como entidades
             List<ImageEntity> images = Arrays.asList(
-                    ImageEntity.builder().imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706042/toursico_hhtvjd.png").build(),
-                    ImageEntity.builder().imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706279/Actividadico_vwoocb.png").build()
+                    ImageEntity.builder().imageUrl("http://res.cloudinary.com/dworm9bnx/image/upload/v1733683632/turisteando/file_eiimnx.svg").build(),
+                    ImageEntity.builder().imageUrl("http://res.cloudinary.com/dworm9bnx/image/upload/v1733683630/turisteando/file_mfenjy.svg").build()
             );
 //            List<ImageEntity> savedImages = imageRepository.saveAll(images);
 
@@ -149,16 +149,16 @@ public class DataLoader implements CommandLineRunner {
             );
 
             List<String> imageUrls = Arrays.asList(
-                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/caminataIco_hkgi1a.png",
-                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/trenIco_als9ww.png",
-                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/hotelIco_qckl5o.png",
-                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706773/comidaIco_bvsss0.png",
-                    "https://res.cloudinary.com/dvjfzzck0/image/upload/v1731706774/wifiIco_rc3911.png",
-                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706894/swimming-pool_7492829_lw1sjf.png",
-                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706963/playground_2204154_shilwq.png",
-                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706905/disabled_1467235_sntidk.png",
-                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706901/pet-friendly_2059755_mogvk2.png",
-                    "https://res.cloudinary.com/daksixwdc/image/upload/v1731706911/age-group_3787843_n0ervf.png"
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733680824/turisteando/file_dkl1ju.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733682899/turisteando/file_t2ycxa.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733680827/turisteando/file_af1g3c.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733680825/turisteando/file_s6jq8u.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733682901/turisteando/file_aizb67.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733682898/turisteando/file_ubgupr.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733682895/turisteando/file_rkltxp.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733682893/turisteando/file_quk9nf.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733680831/turisteando/file_kyovsa.svg",
+                    "http://res.cloudinary.com/dworm9bnx/image/upload/v1733680829/turisteando/file_kys4k0.svg"
             );
 
             // Crear y guardar las entidades de imagen primero

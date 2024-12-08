@@ -635,7 +635,7 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity1);
 
             ImageEntity image1activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647705/7colores_to6zcp.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733616889/MOUNTAIN5_knshod.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image1activity1);

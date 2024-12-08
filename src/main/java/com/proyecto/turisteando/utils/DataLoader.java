@@ -635,13 +635,13 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity1);
 
             ImageEntity image1activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733616889/MOUNTAIN5_knshod.png")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644029/montana-7-colores1-1000x650_bjlgjs.jpg")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image1activity1);
 
             ImageEntity image2activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644029/montana-7-colores1-1000x650_bjlgjs.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733616889/MOUNTAIN5_knshod.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image2activity1);

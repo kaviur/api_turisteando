@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is responsible for loading initial data into the database.
@@ -192,7 +194,7 @@ public class DataLoader implements CommandLineRunner {
         List<TouristPlanEntity> plans = touristPlanRepository.findAll();
         if (plans.isEmpty()) {
             CategoryEntity toursCategory = categoryRepository.findByName("Tours");
-            CategoryEntity activitiesCategory = categoryRepository.findByName("Actividades");
+            CategoryEntity activitiesCategory = categoryRepository.findByName("Activity");
 
             // Crear planes turísticos
             TouristPlanEntity tour2 = TouristPlanEntity.builder()
@@ -201,7 +203,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(1800.00)
                     .seller("Valle Sagrado Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(200)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -215,35 +217,32 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(tour2);
 
-
+            Set<ImageEntity> images1 = new HashSet<>();
             ImageEntity image1T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639695/2._Tour_por_el_Valle_Sagrado_ktha78.webp")
                     .touristPlan(tour2)
                     .build();
-            imageRepository.save(image1T2);
-
+            images1.add(image1T2);
 
             ImageEntity image2T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639695/2._Tour_por_el_Valle_Sagrado_ktha78.webp")
                     .touristPlan(tour2)
                     .build();
-            imageRepository.save(image2T2);
-
+            images1.add(image2T2);
 
             ImageEntity image3T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639654/3._Tour_por_el_Valle_Sagrado_iu9iie.webp")
                     .touristPlan(tour2)
                     .build();
-            imageRepository.save(image3T2);
-
+            images1.add(image3T2);
 
             ImageEntity image4T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639645/5._Tour_por_el_Valle_Sagrado_tgusn6.jpg")
                     .touristPlan(tour2)
                     .build();
-            imageRepository.save(image4T2);
-
+            images1.add(image4T2);
 
             ImageEntity image5T2 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639839/5._Tour_por_el_Valle_Sagrado_hiykz1.jpg")
                     .touristPlan(tour2)
                     .build();
-            imageRepository.save(image5T2);
+            images1.add(image5T2);
+            imageRepository.saveAll(images1);
 
 
             TouristPlanEntity tour3 = TouristPlanEntity.builder()
@@ -252,7 +251,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(1500.00)
                     .seller("Paracas Tours")
                     .city(cities.get(10))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(80)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -269,25 +268,25 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(tour3);
 
 
-            ImageEntity image1T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640255/1._Tour_por_la_Reserva_Nacional_de_Paracas_hcwnd4.avif")
+            ImageEntity image1T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733630402/1._Tour_por_la_Reserva_Nacional_de_Paracas_hcwnd4.png")
                     .touristPlan(tour3)
                     .build();
             imageRepository.save(image1T3);
 
 
-            ImageEntity image2T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640392/2._Tour_por_la_Reserva_Nacional_de_Paracas_jxuacy.avif")
+            ImageEntity image2T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733630389/2._Tour_por_la_Reserva_Nacional_de_Paracas_jxuacy.png")
                     .touristPlan(tour3)
                     .build();
             imageRepository.save(image2T3);
-            ImageEntity image3T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640395/3._Tour_por_la_Reserva_Nacional_de_Paracas_auq3k1.avif")
+            ImageEntity image3T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733630377/3._Tour_por_la_Reserva_Nacional_de_Paracas_auq3k1.png")
                     .touristPlan(tour3)
                     .build();
             imageRepository.save(image3T3);
-            ImageEntity image4T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640400/4._Tour_por_la_Reserva_Nacional_de_Paracas_xhmygb.avif")
+            ImageEntity image4T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733630363/4._Tour_por_la_Reserva_Nacional_de_Paracas_xhmygb.png")
                     .touristPlan(tour3)
                     .build();
             imageRepository.save(image4T3);
-            ImageEntity image5T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731640422/5._Tour_por_la_Reserva_Nacional_de_Paracas_fdztgy.avif")
+            ImageEntity image5T3 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733630348/5._Tour_por_la_Reserva_Nacional_de_Paracas_fdztgy.png")
                     .touristPlan(tour3)
                     .build();
             imageRepository.save(image5T3);
@@ -299,7 +298,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(380.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(20))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(150)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 2, 25))
@@ -315,29 +314,29 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(tour5);
 
 
-            ImageEntity image1T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641347/1._Tour_a_las_Islas_Flotantes_del_Lago_Titicaca_ptt0d4.jpg")
+            ImageEntity image1T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733691840/1._Tour_a_las_Islas_Flotantes_del_Lago_Titicaca_ptt0d4.png")
                     .touristPlan(tour5)
                     .build();
             imageRepository.save(image1T5);
 
 
-            ImageEntity image2T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641509/2._Titicaca_bddtpa.jpg")
+            ImageEntity image2T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733692030/4.titicaca_e5digo.png")
                     .touristPlan(tour5)
                     .build();
             imageRepository.save(image2T5);
 
 
-            ImageEntity image3T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641770/3_titicaca_xkldlr.jpg")
+            ImageEntity image3T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733691853/3_titicaca_xkldlr.png")
                     .touristPlan(tour5)
                     .build();
             imageRepository.save(image3T5);
 
 
-            ImageEntity image4T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641779/4.titicaca_e5digo.jpg")
+            ImageEntity image4T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733692015/2._Titicaca_bddtpa.png")
                     .touristPlan(tour5)
                     .build();
             imageRepository.save(image4T5);
-            ImageEntity image5T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641783/5_titicaca_btuokl.jpg")
+            ImageEntity image5T5 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733692113/5_titicaca_btuokl.png")
                     .touristPlan(tour5)
                     .build();
             imageRepository.save(image5T5);
@@ -350,7 +349,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(760.00)
                     .seller("Cusco Tours")
                     .city(cities.get(3))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(400)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
                     .availabilityEndDate(LocalDate.of(2025, 3, 28))
@@ -366,33 +365,33 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(tour7);
 
             ImageEntity image1Tour7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632569/pallay-poncho-1-dia-tour-desde-cusco_6_ujmnlv.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733691531/pallay-poncho-tour-sharp-rainbow-mountain-cusco-5_kk7qjn.png")
                     .touristPlan(tour7)
                     .build();
             imageRepository.save(image1Tour7);
 
             ImageEntity image2Tour7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632566/pallay-poncho-tour-sharp-rainbow-mountain-cusco-5_kk7qjn.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733691551/pallay-poncho-1-dia-tour-desde-cusco_6_ujmnlv.png")
                     .touristPlan(tour7)
                     .build();
             imageRepository.save(image2Tour7);
 
             ImageEntity image3Tour7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632565/pallay-poncho-tour-sharp-rainbow-mountain-cusco-3_fbaaqu.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733691515/pallay-poncho-tour-sharp-rainbow-mountain-cusco-3_fbaaqu.png")
                     .touristPlan(tour7)
                     .build();
             imageRepository.save(image3Tour7);
 
 
             ImageEntity image4Tour7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632564/pallay-poncho-1-dia-tour-desde-cusco_1_jhnmya.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733691500/pallay-poncho-tour-sharp-rainbow-mountain-cusco-2_zztxof.png")
                     .touristPlan(tour7)
                     .build();
             imageRepository.save(image4Tour7);
 
 
             ImageEntity image5Tour7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632564/pallay-poncho-tour-sharp-rainbow-mountain-cusco-2_zztxof.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733691484/pallay-poncho-1-dia-tour-desde-cusco_1_jhnmya.png")
                     .touristPlan(tour7)
                     .build();
             imageRepository.save(image5Tour7);
@@ -405,7 +404,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(40.00)
                     .seller("freewalkingtours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
                     .availabilityEndDate(LocalDate.of(2025, 3, 15))
@@ -422,38 +421,39 @@ public class DataLoader implements CommandLineRunner {
 
 
             ImageEntity image1Tour8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632839/ValleSurCuscoPpal_oz42dy.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602668/ValleSurCuscoPpal_oz42dy.png")
                     .touristPlan(tour8)
                     .build();
             imageRepository.save(image1Tour8);
 
 
             ImageEntity image2Tour8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632829/valle-sur-cusco-tour-3_sufsgv.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602689/valle-sur-cusco-tour-3_sufsgv.png")
                     .touristPlan(tour8)
                     .build();
             imageRepository.save(image2Tour8);
 
 
             ImageEntity image3Tour8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632810/valle-sur-cusco-tour-8_sufczt.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602700/valle-sur-cusco-tour-8_sufczt.png")
                     .touristPlan(tour8)
                     .build();
             imageRepository.save(image3Tour8);
 
 
             ImageEntity image4Tour8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632807/valle-sur-cusco-tour-7_nuj2xn.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602721/valle-sur-cusco-tour-6_d9aeby.png")
                     .touristPlan(tour8)
                     .build();
             imageRepository.save(image4Tour8);
 
 
             ImageEntity image5Tour8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731632805/valle-sur-cusco-tour-6_d9aeby.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602768/valle-sur-cusco-tour-5_xzfxqn.png")
                     .touristPlan(tour8)
                     .build();
             imageRepository.save(image5Tour8);
+
 
             //TOUR 9
             TouristPlanEntity tour9 = TouristPlanEntity.builder()
@@ -462,7 +462,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(236.00)
                     .seller("Arequipa Explorer")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(200)
                     .availabilityStartDate(LocalDate.of(2024, 11, 25))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -476,33 +476,34 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour9);
+
             ImageEntity image1Tour9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731631757/canon-del-colca5_aytizv.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733603049/canon-del-colca5_aytizv.png")
                     .touristPlan(tour9)
                     .build();
             imageRepository.save(image1Tour9);
 
             ImageEntity image2Tour9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731631751/canon-del-colca_eur68v.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733603059/canon-del-colca_eur68v.png")
                     .touristPlan(tour9)
                     .build();
             imageRepository.save(image2Tour9);
 
             ImageEntity image3Tour9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731631750/canon-del-colca6_nhozim.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733603074/canon-del-colca6_nhozim.png")
                     .touristPlan(tour9)
                     .build();
             imageRepository.save(image3Tour9);
 
             ImageEntity image4Tour9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731631748/canon-del-colca3_wx7pza.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733603087/canon-del-colca4_lyvvwn.png")
                     .touristPlan(tour9)
                     .build();
             imageRepository.save(image4Tour9);
 
 
             ImageEntity image5Tour9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731631737/canon-del-colca2_gc74xe.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733603096/canon-del-colca3_wx7pza.png")
                     .touristPlan(tour9)
                     .build();
             imageRepository.save(image5Tour9);
@@ -515,7 +516,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(450.00)
                     .seller("Viajando tours")
                     .city(cities.get(12))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(250)
                     .availabilityStartDate(LocalDate.of(2024, 11, 25))
                     .availabilityEndDate(LocalDate.of(2025, 4, 10))
@@ -529,32 +530,33 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour10);
+
             ImageEntity image1Tour10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633266/Trujillo1_u3lks4.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602668/ValleSurCuscoPpal_oz42dy.png")
                     .touristPlan(tour10)
                     .build();
             imageRepository.save(image1Tour10);
 
             ImageEntity image2Tour10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633263/Trujillo6_ivk0ei.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602689/valle-sur-cusco-tour-3_sufsgv.png")
                     .touristPlan(tour10)
                     .build();
             imageRepository.save(image2Tour10);
 
             ImageEntity image3Tour10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633261/Trujillo9_coz1b5.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602700/valle-sur-cusco-tour-8_sufczt.png")
                     .touristPlan(tour10)
                     .build();
             imageRepository.save(image3Tour10);
 
             ImageEntity image4Tour10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633256/Trujillo12_cisrjz.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602721/valle-sur-cusco-tour-6_d9aeby.png")
                     .touristPlan(tour10)
                     .build();
             imageRepository.save(image4Tour10);
 
             ImageEntity image5Tour10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633253/Trujillo10_bamutx.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733602768/valle-sur-cusco-tour-5_xzfxqn.png")
                     .touristPlan(tour10)
                     .build();
             imageRepository.save(image5Tour10);
@@ -562,12 +564,12 @@ public class DataLoader implements CommandLineRunner {
 
             //TOUR 11
             TouristPlanEntity tour11 = TouristPlanEntity.builder()
-                    .title("Tour- Expedición al Huascaran")
+                    .title("Tour- Expedición al Huascarán")
                     .description("¡Conquista el Techo del Perú! Adéntrate en el majestuoso Nevado Huascarán, también llamado “Mataraju”, con sus impresionantes picos gemelos. Vive la emoción de ascender a la cima más alta del país (6,877 m) en el Parque Nacional Huascarán. Supera desafíos únicos como grietas y seracs, siempre guiado por expertos. ¡Haz realidad esta inolvidable experiencia llena de adrenalina y naturaleza!.")
                     .price(2000.00)
                     .seller(" Huascaran tours")
                     .city(cities.get(1))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2024, 11, 20))
                     .availabilityEndDate(LocalDate.of(2025, 1, 27))
@@ -581,32 +583,33 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour11);
+
             ImageEntity image1Tour11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633354/portada-expedicion-al-nevado-huascaran-imagen2-del-tour_y91apa.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601645/portada-expedicion-al-nevado-huascaran-imagen2-del-tour_y91apa.png")
                     .touristPlan(tour11)
                     .build();
             imageRepository.save(image1Tour11);
 
             ImageEntity image2Tour11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633336/expedicion-al-nevado-huascaran-galeria-del-tour7_uonadt.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601655/expedicion-al-nevado-huascaran-galeria-del-tour3_jj699d.png")
                     .touristPlan(tour11)
                     .build();
             imageRepository.save(image2Tour11);
 
             ImageEntity image3Tour11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633334/expedicion-al-nevado-huascaran-galeria-del-tour6_fvzdbb.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601876/expedicion-al-nevado-huascaran-galeria-del-tour4_hbdq0m.png")
                     .touristPlan(tour11)
                     .build();
             imageRepository.save(image3Tour11);
 
             ImageEntity image4Tour11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633331/expedicion-al-nevado-huascaran-galeria-del-tour5_jm1t5q.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601679/expedicion-al-nevado-huascaran-galeria-del-tour7_uonadt.png")
                     .touristPlan(tour11)
                     .build();
             imageRepository.save(image4Tour11);
 
             ImageEntity image5Tour11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633329/expedicion-al-nevado-huascaran-galeria-del-tour2_ddjum4.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601679/expedicion-al-nevado-huascaran-galeria-del-tour7_uonadt.png")
                     .touristPlan(tour11)
                     .build();
             imageRepository.save(image5Tour11);
@@ -619,7 +622,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(19.00)
                     .seller("Machupicchu Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(120)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -635,31 +638,31 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity1);
 
             ImageEntity image1activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644029/montana-7-colores1-1000x650_bjlgjs.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555871/montana-7-colores1-1000x650_bjlgjs.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image1activity1);
 
             ImageEntity image2activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733616889/MOUNTAIN5_knshod.png")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555706/montana-llamas-vinicunca1-1000x650_bjlrty.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image2activity1);
 
             ImageEntity image3activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644025/chicas-cartel-montana-7-colores2-1000x650_r68cq2.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555716/montana-colores-caballos1-1000x650_f4nbpi.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image3activity1);
 
             ImageEntity image4activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644020/montana-colores-caballos1-1000x650_f4nbpi.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555763/chicas-cartel-montana-7-colores2-1000x650_r68cq2.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image4activity1);
 
             ImageEntity image5activity1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731644022/montana-llamas-vinicunca1-1000x650_bjlrty.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733616889/MOUNTAIN5_knshod.png")
                     .touristPlan(activity1)
                     .build();
             imageRepository.save(image5activity1);
@@ -672,7 +675,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(275.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(15))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(300)
                     .availabilityStartDate(LocalDate.of(2025, 1, 1))
                     .availabilityEndDate(LocalDate.of(2025, 3, 30))
@@ -686,32 +689,33 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(activity2);
+
             ImageEntity image1activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731647840/selva-amazonicaPpal_eru4un.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554509/SELVA-AMAZONICA2_acsrvk.png")
                     .touristPlan(activity2)
                     .build();
             imageRepository.save(image1activity2);
 
             ImageEntity image2activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646596/SELVA-AMAZONICA3_ll3tnw.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554520/SELVA-AMAZONICA_mebrcv.png")
                     .touristPlan(activity2)
                     .build();
             imageRepository.save(image2activity2);
 
             ImageEntity image3activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646587/SELVA-AMAZONICA2_acsrvk.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554496/SELVA-AMAZONICA3_ll3tnw.png")
                     .touristPlan(activity2)
                     .build();
             imageRepository.save(image3activity2);
 
             ImageEntity image4activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646583/SELVA-AMAZONICA_mebrcv.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554466/selva-amazonicaPpal_eru4un.png")
                     .touristPlan(activity2)
                     .build();
             imageRepository.save(image4activity2);
 
             ImageEntity image5activity2 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731646580/SELVA-AMAZONICA5_yyp1y8.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733618977/SELVA-AMAZONICA5_yyp1y8.png")
                     .touristPlan(activity2)
                     .build();
             imageRepository.save(image5activity2);
@@ -724,7 +728,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(1000.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(10))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 12, 20))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -739,31 +743,31 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(activity3);
             ImageEntity image1activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dworm9bnx/image/upload/v1732837706/turisteando/file_dskvau.webp")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554572/Huacachina4_cnucrh.png")
                     .touristPlan(activity3)
                     .build();
             imageRepository.save(image1activity3);
 
             ImageEntity image2activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648180/Huacachina2_m1qnlw.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554624/Huacachina2_m1qnlw.png")
                     .touristPlan(activity3)
                     .build();
             imageRepository.save(image2activity3);
 
             ImageEntity image3activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648184/Huacachina3_amcryz.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554610/Huacachina3_amcryz.png")
                     .touristPlan(activity3)
                     .build();
             imageRepository.save(image3activity3);
 
             ImageEntity image4activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648188/Huacachina4_cnucrh.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554598/Huacachina5_xsdoz3.png")
                     .touristPlan(activity3)
                     .build();
             imageRepository.save(image4activity3);
 
             ImageEntity image5activity3 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731648161/Huacachina5_xsdoz3.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554585/HuacachinaPpal_xbsqeq.png")
                     .touristPlan(activity3)
                     .build();
             imageRepository.save(image5activity3);
@@ -776,7 +780,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(1110.00)
                     .seller("Freewalking Tours Perú")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(90)
                     .availabilityStartDate(LocalDate.of(2024, 11, 26))
                     .availabilityEndDate(LocalDate.of(2025, 3, 26))
@@ -794,35 +798,35 @@ public class DataLoader implements CommandLineRunner {
 
 
             ImageEntity image1activity7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634060/tour-laguna-humantay-desde-cusco1_wfp7mz.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555452/humantay-lake-day-trip-from-cusco-6_ciosv2.png")
                     .touristPlan(activity7)
                     .build();
             imageRepository.save(image1activity7);
 
 
             ImageEntity image2activity7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634056/tour-laguna-humantay-desde-cusco_4_gkkue0.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555339/humantay-lake-day-trip-from-cusco-2_svok2o.png")
                     .touristPlan(activity7)
                     .build();
             imageRepository.save(image2activity7);
 
 
             ImageEntity image3activity7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634051/tour-laguna-humantay-desde-cusco_3_f28du4.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555330/tour-laguna-humantay-desde-cusco_3_f28du4.png")
                     .touristPlan(activity7)
                     .build();
             imageRepository.save(image3activity7);
 
 
             ImageEntity image4activity7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634049/humantay-lake-day-trip-from-cusco-2_svok2o.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555318/tour-laguna-humantay-desde-cusco_4_gkkue0.png")
                     .touristPlan(activity7)
                     .build();
             imageRepository.save(image4activity7);
 
 
             ImageEntity image5activity7 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634049/humantay-lake-day-trip-from-cusco-6_ciosv2.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733555306/tour-laguna-humantay-desde-cusco1_wfp7mz.png")
                     .touristPlan(activity7)
                     .build();
             imageRepository.save(image5activity7);
@@ -835,7 +839,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(530.00)
                     .seller("Cusco Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(500)
                     .availabilityStartDate(LocalDate.of(2024, 11, 29))
                     .availabilityEndDate(LocalDate.of(2025, 5, 29))
@@ -850,40 +854,36 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(activity8);
 
-
             ImageEntity image1activity8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634653/city-tour-cusco-with-sacsayhuaman-4-ruins-fwtp_1_gxp93e.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733590591/city-tour-cusco-with-sacsayhuaman-4-ruins-6_okqjjg.png")
                     .touristPlan(activity8)
                     .build();
             imageRepository.save(image1activity8);
 
-
             ImageEntity image2activity8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634511/city-tour-cusco-with-sacsayhuaman-4-ruins-fwtp_atpwtk.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733590603/city-tour-cusco-with-sacsayhuaman-4-ruins-4-5_zwpcw0.png")
                     .touristPlan(activity8)
                     .build();
             imageRepository.save(image2activity8);
 
-
             ImageEntity image3activity8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634507/city-tour-cusco-with-sacsayhuaman-4-ruins-6_okqjjg.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733590615/city-tour-cusco-with-sacsayhuaman-4-ruins-4_vwcaqw.png")
                     .touristPlan(activity8)
                     .build();
             imageRepository.save(image3activity8);
 
-
             ImageEntity image4activity8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634504/city-tour-cusco-with-sacsayhuaman-4-ruins-4-5_zwpcw0.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733590567/city-tour-cusco-with-sacsayhuaman-4-ruins-fwtp_1_gxp93e.png")
                     .touristPlan(activity8)
                     .build();
             imageRepository.save(image4activity8);
 
-
             ImageEntity image5activity8 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634497/city-tour-cusco-with-sacsayhuaman-4-ruins-4_vwcaqw.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733590579/city-tour-cusco-with-sacsayhuaman-4-ruins-fwtp_atpwtk.png")
                     .touristPlan(activity8)
                     .build();
             imageRepository.save(image5activity8);
+
 
             //Actividad 9
             TouristPlanEntity activity9 = TouristPlanEntity.builder()
@@ -892,7 +892,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(600.00)
                     .seller("Macchu Pichu Viajes Peru")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(30)
                     .availabilityStartDate(LocalDate.of(2024, 11, 28))
                     .availabilityEndDate(LocalDate.of(2025, 1, 10))
@@ -908,45 +908,44 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity9);
 
             ImageEntity image1activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635206/excursion-a-waqrapukara-ruta-por-santa-lucia_5_chw2ul.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600576/excursion-a-waqrapukara-ruta-por-santa-lucia_1_mgp0ky.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image1activity9);
 
             ImageEntity image2activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634695/excursion-a-waqrapukara-ruta-por-santa-lucia_2_lfs4he.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600561/excursion-a-waqrapukara-ruta-por-santa-lucia_3_dcfnvt.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image2activity9);
 
             ImageEntity image3activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634690/excursion-a-waqrapukara-ruta-por-santa-lucia_4_paahkp.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600544/excursion-a-waqrapukara-ruta-por-santa-lucia_4_paahkp.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image3activity9);
 
             ImageEntity image4activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634684/excursion-a-waqrapukara-ruta-por-santa-lucia_1_mgp0ky.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600534/excursion-a-waqrapukara-ruta-por-santa-lucia_2_lfs4he.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image4activity9);
 
             ImageEntity image5activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731634688/excursion-a-waqrapukara-ruta-por-santa-lucia_3_dcfnvt.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600518/excursion-a-waqrapukara-ruta-por-santa-lucia_5_chw2ul.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image5activity9);
 
 
-//Actividad 10
-
+            //Actividad 10
             TouristPlanEntity activity10 = TouristPlanEntity.builder()
                     .title("Aventura en el Planetario del Cusco")
                     .description("Vive la magia del Planetario de Cusco. Ubicado en el Parque Arqueológico de Sacsayhuamán y la reserva ecológica de Llaullipata, el Planetario de Cusco ofrece una experiencia única de astronomía. A solo 15 minutos del centro histórico, disfrutarás de un entorno natural impresionante. Explora la astronomía inca, leyendas de los cielos del Sur, y observa las estrellas, nebulosas y planetas con telescopios avanzados. ¡Una experiencia única que conecta historia y ciencia!")
                     .price(135.00)
                     .seller("Macchu Pichu Viajes Peru")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(350)
                     .availabilityStartDate(LocalDate.of(2024, 11, 27))
                     .availabilityEndDate(LocalDate.of(2025, 2, 5))
@@ -962,45 +961,44 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity10);
 
             ImageEntity image1activity10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635254/planetario_uhm4f2.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733553672/planetario_uhm4f2.png")
                     .touristPlan(activity10)
                     .build();
             imageRepository.save(image1activity10);
 
             ImageEntity image2activity10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635250/aventura-en-el-planetario-del-cusco_7_umqru2.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733553683/aventura-en-el-planetario-del-cusco_7_umqru2.png")
                     .touristPlan(activity10)
                     .build();
             imageRepository.save(image2activity10);
 
             ImageEntity image3activity10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635241/aventura-en-el-planetario-del-cusco_5_cas9fv.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733553700/aventura-en-el-planetario-del-cusco_6_b4pedu.png")
                     .touristPlan(activity10)
                     .build();
             imageRepository.save(image3activity10);
 
             ImageEntity image4activity10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635238/aventura-en-el-planetario-del-cusco_4_ucv5ap.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733553714/aventura-en-el-planetario-del-cusco_5_cas9fv.png")
                     .touristPlan(activity10)
                     .build();
             imageRepository.save(image4activity10);
 
             ImageEntity image5activity10 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731635232/aventura-en-el-planetario-del-cusco_nlguc5.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733553727/aventura-en-el-planetario-del-cusco_3_tmgdzo.png")
                     .touristPlan(activity10)
                     .build();
             imageRepository.save(image5activity10);
 
 
-//Ana—------- Tours……
-
+            //Ana—------- Tours……
             TouristPlanEntity tour12 = TouristPlanEntity.builder()
                     .title("Tour Lima Antigua y Moderna")
                     .description("El tour Lima Antigua y Moderna ofrece un recorrido completo por la capital peruana, combinando su fascinante historia colonial con su vibrante vida moderna. Explora la majestuosidad de su arquitectura histórica en el centro antiguo, Patrimonio de la Humanidad, y descubre los barrios residenciales y modernos de Miraflores y San Isidro, con vistas espectaculares del Océano Pacífico")
                     .price(920.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(50)
                     .availabilityStartDate(LocalDate.of(2024, 12, 5))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1016,31 +1014,31 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(tour12);
             ImageEntity image1T12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731633797/1.Tour_Lima_Antigua_y_Moderna_ekbooh.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733633192/5._Tour_Lima_Antigua_y_Moderna_ifla7i.png")
                     .touristPlan(tour12)
                     .build();
             imageRepository.save(image1T12);
             touristPlanRepository.save(tour12);
             ImageEntity image2T12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731633798/2._Tour_Lima_Antigua_y_Moderna_d7bdib.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733633258/1.Tour_Lima_Antigua_y_Moderna_ekbooh.png")
                     .touristPlan(tour12)
                     .build();
             imageRepository.save(image2T12);
             touristPlanRepository.save(tour12);
             ImageEntity image3T12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731633799/3._Tour_Lima_Antigua_y_Moderna_pnsm0x.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733633247/2._Tour_Lima_Antigua_y_Moderna_d7bdib.png")
                     .touristPlan(tour12)
                     .build();
             imageRepository.save(image3T12);
             touristPlanRepository.save(tour12);
             ImageEntity image4T12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731633801/4._Tour_Lima_Antigua_y_Moderna_en435x.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733633234/3._Tour_Lima_Antigua_y_Moderna_pnsm0x.png")
                     .touristPlan(tour12)
                     .build();
             imageRepository.save(image4T12);
             touristPlanRepository.save(tour12);
             ImageEntity image5T12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731633803/5._Tour_Lima_Antigua_y_Moderna_ifla7i.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733633222/4._Tour_Lima_Antigua_y_Moderna_en435x.png")
                     .touristPlan(tour12)
                     .build();
             imageRepository.save(image5T12);
@@ -1052,7 +1050,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(430.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(160)
                     .availabilityStartDate(LocalDate.of(2024, 12, 20))
                     .availabilityEndDate(LocalDate.of(2025, 2, 20))
@@ -1067,30 +1065,28 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour13);
-
-
             ImageEntity image1T13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731634321/1._Tour_al_complejo_arqueolo%CC%81gico_Pachacamac_y_Barranco_mmfvaa.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733677494/2._Tour_al_complejo_arqueológico_Pachacamac_y_Barranco_ifqssx.png")
                     .touristPlan(tour13)
                     .build();
             imageRepository.save(image1T13);
             ImageEntity image2T13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731634323/2._Tour_al_complejo_arqueolo%CC%81gico_Pachacamac_y_Barranco_ifqssx.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733677470/3._Tour_al_complejo_arqueológico_Pachacamac_y_Barranco_p7rx8r.png")
                     .touristPlan(tour13)
                     .build();
             imageRepository.save(image2T13);
             ImageEntity image3T13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731634324/3._Tour_al_complejo_arqueolo%CC%81gico_Pachacamac_y_Barranco_p7rx8r.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733677451/4._Tour_al_complejo_arqueológico_Pachacamac_y_Barranco_umkbaf.png")
                     .touristPlan(tour13)
                     .build();
             imageRepository.save(image3T13);
             ImageEntity image4T13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731634326/4._Tour_al_complejo_arqueolo%CC%81gico_Pachacamac_y_Barranco_umkbaf.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733677436/1._Tour_al_complejo_arqueológico_Pachacamac_y_Barranco_mmfvaa.png")
                     .touristPlan(tour13)
                     .build();
             imageRepository.save(image4T13);
             ImageEntity image5T13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731634327/5._Tour_al_complejo_arqueolo%CC%81gico_Pachacamac_y_Barranco_jf2neo.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733677405/5._Tour_al_complejo_arqueológico_Pachacamac_y_Barranco_jf2neo.png")
                     .touristPlan(tour13)
                     .build();
             imageRepository.save(image5T13);
@@ -1101,7 +1097,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(300.20)
                     .seller("XTravel Perú")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(20)
                     .availabilityStartDate(LocalDate.of(2025, 2, 2))
                     .availabilityEndDate(LocalDate.of(2025, 4, 28))
@@ -1117,27 +1113,27 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(tour14);
             ImageEntity image1T14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631772/1._Tour_gastrono%CC%81mico_por_Miraflores_o5n4f8.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733632619/4._Tour_gastronómico_por_Miraflores_hqptrf.png")
                     .touristPlan(tour14)
                     .build();
             imageRepository.save(image1T14);
             ImageEntity image2T14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631767/2._Tour_gastrono%CC%81mico_por_Miraflores_iq34oc.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733632656/2._Tour_gastronómico_por_Miraflores_iq34oc.png")
                     .touristPlan(tour14)
                     .build();
             imageRepository.save(image2T14);
             ImageEntity image3T14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631767/3._Tour_gastrono%CC%81mico_por_Miraflores_u5ugnn.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733632646/3._Tour_gastronómico_por_Miraflores_u5ugnn.png")
                     .touristPlan(tour14)
                     .build();
             imageRepository.save(image3T14);
             ImageEntity image4T14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631770/4._Tour_gastrono%CC%81mico_por_Miraflores_hqptrf.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733632636/5._Tour_gastronómico_por_Miraflores_ucl48t.png")
                     .touristPlan(tour14)
                     .build();
             imageRepository.save(image4T14);
             ImageEntity image5T14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631770/5._Tour_gastrono%CC%81mico_por_Miraflores_ucl48t.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733632605/1._Tour_gastronómico_por_Miraflores_o5n4f8.png")
                     .touristPlan(tour14)
                     .build();
             imageRepository.save(image5T14);
@@ -1149,7 +1145,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(830.20)
                     .seller("XTravel Perú")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(200)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1163,27 +1159,27 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(tour15);
             ImageEntity image1T15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731635060/1._Waqrapukara_Tour_hsozd0.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733765581/1._Waqrapukara_Tour_hsozd0.png")
                     .touristPlan(tour15)
                     .build();
             imageRepository.save(image1T15);
             ImageEntity image2T15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731635060/2._Waqrapukara_Tour_uvbd28.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733765567/2._Waqrapukara_Tour_uvbd28.png")
                     .touristPlan(tour15)
                     .build();
             imageRepository.save(image2T15);
             ImageEntity image3T15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731635064/3._Waqrapukara_Tour_f8ulin.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733765553/3._Waqrapukara_Tour_f8ulin.png")
                     .touristPlan(tour15)
                     .build();
             imageRepository.save(image3T15);
             ImageEntity image4T15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731635065/4._Waqrapukara_Tour_n3iaqv.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733765541/4._Waqrapukara_Tour_n3iaqv.png")
                     .touristPlan(tour15)
                     .build();
             imageRepository.save(image4T15);
             ImageEntity image5T15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731635067/5._Waqrapukara_Tour_qnzyuy.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733765530/5._Waqrapukara_Tour_qnzyuy.png")
                     .touristPlan(tour15)
                     .build();
             imageRepository.save(image5T15);
@@ -1195,7 +1191,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(250.50)
                     .seller("XTravel Perú")
                     .city(cities.get(10))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(30)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 1, 31))
@@ -1208,41 +1204,39 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(tour16);
             ImageEntity image1T16 = ImageEntity.builder()
-                    .imageUrl("https://www.rumbosdelperu.com/wp-content/uploads/2019/04/Ca%C3%B1on-de-los-Perdidos-.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733693812/1._Tour_Cañón_de_los_Perdidos_tk5jz6.png")
                     .touristPlan(tour16)
                     .build();
             imageRepository.save(image1T16);
             ImageEntity image2T16 = ImageEntity.builder()
-                    .imageUrl("https://www.rumbosdelperu.com/wp-content/uploads/2019/04/Ca%C3%B1on-de-los-Perdidos-.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695367/2._Tour_Cañón_de_los_Perdidos_eqng97.png")
                     .touristPlan(tour16)
                     .build();
             imageRepository.save(image2T16);
             ImageEntity image3T16 = ImageEntity.builder()
-                    .imageUrl("https://www.rumbosdelperu.com/wp-content/uploads/2019/04/Ca%C3%B1on-de-los-Perdidos-.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695353/3._Tour_Cañón_de_los_Perdidos_noy7iz.png")
                     .touristPlan(tour16)
                     .build();
             imageRepository.save(image3T16);
             ImageEntity image4T16 = ImageEntity.builder()
-                    .imageUrl("https://www.rumbosdelperu.com/wp-content/uploads/2019/04/Ca%C3%B1on-de-los-Perdidos-.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695339/4._Tour_Cañón_de_los_Perdidos_ar17aq.png")
                     .touristPlan(tour16)
                     .build();
             imageRepository.save(image4T16);
             ImageEntity image5T16 = ImageEntity.builder()
-                    .imageUrl("https://www.rumbosdelperu.com/wp-content/uploads/2019/04/Ca%C3%B1on-de-los-Perdidos-.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733693769/5._Tour_Cañón_de_los_Perdidos_rj9jyx.png")
                     .touristPlan(tour16)
                     .build();
             imageRepository.save(image5T16);
 
-//Ana—-------5 Actividades
-
-
+            //Ana—-------5 Actividades
             TouristPlanEntity activity11 = TouristPlanEntity.builder()
                     .title("Descubriendo el Street food limeño, tour privado.")
                     .description("Te sumergirás en los sabores callejeros más auténticos de Lima. Recorre mercados y puestos tradicionales, donde podrás degustar delicias como los anticuchos, picarones y butifarras, mientras conoces las historias y tradiciones detrás de cada plato. Ideal para amantes de la gastronomía que desean explorar Lima como un verdadero local.")
                     .price(490.50)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1255,29 +1249,27 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(activity11);
             ImageEntity image1A11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643877/1._Descubriendo_el__Street_food__limen%CC%83o_tour_privado_d6fj6x.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629102/1._Descubriendo_el__Street_food__limeño_tour_privado_d6fj6x.png")
                     .touristPlan(activity11)
                     .build();
             imageRepository.save(image1A11);
             ImageEntity image2A11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643883/2._Descubriendo_el__Street_food__limen%CC%83o_tour_privado_vp4ydg.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629069/2._Descubriendo_el__Street_food__limeño_tour_privado_vp4ydg.png")
                     .touristPlan(activity11)
                     .build();
             imageRepository.save(image2A11);
             ImageEntity image3A11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643887/3._Descubriendo_el__Street_food__limen%CC%83o_tour_privado_ipjp9x.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629050/3._Descubriendo_el__Street_food__limeño_tour_privado_ipjp9x.png")
                     .touristPlan(activity11)
                     .build();
             imageRepository.save(image3A11);
             ImageEntity image4A11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643892/4._Descubriendo_el__Street_food__limen%CC%83o_tour_privado_u9ovjq.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629037/4._Descubriendo_el__Street_food__limeño_tour_privado_u9ovjq.png")
                     .touristPlan(activity11)
                     .build();
             imageRepository.save(image4A11);
-
-
             ImageEntity image5A11 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643897/5._Descubriendo_el__Street_food__limen%CC%83o_tour_privado_a4wied.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629008/5._Descubriendo_el__Street_food__limeño_tour_privado_a4wied.png")
                     .touristPlan(activity11)
                     .build();
             imageRepository.save(image5A11);
@@ -1289,7 +1281,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(162.42)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(4)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 2, 3))
@@ -1302,29 +1294,29 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(activity12);
             ImageEntity image1A12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631232/1._Paramotor_Sky_Activity_bmtdz2.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627724/2._Clase_de_surf_qsqwzg.png")
                     .touristPlan(activity12)
                     .build();
             imageRepository.save(image1A12);
             ImageEntity image2A12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631232/2._Paramotor_Sky_Activity_d1litb.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627713/3._Clase_de_surf_z3pp5m.png")
                     .touristPlan(activity12)
                     .build();
             imageRepository.save(image2A12);
 
 
             ImageEntity image3A12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631232/3._Paramotor_Sky_Activity_uvdwgq.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627701/4._Clase_de_surf_q92c3l.png")
                     .touristPlan(activity12)
                     .build();
             imageRepository.save(image3A12);
             ImageEntity image4A12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631235/4._Paramotor_Sky_Activity_h9s1xd.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627688/1._Clase_de_surf_xfdqdt.png")
                     .touristPlan(activity12)
                     .build();
             imageRepository.save(image4A12);
             ImageEntity image5A12 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631233/5._Paramotor_Sky_Activity_zwzlbt.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627661/5._Clase_de_surf_ouryry.png")
                     .touristPlan(activity12)
                     .build();
             imageRepository.save(image5A12);
@@ -1336,7 +1328,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(85.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(5)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2024, 12, 31))
@@ -1351,27 +1343,27 @@ public class DataLoader implements CommandLineRunner {
 
 
             ImageEntity image1A13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631943/1._Nado_con_lobos_marinos_en_Islas_Palomino_dxejfi.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624637/1._Paramotor_Sky_Activity_bmtdz2.png")
                     .touristPlan(activity13)
                     .build();
             imageRepository.save(image1A13);
             ImageEntity image2A13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631944/2._Nado_con_lobos_marinos_en_Islas_Palomino_qqvpni.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624627/2._Paramotor_Sky_Activity_d1litb.png")
                     .touristPlan(activity13)
                     .build();
             imageRepository.save(image2A13);
             ImageEntity image3A13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631946/3._Nado_con_lobos_marinos_en_Islas_Palomino_yzo16s.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624614/3._Paramotor_Sky_Activity_uvdwgq.png")
                     .touristPlan(activity13)
                     .build();
             imageRepository.save(image3A13);
             ImageEntity image4A13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631947/4._Nado_con_lobos_marinos_en_Islas_Palomino_lghrwo.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624600/5._Paramotor_Sky_Activity_zwzlbt.png")
                     .touristPlan(activity13)
                     .build();
             imageRepository.save(image4A13);
             ImageEntity image5A13 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631948/5._Nado_con_lobos_marinos_en_Islas_Palomino_hvhoxs.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624587/4._Paramotor_Sky_Activity_h9s1xd.png")
                     .touristPlan(activity13)
                     .build();
             imageRepository.save(image5A13);
@@ -1383,7 +1375,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(190.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 3, 1))
@@ -1397,27 +1389,27 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(activity14);
             ImageEntity image1A14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631943/1._Nado_con_lobos_marinos_en_Islas_Palomino_dxejfi.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733628129/5._Nado_con_lobos_marinos_en_Islas_Palomino_hvhoxs.png")
                     .touristPlan(activity14)
                     .build();
             imageRepository.save(image1A14);
             ImageEntity image2A14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631944/2._Nado_con_lobos_marinos_en_Islas_Palomino_qqvpni.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733628176/1._Nado_con_lobos_marinos_en_Islas_Palomino_dxejfi.png")
                     .touristPlan(activity14)
                     .build();
             imageRepository.save(image2A14);
             ImageEntity image3A14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631946/3._Nado_con_lobos_marinos_en_Islas_Palomino_yzo16s.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733628166/2._Nado_con_lobos_marinos_en_Islas_Palomino_qqvpni.png")
                     .touristPlan(activity14)
                     .build();
             imageRepository.save(image3A14);
             ImageEntity image4A14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631947/4._Nado_con_lobos_marinos_en_Islas_Palomino_lghrwo.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733628156/3._Nado_con_lobos_marinos_en_Islas_Palomino_yzo16s.png")
                     .touristPlan(activity14)
                     .build();
             imageRepository.save(image4A14);
             ImageEntity image5A14 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731631948/5._Nado_con_lobos_marinos_en_Islas_Palomino_hvhoxs.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733628147/4._Nado_con_lobos_marinos_en_Islas_Palomino_lghrwo.png")
                     .touristPlan(activity14)
                     .build();
             imageRepository.save(image5A14);
@@ -1429,7 +1421,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(116.00)
                     .seller("Lima Tours")
                     .city(cities.get(14))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(6)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 1, 16))
@@ -1442,42 +1434,40 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(activity15);
             ImageEntity image1A15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731630362/1._Clase_de_surf_xfdqdt.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627106/2._Tour_en_kayak_t1qscc.png")
                     .touristPlan(activity15)
                     .build();
             imageRepository.save(image1A15);
             ImageEntity image2A15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731630361/2._Clase_de_surf_qsqwzg.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627096/1._Tour_en_kayak_l25rnr.png")
                     .touristPlan(activity15)
                     .build();
             imageRepository.save(image2A15);
             ImageEntity image3A15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731630362/3._Clase_de_surf_z3pp5m.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627086/3._Tour_en_kayak_ovadw2.png")
                     .touristPlan(activity15)
                     .build();
             imageRepository.save(image3A15);
             ImageEntity image4A15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731630362/4._Clase_de_surf_q92c3l.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627075/4._Tour_en_kayak_fuq6a0.png")
                     .touristPlan(activity15)
                     .build();
             imageRepository.save(image4A15);
-
-
             ImageEntity image5A15 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731630362/5._Clase_de_surf_ouryry.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733627064/5._Tour_en_kayak_htzsbp.png")
                     .touristPlan(activity15)
                     .build();
             imageRepository.save(image5A15);
 
 
-// Los primeros Planes Turísticos
+            // Los primeros Planes Turísticos
             TouristPlanEntity tour1 = TouristPlanEntity.builder()
                     .title("Tour guiado a Machu Picchu")
                     .description("Explora la antigua ciudadela inca de Machu Picchu, una de las nuevas Siete Maravillas del Mundo. Puedes optar por hacer la caminata del Camino Inca o tomar el tren desde Cusco hasta Aguas Calientes, seguido de un tour guiado por el sitio arqueológico.")
                     .price(700.00)
                     .seller("Machupicchu Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(100)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 4, 20))
@@ -1491,38 +1481,28 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour1);
-
-
             ImageEntity image1T1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731638418/1._Tour_guiado_a_Machu_Picchu_vxub0f.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733631637/1._Tour_guiado_a_Machu_Picchu_vxub0f.png")
                     .touristPlan(tour1)
                     .build();
             imageRepository.save(image1T1);
-
-
             ImageEntity image2T1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639016/2._Tour_guiado_a_Machu_Picchu_zf6omu.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733631601/4._Tour_guiado_a_Machu_Picchu_sfwsy0.png")
                     .touristPlan(tour1)
                     .build();
             imageRepository.save(image2T1);
-
-
             ImageEntity image3T1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639011/3._Tour_guiado_a_Machu_Picchu_axunej.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733631748/3._Tour_guiado_a_Machu_Picchu_axunej.png")
                     .touristPlan(tour1)
                     .build();
             imageRepository.save(image3T1);
-
-
             ImageEntity image4T1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639014/4._Tour_guiado_a_Machu_Picchu_sfwsy0.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733631587/2._Tour_guiado_a_Machu_Picchu_zf6omu.png")
                     .touristPlan(tour1)
                     .build();
             imageRepository.save(image4T1);
-
-
             ImageEntity image5T1 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731639019/5._Tour_guiado_a_Machu_Picchu_judaok.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733631099/5._Tour_guiado_a_Machu_Picchu_judaok.png")
                     .touristPlan(tour1)
                     .build();
             imageRepository.save(image5T1);
@@ -1534,7 +1514,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(1650.00)
                     .seller("Nazca Tours")
                     .city(cities.get(10))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 29))
                     .availabilityEndDate(LocalDate.of(2025, 1, 5))
@@ -1549,32 +1529,27 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             touristPlanRepository.save(tour4);
 
-
-            ImageEntity image1T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641062/1._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_1_dffufd.webp")
+            ImageEntity image1T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629624/4._Tour_aéreo_sobre_las_Líneas_de_Nazca_uvde2e.png")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image1T4);
 
-
-            ImageEntity image2T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641070/2._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_jps0io.jpg")
+            ImageEntity image2T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629429/1._Tour_aéreo_sobre_las_Líneas_de_Nazca_1_dffufd.png")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image2T4);
 
-
-            ImageEntity image3T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641066/3._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_udfdbx.jpg")
+            ImageEntity image3T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629331/3._Tour_aéreo_sobre_las_Líneas_de_Nazca_udfdbx.png")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image3T4);
 
-
-            ImageEntity image4T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731641055/4._Tour_ae%CC%81reo_sobre_las_Li%CC%81neas_de_Nazca_uvde2e.jpg")
+            ImageEntity image4T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629320/2._Tour_aéreo_sobre_las_Líneas_de_Nazca_jps0io.png")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image4T4);
 
-
-            ImageEntity image5T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731643486/nasca5_xgms6c.jpg")
+            ImageEntity image5T4 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733629300/nasca5_xgms6c.png")
                     .touristPlan(tour4)
                     .build();
             imageRepository.save(image5T4);
@@ -1586,7 +1561,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(1250.00)
                     .seller("Colca Tours")
                     .city(cities.get(3))
-                    .category(categoryRepository.findByName("Tours"))
+                    .category(toursCategory)
                     .capacity(25)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 2, 2))
@@ -1600,45 +1575,87 @@ public class DataLoader implements CommandLineRunner {
                     .isActive(true)
                     .build();
             touristPlanRepository.save(tour6);
-
-
-            ImageEntity image1T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642473/1._canon_del_colca_h0dv6v.jpg")
+            ImageEntity image1T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695552/2._Tour_en_el_Cañón_del_Colca_elrugf.png")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image1T6);
-
-
-            ImageEntity image2T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642674/2._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_elrugf.jpg")
+            ImageEntity image2T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695536/3._Tour_en_el_Cañón_del_Colca_eebimm.png")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image2T6);
-
-
-            ImageEntity image3T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642642/3._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_eebimm.jpg")
+            ImageEntity image3T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695519/4._Tour_en_el_Cañón_del_Colca_p9x5wv.png")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image3T6);
-            ImageEntity image4T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642637/4._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_p9x5wv.jpg")
+            ImageEntity image4T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695506/5._Tour_en_el_Cañón_del_Colca_mykeyo.png")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image4T6);
-
-
-            ImageEntity image5T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731642631/5._Tour_en_el_Can%CC%83o%CC%81n_del_Colca_mykeyo.jpg")
+            ImageEntity image5T6 = ImageEntity.builder().imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733695491/1._canon_del_colca_h0dv6v.png")
                     .touristPlan(tour6)
                     .build();
             imageRepository.save(image5T6);
 
+            //Tour Trujillo Huascas
+            TouristPlanEntity tour17 = TouristPlanEntity.builder()
+                    .title("Tour Trujillo Huascas")
+                    .description("Viaja y disfruta del norte de Perú Trujillo y descubre en full day las huacas de moche , chan chan y los caballos peruanos de paso solo en Trujillo Perú.")
+                    .price(1800.00)
+                    .seller("Trujillo Tours")
+                    .city(cities.get(7))
+                    .category(toursCategory)
+                    .capacity(200)
+                    .availabilityStartDate(LocalDate.of(2024, 11, 1))
+                    .availabilityEndDate(LocalDate.of(2024, 12, 31))
+                    .duration("2 días")
+                    .characteristic(List.of(
+                            characteristicsList.get(0),
+                            characteristicsList.get(2),
+                            characteristicsList.get(8),
+                            characteristicsList.get(9)))
+                    .isActive(true)
+                    .build();
+            touristPlanRepository.save(tour17);
 
-//Primeras Actividades
+            ImageEntity image1T17 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601073/Trujillo12_cisrjz.png")
+                    .touristPlan(tour17)
+                    .build();
+            imageRepository.save(image1T17);
 
+            ImageEntity image2T17 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601244/Trujillo11_jy4w2c.png")
+                    .touristPlan(tour17)
+                    .build();
+            imageRepository.save(image2T17);
+
+            ImageEntity image3T17 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601060/Trujillo5_gr4tbb.png")
+                    .touristPlan(tour17)
+                    .build();
+            imageRepository.save(image3T17);
+
+            ImageEntity image4T17 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601050/Trujillo9_coz1b5.png")
+                    .touristPlan(tour17)
+                    .build();
+            imageRepository.save(image4T17);
+
+            ImageEntity image5T17 = ImageEntity.builder()
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733601039/Trujillo6_ivk0ei.png")
+                    .touristPlan(tour17)
+                    .build();
+            imageRepository.save(image5T17);
+
+
+            //Primeras Actividades
             TouristPlanEntity activity6 = TouristPlanEntity.builder()
                     .title("7 lagunas de Ausangate aguas termales")
                     .description("Explora las 7 Lagunas de Ausangate y relájate en sus aguas termales. Si amas la naturaleza y la aventura, este tour es para ti. Recorre un sendero rodeado de imponentes montañas, donde descubrirás lagunas de origen glaciar en tonos azul turquesa y verde esmeralda. Disfruta de vistas panorámicas únicas y culmina con un baño relajante en las aguas termales de Pacchanta. ¡Conecta con el encanto natural en esta experiencia inolvidable!")
                     .price(75.00)
                     .seller("Freewalking Tours Peru")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(15)
                     .availabilityStartDate(LocalDate.of(2024, 12, 2))
                     .availabilityEndDate(LocalDate.of(2025, 1, 25))
@@ -1654,31 +1671,31 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity6);
 
             ImageEntity image1activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633840/tour-ausangate-7-lagunas-aguas-termales_Ppal_jtxrgg.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554738/tour-ausangate-7-lagunas-aguas-termales_7_r2k0mp.png")
                     .touristPlan(activity6)
                     .build();
             imageRepository.save(image1activity6);
 
             ImageEntity image2activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633837/tour-ausangate-7-lagunas-aguas-termales_7_r2k0mp.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554747/tour-ausangate-7-lagunas-aguas-termales_Ppal_jtxrgg.png")
                     .touristPlan(activity6)
                     .build();
             imageRepository.save(image2activity6);
 
             ImageEntity image3activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633835/tour-ausangate-7-lagunas-aguas-termales_6_werrt4.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554728/tour-ausangate-7-lagunas-aguas-termales_6_werrt4.png")
                     .touristPlan(activity6)
                     .build();
             imageRepository.save(image3activity6);
 
             ImageEntity image4activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633833/tour-ausangate-7-lagunas-aguas-termales_4_xkg9cj.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733554718/tour-ausangate-7-lagunas-aguas-termales_4_xkg9cj.png")
                     .touristPlan(activity6)
                     .build();
             imageRepository.save(image4activity6);
 
             ImageEntity image5activity6 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633829/tour-ausangate-7-lagunas-aguas-termales_2_zqxkfb.jpg")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1731633826/tour-ausangate-7-lagunas-aguas-termales_1_geytff.jpg")
                     .touristPlan(activity6)
                     .build();
             imageRepository.save(image5activity6);
@@ -1690,7 +1707,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(100.00)
                     .seller("Machupicchu Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 1, 15))
@@ -1706,31 +1723,31 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity4);
 
             ImageEntity image1activity4 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731648634/1_san_pedro_r7wuli.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624817/1_san_pedro_r7wuli.png")
                     .touristPlan(activity4)
                     .build();
             imageRepository.save(image1activity4);
 
             ImageEntity image2activity4 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731648193/2._Visita_al_Mercado_de_San_Pedro_en_Cusco_ezgnaz.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624898/2._Visita_al_Mercado_de_San_Pedro_en_Cusco_ezgnaz.png")
                     .touristPlan(activity4)
                     .build();
             imageRepository.save(image2activity4);
 
             ImageEntity image3activity4 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731648311/3._Visita_al_Mercado_de_San_Pedro_en_Cusco_lwiah1.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624852/3._Visita_al_Mercado_de_San_Pedro_en_Cusco_lwiah1.webp")
                     .touristPlan(activity4)
                     .build();
             imageRepository.save(image3activity4);
 
             ImageEntity image4activity4 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731648197/4._Visita_al_Mercado_de_San_Pedro_en_Cusco_hn8pcg.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624871/4._Visita_al_Mercado_de_San_Pedro_en_Cusco_hn8pcg.png")
                     .touristPlan(activity4)
                     .build();
             imageRepository.save(image4activity4);
 
             ImageEntity image5activity4 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731648319/5._Visita_al_Mercado_de_San_Pedro_en_Cusco_fg7z2c.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733624836/5._Visita_al_Mercado_de_San_Pedro_en_Cusco_fg7z2c.png")
                     .touristPlan(activity4)
                     .build();
             imageRepository.save(image5activity4);
@@ -1743,7 +1760,7 @@ public class DataLoader implements CommandLineRunner {
                     .price(50.00)
                     .seller("Titicaca Tours")
                     .city(cities.get(7))
-                    .category(categoryRepository.findByName("Activity"))
+                    .category(activitiesCategory)
                     .capacity(10)
                     .availabilityStartDate(LocalDate.of(2024, 11, 1))
                     .availabilityEndDate(LocalDate.of(2025, 3, 30))
@@ -1759,36 +1776,34 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity5);
 
             ImageEntity image1activity5 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731647746/1._Visita_a_las_Salineras_de_Maras_c1axao.webp")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733625624/5._Visita_a_las_Salineras_de_Maras_w1yhgt.png")
                     .touristPlan(activity5)
                     .build();
             imageRepository.save(image1activity5);
 
             ImageEntity image2activity5 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731647740/2._Visita_a_las_Salineras_de_Maras_igsouz.jpg")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733625614/4._Visita_a_las_Salineras_de_Maras_xe2pbu.png")
                     .touristPlan(activity5)
                     .build();
             imageRepository.save(image2activity5);
 
             ImageEntity image3activity5 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731647737/3._Visita_a_las_Salineras_de_Maras_w4k4vy.avif")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733625603/3._Visita_a_las_Salineras_de_Maras_w4k4vy.png")
                     .touristPlan(activity5)
                     .build();
             imageRepository.save(image3activity5);
 
             ImageEntity image4activity5 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731647734/4._Visita_a_las_Salineras_de_Maras_xe2pbu.avif")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733625592/2._Visita_a_las_Salineras_de_Maras_igsouz.png")
                     .touristPlan(activity5)
                     .build();
             imageRepository.save(image4activity5);
 
             ImageEntity image5activity5 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1731647732/5._Visita_a_las_Salineras_de_Maras_w1yhgt.avif")
+                    .imageUrl("https://res.cloudinary.com/daksixwdc/image/upload/v1733625582/1._Visita_a_las_Salineras_de_Maras_c1axao.png")
                     .touristPlan(activity5)
                     .build();
             imageRepository.save(image5activity5);
-
-
         }
 
 

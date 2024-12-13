@@ -13,4 +13,5 @@ public interface IUserService extends CrudService<UserRequestDto, UserResponseDt
 
     @Transactional
     UserResponseDto toggleUserRole(Long id);
+    public UserResponseDto processOAuthPostLogin(String email, String name);
 }

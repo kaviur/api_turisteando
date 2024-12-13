@@ -1865,46 +1865,42 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(1L).get())
                     .touristPlan(touristPlanRepository.findById(1L).get())
                     .rating(5)
-                    .comment("¡Increíble experiencia! Desde el inicio, el plan superó mis expectativas. La caminata por las montañas fue guiada por expertos que compartieron datos fascinantes sobre la flora y fauna de la región. Además, las vistas desde la cima eran espectaculares, un verdadero paraíso para los amantes de la fotografía.")
+                    .comment("¡Increíble experiencia! El plan superó mis expectativas. La caminata fue guiada por expertos que compartieron datos fascinantes sobre la flora y fauna de la región. Las vistas desde la cima eran espectaculares, un paraíso para la fotografía.")
                     .build();
             reviewRepository.save(review1);
             ReviewEntity review2 = ReviewEntity.builder()
                     .user(userRepository.findById(2L).get())
                     .touristPlan(touristPlanRepository.findById(1L).get())
                     .rating(4)
-                    .comment("El recorrido fue encantador, lleno de historias y datos fascinantes sobre la arquitectura colonial y la cultura local. La guía era muy conocedora y respondió a todas nuestras preguntas con entusiasmo.\n" +
-                            "\n" +
-                            "Lo que más disfruté fue la visita al mercado artesanal y la degustación de dulces típicos, que agregaron un toque especial a la experiencia")
+                    .comment("El recorrido fue encantador, lleno de historias y datos fascinantes sobre la arquitectura colonial y la cultura local. La guía era muy conocedora y respondió a todas nuestras preguntas con entusiasmo.")
                     .build();
             reviewRepository.save(review2);
             ReviewEntity review3 = ReviewEntity.builder()
                     .user(userRepository.findById(3L).get())
                     .touristPlan(touristPlanRepository.findById(2L).get())
                     .rating(5)
-                    .comment("¡Una experiencia mágica! Desde el paisaje hasta el ambiente, todo fue perfecto. Nos recibieron con una copa de vino espumoso y nos llevaron a un recorrido privado por los viñedos. Aprendimos mucho sobre la producción del vino y disfrutamos de una cata de cinco variedades acompañadas de quesos locales.")
+                    .comment("¡Una experiencia mágica! Desde el paisaje hasta el ambiente, todo fue perfecto. Nos recibieron con una copa de vino espumoso y nos llevaron a un recorrido privado por los viñedos. Aprendimos mucho.")
                     .build();
             reviewRepository.save(review3);
             ReviewEntity review4 = ReviewEntity.builder()
                     .user(userRepository.findById(4L).get())
                     .touristPlan(touristPlanRepository.findById(2L).get())
                     .rating(4)
-                    .comment("La caminata nocturna fue una experiencia fascinante. Con linternas y la guía de un experto, pudimos observar animales nocturnos como ranas y búhos. Además, el guía tenía un vasto conocimiento sobre el ecosistema local, lo que hizo el recorrido aún más interesante.")
+                    .comment("La caminata nocturna fue una experiencia fascinante. Con linternas y la guía de un experto, pudimos observar animales nocturnos como ranas y búhos. El recorrido fue muy interesante.")
                     .build();
             reviewRepository.save(review4);
             ReviewEntity review5 = ReviewEntity.builder()
                     .user(userRepository.findById(5L).get())
                     .touristPlan(touristPlanRepository.findById(3L).get())
                     .rating(5)
-                    .comment("¡Un sueño hecho realidad! Visitar Machu Picchu fue una experiencia mágica, y el tour estuvo impecablemente organizado. Desde el viaje en tren con vistas espectaculares hasta la caminata por las antiguas ruinas, cada momento fue inolvidable.\n" +
-                            "\n" +
-                            "El guía fue increíblemente conocedor y apasionado, compartiendo historias y datos fascinantes sobre la civilización inca..")
+                    .comment("¡Un sueño hecho realidad! Visitar Machu Picchu fue una experiencia mágica, y el tour estuvo impecablemente organizado. Cada momento fue inolvidable.")
                     .build();
             reviewRepository.save(review5);
             ReviewEntity review6 = ReviewEntity.builder()
                     .user(userRepository.findById(1L).get())
                     .touristPlan(touristPlanRepository.findById(3L).get())
                     .rating(5)
-                    .comment("¡Una experiencia única e inolvidable! Ver las Líneas de Nazca desde el aire es algo que no se puede describir con palabras; la magnitud y el detalle de estas figuras son asombrosos. El piloto y el guía a bordo fueron muy profesionales y explicaron la historia y los misterios detrás de cada figura.")
+                    .comment("¡Una experiencia única e inolvidable! Ver las Líneas de Nazca desde el aire es algo que no se puede describir con palabras; son asombrosas. El piloto y el guía a bordo fueron muy profesionales")
                     .build();
             reviewRepository.save(review6);
             ReviewEntity review7 = ReviewEntity.builder()
@@ -1918,7 +1914,7 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(3L).get())
                     .touristPlan(touristPlanRepository.findById(4L).get())
                     .rating(5)
-                    .comment("Desde el primer contacto, el equipo de TURISTEANDO fue muy profesional. Todo salió mejor de lo esperado, gracias a su excelente organización.\n")
+                    .comment("Desde el primer contacto, el equipo de TURISTEANDO fue muy profesional. Todo salió mejor de lo esperado, gracias a su excelente organización.")
                     .build();
             reviewRepository.save(review8);
             ReviewEntity review9 = ReviewEntity.builder()
@@ -1932,7 +1928,7 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(5L).get())
                     .touristPlan(touristPlanRepository.findById(5L).get())
                     .rating(5)
-                    .comment("Por el precio que pagamos, recibimos mucho más de lo esperado. El Tour tiene una calidad increíble y vale cada centavo.\n")
+                    .comment("Por el precio que pagamos, recibimos mucho más de lo esperado. El Tour tiene una calidad increíble y vale cada centavo.")
                     .build();
             reviewRepository.save(review10);
             ReviewEntity review11 = ReviewEntity.builder()
@@ -1955,7 +1951,7 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(3L).get())
                     .touristPlan(touristPlanRepository.findById(7L).get())
                     .rating(5)
-                    .comment("IUna jornada increíble llena de historia y paisajes. Visitamos Pisac, Ollantaytambo y Chinchero, y en cada lugar aprendimos sobre la cultura inca. Los mercados locales también fueron un punto destacado para comprar artesanías auténticas..")
+                    .comment("Una jornada increíble llena de historia y paisajes. Visitamos Pisac, Ollantaytambo y Chinchero, y en cada lugar aprendimos sobre la cultura inca...")
                     .build();
             reviewRepository.save(review13);
             ReviewEntity review14 = ReviewEntity.builder()
@@ -1969,14 +1965,14 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(5L).get())
                     .touristPlan(touristPlanRepository.findById(8L).get())
                     .rating(5)
-                    .comment("Mi esposo y yo quedamos fascinados de todo lo que pudimos visitar con este TOUR, podríamos recomendar la maravillosa experiencia que tuvimos con TURISTEANDO, un equipo de personas muy profesionales y dispuestos a brindar la mejor atención a sus clientes.")
+                    .comment("Mi esposo y yo quedamos fascinados de todo lo que pudimos visitar con este TOUR, podríamos recomendar la maravillosa experiencia que tuvimos con TURISTEANDO, un equipo muy profesional y dispuestos a brindar la mejor atención a sus clientes.")
                     .build();
             reviewRepository.save(review15);
             ReviewEntity review16 = ReviewEntity.builder()
                     .user(userRepository.findById(1L).get())
                     .touristPlan(touristPlanRepository.findById(8L).get())
                     .rating(5)
-                    .comment("Podríamos decir, que es todo un paraíso para los amantes de la naturaleza. Pudimos ver monos, guacamayos y hasta caimanes durante los recorridos en bote y caminatas guiadas. La experiencia nocturna fue emocionante, llena de sonidos de la selva.")
+                    .comment("Podríamos decir, que es todo un paraíso para los amantes de la naturaleza. Pudimos ver monos, guacamayos y hasta caimanes durante los recorridos en bote y caminatas guiadas. La experiencia fue emocionante, llena de sonidos de la selva.")
                     .build();
             reviewRepository.save(review16);
             ReviewEntity review17 = ReviewEntity.builder()
@@ -1984,7 +1980,7 @@ public class DataLoader implements CommandLineRunner {
                     .touristPlan(touristPlanRepository.findById(9L).get())
                     .rating(4)
                     .comment("Aventura para recordar " +
-                            "hicimos el plan completo, no nos podíamos perder de todas las actividades recomendadas por el grupo de TURISTEANDO y cada momento fue emocionante. Las actividades estuvieron muy bien organizadas. ¡Excelente!")
+                            "hicimos el plan completo, con todas las actividades recomendadas por el grupo de TURISTEANDO y cada momento fue emocionante. Las actividades estuvieron muy bien organizadas. ¡Excelente!")
                     .build();
             reviewRepository.save(review17);
             ReviewEntity review18 = ReviewEntity.builder()
@@ -2019,7 +2015,7 @@ public class DataLoader implements CommandLineRunner {
                     .user(userRepository.findById(2L).get())
                     .touristPlan(touristPlanRepository.findById(11L).get())
                     .rating(4)
-                    .comment("Una forma divertida y relajante de recorrer dos de los distritos más hermosos de Lima. Las vistas del malecón en Miraflores y la energía bohemia de Barranco fueron lo mejor. El guía fue excelente al compartir datos históricos y culturales durante todo el trayecto.")
+                    .comment("Una forma divertida y relajante de recorrer dos de los distritos más hermosos de Lima. Las vistas del malecón en Miraflores y la energía bohemia de Barranco fueron lo mejor. El guía fue excelente al compartir datos históricos y culturales.")
                     .build();
             reviewRepository.save(review22);
         }

@@ -2,14 +2,19 @@ package com.proyecto.turisteando.dtos.responseDto;
 
 import com.proyecto.turisteando.dtos.IDto;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Value
+
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReservationResponseDto implements IDto {
+
 
     private Long id;
     private LocalDateTime createdAt;
@@ -20,4 +25,9 @@ public class ReservationResponseDto implements IDto {
     private double totalPrice;
     private Long touristPlanId;
     private Long userId;
+
+
+    private String touristPlanTitle;  // Nuevo campo
+
+
 }

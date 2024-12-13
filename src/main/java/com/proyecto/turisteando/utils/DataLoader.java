@@ -908,13 +908,13 @@ public class DataLoader implements CommandLineRunner {
             touristPlanRepository.save(activity9);
 
             ImageEntity image1activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600576/excursion-a-waqrapukara-ruta-por-santa-lucia_1_mgp0ky.png")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600561/excursion-a-waqrapukara-ruta-por-santa-lucia_3_dcfnvt.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image1activity9);
 
             ImageEntity image2activity9 = ImageEntity.builder()
-                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600561/excursion-a-waqrapukara-ruta-por-santa-lucia_3_dcfnvt.png")
+                    .imageUrl("https://res.cloudinary.com/dvjfzzck0/image/upload/v1733600576/excursion-a-waqrapukara-ruta-por-santa-lucia_1_mgp0ky.png")
                     .touristPlan(activity9)
                     .build();
             imageRepository.save(image2activity9);
@@ -1596,9 +1596,9 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             imageRepository.save(image5T6);
 
-            //Tour Trujillo Huascas
+            //Tour Trujillo Huacas
             TouristPlanEntity tour17 = TouristPlanEntity.builder()
-                    .title("Tour Trujillo Huascas")
+                    .title("Tour Trujillo Huacas")
                     .description("Viaja y disfruta del norte de Perú Trujillo y descubre en full day las huacas de moche , chan chan y los caballos peruanos de paso solo en Trujillo Perú.")
                     .price(1800.00)
                     .seller("Trujillo Tours")

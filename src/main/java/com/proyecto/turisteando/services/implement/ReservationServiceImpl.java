@@ -155,12 +155,29 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     public Iterable<ReservationResponseDto> findByUserIdAndStatus(Long userId, boolean status) {
+//        List<ReservationEntity> reservations = reservationRepository.findByUserIdAndStatus(userId, status);
+//        if (reservations.isEmpty()) {
+//            throw new ReservationNotFoundException("No se encontraron reservas para el usuario con ID: " + userId);
+//        }
+//        return reservations.stream()
+//                .map(reservationMapper::toDto)
+//                .collect(Collectors.toList());
+
         List<ReservationEntity> reservations = reservationRepository.findByUserIdAndStatus(userId, status);
         if (reservations.isEmpty()) {
             throw new ReservationNotFoundException("No se encontraron reservas para el usuario con ID: " + userId);
         }
+
+        // Mapear las reservas a DTOs e incluir el nombre del plan turístico
         return reservations.stream()
-                .map(reservationMapper::toDto)
+                .map(reservation -> {
+                    ReservationResponseDto dto = reservationMapper.toDto(reservation);
+                    // Obtener el nombre del plan turístico asociado a la reserva
+                    String touristPlanTitle = reservation.getTouristPlan().getTitle();
+                    // Setear el nombre del plan turístico en el DTO
+                    dto.setTouristPlanTitle(touristPlanTitle);
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 }

@@ -67,7 +67,7 @@ public class TouristPlanEntity {
     @JsonManagedReference
     private List<CharacteristicEntity> characteristic;
 
-    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "touristPlan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("touristPlan") // Evitar recursión al serializar
     @JsonManagedReference // Manejar relaciones bidireccionales
     private List<ReviewEntity> reviews;

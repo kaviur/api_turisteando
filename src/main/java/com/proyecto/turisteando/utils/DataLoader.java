@@ -9,10 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class is responsible for loading initial data into the database.
@@ -1860,6 +1858,8 @@ public class DataLoader implements CommandLineRunner {
         }
 
         List<ReviewEntity> reviews = reviewRepository.findAll();
+        List<TouristPlanEntity> touristPlansList = touristPlanRepository.findAll().subList(11, 32);
+        List<UserEntity> userEntityList = userRepository.findAll();
         if (reviews.isEmpty()) {
             ReviewEntity review1 = ReviewEntity.builder()
                     .user(userRepository.findById(1L).get())
@@ -2018,7 +2018,29 @@ public class DataLoader implements CommandLineRunner {
                     .comment("Una forma divertida y relajante de recorrer dos de los distritos más hermosos de Lima. Las vistas del malecón en Miraflores y la energía bohemia de Barranco fueron lo mejor. El guía fue excelente al compartir datos históricos y culturales.")
                     .build();
             reviewRepository.save(review22);
+
+            List<ReviewEntity> newReviews = new ArrayList<>();
+            for (int i = 0; i < 21; i++) {
+                ReviewEntity review = ReviewEntity.builder()
+                        .user(userEntityList.get((int) (Math.random() * 5) + 1))
+                        .touristPlan(touristPlansList.get(i))
+                        .rating((int) (Math.random() * 5) + 1)
+                        .comment("Una forma divertida y relajante de recorrer dos de los distritos más hermosos de Lima. Las vistas del malecón en Miraflores y la energía bohemia de Barranco fueron lo mejor. El guía fue excelente al compartir datos históricos y culturales.")
+                        .build();
+                newReviews.add(review);
+            }
+            reviewRepository.saveAll(newReviews);
         }
+
+        List<TouristPlanEntity> touristPlans = touristPlanRepository.findAll();
+        List<TouristPlanEntity> touristPlansUpdated = touristPlans.stream().peek(plan -> {
+            int totalReviews = plan.getReviews().size();
+            int totalStars = plan.getReviews().stream().mapToInt(ReviewEntity::getRating).sum();
+            plan.setTotalReviews(totalReviews);
+            plan.setTotalStars(totalStars);
+        }).toList();
+        touristPlanRepository.saveAll(touristPlansUpdated);
+
 
         List<ReservationEntity> reservations = reservationRepository.findAll();
         if (reservations.isEmpty()) {

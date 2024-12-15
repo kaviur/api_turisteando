@@ -219,8 +219,8 @@ public class CategoryServiceImpl implements ICategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la categorá a eliminar"));
 
         // Verificar si hay productos asociados a esta categoría
-        boolean hasProducts = touristPlanRepository.existsByCategoryId(id); // Verificar si hay planes turísticos asociados
-        if (hasProducts) {
+        boolean hasActiveProducts = touristPlanRepository.existsByCategoryIdAndIsActive(id, true);
+        if (hasActiveProducts) {
             throw new UnauthorizedActionException("No se puede eliminar la categoría porque tiene productos asociados.");
         }
 

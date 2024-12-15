@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface TouristPlanRepository extends JpaRepository<TouristPlanEntity, Long> {
   
-    boolean existsByCategoryId(Long categoryId);
+    boolean existsByCategoryIdAndIsActive(Long categoryId, Boolean isActive);
 
     @Query(value = "SELECT * FROM tourist_plan t1 INNER JOIN favorites_user_tourist_plan t2 ON t1.id = t2.tourist_plan_id WHERE t2.user_id = ?1", nativeQuery = true)
     List<TouristPlanEntity> usersFavorites (Long userId);

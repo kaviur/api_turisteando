@@ -28,7 +28,7 @@ public class FileValidator {
         for (MultipartFile file : files) {
             if (!isImage(file)) {
                 throw new FileValidationException("El archivo " + file.getOriginalFilename() + " no es una imagen");
-            } else if (file.getSize() > 1 * 1024 * 1024) {
+            } else if (file.getSize() > 10 * 1024 * 1024) {
                 throw new FileValidationException("El tamaño máximo de cada imagen debe ser de 1 MB");
             }
         }

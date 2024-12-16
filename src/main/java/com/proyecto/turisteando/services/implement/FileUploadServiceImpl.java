@@ -10,27 +10,40 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
     private final CloudinaryConfig cloudinaryConfig;
 
+    private Map<String, Object> getUploadParams() {
+        return ObjectUtils.asMap(
+                "use_filename", true,
+                "folder", "turisteando",
+                "unique_filename", true,     // Generar un nombre único
+                "overwrite", false,
+                "transformation", Map.of(    // Transformaciones para optimización
+                        "width", 800,            // Redimensionar ancho máximo a 800px
+                        "height", 800,           // Redimensionar alto máximo a 800px
+                        "crop", "limit",         // Limitar dimensiones sin distorsionar
+                        "format", "auto",        // Usar el formato más eficiente
+                        "quality", "auto"        // Ajustar calidad automáticamente
+                )
+        );
+    }
+
     @Override
     public List<String> saveImage(List<MultipartFile> multipartFiles) throws FileUploadException {
         List<String> listImageName = new ArrayList<>();
         Cloudinary cloudinary = cloudinaryConfig.configuration();
 
-        Map<String, Object> params = getUploadParams();
+        Map<String, Object> params = getUploadParams(); // Cargar parámetros fusionados
 
         for (MultipartFile image : multipartFiles) {
             try {
                 Map<?, ?> uploadResult = cloudinary.uploader().upload(image.getBytes(), params);
-                String imageUrl = uploadResult.get("url").toString();
+                String imageUrl = uploadResult.get("url").toString(); // URL optimizada
                 listImageName.add(imageUrl);
             } catch (IOException ex) {
                 throw new FileUploadException("Error al subir la imagen: " + image.getOriginalFilename(), ex);
@@ -69,15 +82,6 @@ public class FileUploadServiceImpl implements FileUploadService {
         return finalImages;  // Devuelve todas las imágenes activas después de la actualización
     }
 
-    // Método auxiliar para obtener los parámetros de subida
-    private Map<String, Object> getUploadParams() {
-        return ObjectUtils.asMap(
-                "use_filename", true,
-                "folder", "turisteando",
-                "unique_filename", true,
-                "overwrite", false
-        );
-    }
 
     @Override
     public void deleteExistingImages(List<String> imagesToDelete) throws FileUploadException {

@@ -41,6 +41,17 @@ public class JwtService {
                 .compact();
     }
 
+    public String generateToken(String email) {
+        return Jwts
+                .builder()
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+
     private Key getKey() {
         byte[] keyBytes = Base64.getDecoder().decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);

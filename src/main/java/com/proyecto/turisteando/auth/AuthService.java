@@ -1,6 +1,7 @@
 package com.proyecto.turisteando.auth;
 
 import com.proyecto.turisteando.dtos.requestDto.UserRequestDto;
+import com.proyecto.turisteando.dtos.responseDto.UserResponseDto;
 import com.proyecto.turisteando.entities.UserEntity;
 import com.proyecto.turisteando.entities.enums.Role;
 import com.proyecto.turisteando.exceptions.customExceptions.AuthenticationFailedException;
@@ -8,6 +9,7 @@ import com.proyecto.turisteando.exceptions.customExceptions.UserNotFoundExceptio
 import com.proyecto.turisteando.jwt.JwtService;
 import com.proyecto.turisteando.mappers.IUserMapper;
 import com.proyecto.turisteando.repositories.IUserRepository;
+import com.proyecto.turisteando.services.IUserService;
 import com.proyecto.turisteando.services.implement.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,9 +17,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 @Service
 public class AuthService {
@@ -27,6 +33,9 @@ public class AuthService {
 
     @Autowired
     JwtService jwtService;
+
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -98,4 +107,22 @@ public class AuthService {
             throw new AuthenticationFailedException(e.getMessage());
         }
     }
+
+    public AuthResponse loginWithGoogle(@AuthenticationPrincipal OAuth2User principal) {
+        String email = principal.getAttribute("email");
+        String name = principal.getAttribute("name");
+
+        // Procesa el usuario en el servicio
+        UserResponseDto user = userService.processOAuthPostLogin(email, name);
+
+        // Genera el token JWT
+        String token = jwtService.generateToken(email);
+
+        return AuthResponse.builder()
+                .accessToken(token)
+                .user(user)
+                .build();
+    }
+
+
 }

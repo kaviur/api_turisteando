@@ -51,8 +51,11 @@ public class SecurityConfig {
                             .requestMatchers("/api/users/**").hasAuthority(Role.ADMIN.name())
                             .anyRequest().permitAll();
                 })
+                .oauth2Login( oauth2 -> oauth2
+                        .defaultSuccessUrl("/api/auth/googleUser", true)
+                )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

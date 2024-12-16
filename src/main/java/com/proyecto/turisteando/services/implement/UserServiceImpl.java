@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.proyecto.turisteando.entities.enums.Role;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService, UserDetailsService {
@@ -142,6 +143,32 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
                 userDetails.getAuthorities()
         );
 
+    }
+
+    @Override
+    public UserResponseDto processOAuthPostLogin(String email, String fullName) {
+
+        String[] nameParts = fullName.split(" ", 2);
+        String firstName = nameParts[0];
+        String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+        Optional<UserEntity> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            user.setName(firstName);
+            user.setLastName(lastName);
+            return userMapper.toDto(userRepository.save(user));
+        } else {
+            // Crea un nuevo usuario si no existe
+            UserEntity newUser = new UserEntity();
+            newUser.setEmail(email);
+            newUser.setName(firstName);
+            newUser.setLastName(lastName);
+            newUser.setRole(Role.BUYER);
+            newUser.setIsActive(true);
+            return userMapper.toDto(userRepository.save(newUser));
+        }
     }
 
     List<UserEntity> filterUsers(List<UserEntity> users, UserRequestDto dto) {
